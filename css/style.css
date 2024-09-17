@@ -1,0 +1,223 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background: #e3e2dd;
+    font-family: Arial, sans-serif;
+    
+}
+.regi a{
+    text-decoration: none;
+}
+.regi a:hover{
+    font-weight: 600;
+}
+input[type=submit]:hover{
+    transform: scaley(1.2);
+}
+.carousel-item {
+    height: 90vh;
+    background-position: center;
+    background-repeat: no-repeat; 
+    background-size: cover;
+}
+.con{
+    width:90%;
+    margin:auto;
+    
+}
+.col-md-4 a{
+    text-decoration: none;
+    font-weight:400;
+}
+.col-md-4 a:hover{
+    font-weight: 600;
+}
+.tread{
+    
+    width:90%;
+    padding-bottom:20px;
+    background:  #f4f4f4;
+    border-radius:15px;
+  
+}
+.lin a{
+    text-decoration: none;
+    color: black;
+}
+.card img:hover{
+    opacity:0.7;
+}
+.card-title a{
+    text-decoration: none;
+    color: black;
+}
+.item{
+    width:90%;
+    margin:0 auto;
+    margin-top:40px;
+    margin-bottom: 20px;
+    
+   
+   
+}
+.search{
+    border:1px solid #e3e2dd;
+    border-radius: .6rem;
+    text-align: center;
+    height: 1.5rem;
+}
+.footer{
+    background:#AE9D92;
+}
+.nav{
+    background: #FFFF;
+}
+.lo-button {
+    background: #897062;
+    border: none;
+    border-radius: .4rem;
+    padding: .5rem;
+    
+}
+.lo-button:hover{
+    background:#4c3f31 ;
+}
+.lo-button a{
+    color: #FFFF;
+}
+
+.text p{
+    color: black;
+}
+.icon{
+    width:20%;
+    margin: auto;
+    
+}
+.item .side{
+    width:35%;
+}
+.thirf{
+    width:80%;
+    margin:0 auto;
+    margin-top:70px;
+    background-color:darkgray;
+} 
+.thirf button{
+    background: #746557;
+}
+.thirf-one{
+    background: #AE9D92;
+}
+
+.thirf-two{
+    background: #897062;
+}
+.thirf-three{
+    background: #4c3f31;
+}
+.thirf .pic{
+    width:40%;
+    height: 20%;
+    clip-path: polygon(50% 0%,0% 100%,100% 100%);
+    position: relative;
+    top: -30px;
+    left:-40px;
+    
+}
+.thirf .text{
+    width:60%;
+    padding:10px 15px;
+    margin-top: 30px;
+}
+.thirf .text a{
+   text-decoration: none;
+   color:black;
+}
+.thirf .text button{
+    padding:5px 0;
+    width:150px;
+    border: none;
+    border-radius: 5px;
+    transition:width 1s;
+}
+.thirf .text button:hover{
+    width:170px;
+    background-color:rgb(194, 187, 177);
+}
+.verification{
+    width:25%;
+    padding:30px;
+    margin: auto;
+    margin-top: 150px;
+}
+.verification .button{
+    margin-top: 10px;
+}
+
+#update{
+    display: none;
+}
+.table-image {
+    width: 100px;
+    height:75px;
+}
+.vertical-center {
+    vertical-align: middle;
+}
+#personalinfo{
+    background: #f4f4f4;
+    max-height: 16rem;
+    border-radius: .6rem;
+}
+#information,#order,#item{
+    --bs-btn-color:#FFFF;
+    --bs-btn-bg:#897062;
+    --bs-btn-border-color:none;
+    --bs-btn-hover-bg:#4c3f31;
+    --bs-btn-hover-color:#FFFF;
+}
+.equal-width {
+    width: 230px;
+}
+.sp{
+    top:-6px;
+    left: 26px;
+}
+.rating-stars {
+    font-size:15px; 
+}
+
+.rating-stars .fa-star {
+    color: #d3d3d3; 
+}
+
+.rating-stars .fa-star.filled {
+    color: #ffd700; 
+}
+@media screen and (max-width:720px){
+    .item .side{
+        width:100%;
+    }
+    .thirf .pic{
+        position:relative;
+        top:150px;
+        left: 0;
+    }
+    .verification{
+        width:100%;
+        padding:20px;
+        margin-top: 100px;
+    }
+    #personalinfo{
+        
+        max-height:600px;
+        
+    }
+    #update,#edit{
+        margin-bottom: .6rem;
+    }
+}
