@@ -293,7 +293,7 @@ if (isset($_SESSION['userid'])) {
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-center  flex-grow-1 pe-3">
                             <li class="nav-item mx-2">
-                                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                <a class="nav-link active" aria-current="page" href="#">Ho</a>
                             </li>
                             <li class="nav-item mx-2">
                                 <a class="nav-link" href="../Project-I_Exchanza/view/thrift.php">Thrift</a>
