@@ -1,8 +1,7 @@
 <?php
 session_start();
 include_once '../model/DbConnector.php';
-include_once '../model/wishlist.php';
-include_once '../model/addtocart.php';
+
 if (isset($_SESSION['userid'])) {
     $userid = $_SESSION['userid']; ?>
 

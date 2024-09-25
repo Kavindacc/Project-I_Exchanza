@@ -1,9 +1,11 @@
 <?php
-session_start();
-require '../model/DbConnector.php';
-class save{
+
+require '../model/DbConnector.php'; // Make sure this path is correct
+
+class Save {
     
-    function card_detailsdb(){
+    // Function to save card details into the database
+    public function card_detailsdb() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Retrieve form data with null coalescing operator to handle unset keys
             $card = $_POST['card'] ?? '';       
@@ -13,88 +15,97 @@ class save{
             $cvv = $_POST['cvv'] ?? '';
             $save = $_POST['save'] ?? '';
 
-            // Check if the save button was clicked
-            if ($save == "save" && $card == "card") {
-                // Get database connection
-                $db = new DbConnector();
-                $conn = $db->getConnection();
+            // Check if the save button was clicked and if card is set
+            if ($save === "save" && $card === "card") {
+                try {
+                    // Get the database connection
+                    $db = new DbConnector();
+                    $conn = $db->getConnection();
+                    
+                    // Prepare the SQL statement with placeholders
+                    $stmt = $conn->prepare("INSERT INTO card_details (CardHolderName, CardNumber, ExpDate, cvv) VALUES (:name, :cardNumber, :expDate, :cvv)");
 
-                // Fetch user_id from the user table (assuming there's only one user)
-                $stmt = $conn->prepare("SELECT user_id FROM user WHERE user_id = ?"); // Use WHERE condition if needed
-                $stmt->execute(); 
-                $userId = $stmt->fetch(PDO::FETCH_ASSOC)['user_id']; // Extract user_id from the associative array
-                
-                // Prepare the SQL statement with placeholders
-                $stmt = $conn->prepare("INSERT INTO card_details (user_id, CardHolderName, CardNumber, ExpDate, cvv) VALUES (?, ?, ?, ?, ?)");
+                    // Check if preparation was successful
+                    if ($stmt) {
+                        // Bind the parameters with appropriate types using bindParam
+                        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+                        $stmt->bindParam(':cardNumber', $cardNumber, PDO::PARAM_STR);
+                        $stmt->bindParam(':expDate', $expDate, PDO::PARAM_STR);
+                        $stmt->bindParam(':cvv', $cvv, PDO::PARAM_STR);
 
-                // Bind the parameters with correct values
-                if ($stmt) {
-                    $stmt->bindValue(1, $userId, PDO::PARAM_INT);      // user_id
-                    $stmt->bindValue(2, $name, PDO::PARAM_STR);        // CardHolderName
-                    $stmt->bindValue(3, $cardNumber, PDO::PARAM_STR);  // CardNumber
-                    $stmt->bindValue(4, $expDate, PDO::PARAM_STR);     // ExpDate
-                    $stmt->bindValue(5, $cvv, PDO::PARAM_STR);         // cvv
+                        // Execute the statement
+                        if ($stmt->execute()) {
+                            //echo "Card details saved successfully!";
+                        } else {
+                            //echo "Failed to execute card details insertion.";
+                        }
 
-                    // Execute the statement
-                    if ($stmt->execute()) {
-                        echo "Card details saved successfully!";
+                        // Close the statement
+                        $stmt = null;
                     } else {
-                        echo "Failed to save card details!";
+                        //echo "Failed to prepare the SQL statement.";
                     }
+                    
+                    // Close the database connection
+                    $conn = null;
 
-                    // Close the statement
-                    $stmt->closeCursor();
-                } else {
-                    echo "Failed to prepare statement!";
+                } catch (PDOException $e) {
+                    //echo "Error: " . $e->getMessage();
                 }
             }
         }
         return null;
     }
 
-    function place_orderdb(){
+    // Function to save place order details into the database
+    public function place_orderdb() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Retrieve form data with null coalescing operator to handle unset keys
             $fullname = $_POST['name'] ?? '';
             $addres = $_POST['addres'] ?? '';
             $city = $_POST['city'] ?? '';
             $zip = $_POST['zip'] ?? '';
-            $district = $_POST['district'] ?? '';
+            $district = $_POST['distric'] ?? '';
             $province = $_POST['province'] ?? ''; 
-    
-            // Get database connection
-            $db = new DbConnector();
-            $conn = $db->getConnection();
-    
-            // Fetch user_id from the user table (assuming there's only one user)
-            $stmt = $conn->prepare("SELECT user_id FROM user WHERE user_id = ?"); // Use WHERE condition if needed
-            $stmt->execute();
-            $userId = $stmt->fetch(PDO::FETCH_ASSOC)['user_id']; // Extract user_id from the associative array
-    
-            // Prepare the SQL statement with placeholders
-            $stmt = $conn->prepare("INSERT INTO place_order (user_id, FullName, Addres, City, Zip, District, Province) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    
-            // Bind the parameters with correct values
-            if ($stmt) {
-                $stmt->bindValue(1, $userId, PDO::PARAM_INT);     // user_id
-                $stmt->bindValue(2, $fullname, PDO::PARAM_STR);   // FullName
-                $stmt->bindValue(3, $addres, PDO::PARAM_STR);     // Address
-                $stmt->bindValue(4, $city, PDO::PARAM_STR);       // City
-                $stmt->bindValue(5, $zip, PDO::PARAM_STR);        // Zip
-                $stmt->bindValue(6, $district, PDO::PARAM_STR);   // District
-                $stmt->bindValue(7, $province, PDO::PARAM_STR);   // Province
-    
-                // Execute the statement
-                if ($stmt->execute()) {
-                    echo "Order placed successfully!";
+            $country = $_POST['country'] ?? '';
+
+            try {
+                // Get the database connection
+                $db = new DbConnector();
+                $conn = $db->getConnection();
+                
+                // Prepare the SQL statement with placeholders
+                $stmt = $conn->prepare("INSERT INTO place_order (FullName, Address, City, Zip, District, Province, Country) VALUES (:fullname, :addres, :city, :zip, :district, :province, :country)");
+
+                // Check if preparation was successful
+                if ($stmt) {
+                    // Bind the parameters with appropriate types using bindParam
+                    $stmt->bindParam(':fullname', $fullname, PDO::PARAM_STR);
+                    $stmt->bindParam(':addres', $addres, PDO::PARAM_STR);
+                    $stmt->bindParam(':city', $city, PDO::PARAM_STR);
+                    $stmt->bindParam(':zip', $zip, PDO::PARAM_STR);
+                    $stmt->bindParam(':district', $district, PDO::PARAM_STR);
+                    $stmt->bindParam(':province', $province, PDO::PARAM_STR);
+                    $stmt->bindParam(':country', $country, PDO::PARAM_STR);
+
+                    // Execute the statement
+                    if ($stmt->execute()) {
+                        //echo "Order placed successfully!";
+                    } else {
+                        //echo "Failed to execute order placement.";
+                    }
+
+                    // Close the statement
+                    $stmt = null;
                 } else {
-                    echo "Failed to place order!";
+                    //echo "Failed to prepare the SQL statement.";
                 }
-    
-                // Close the statement
-                $stmt->closeCursor();
-            } else {
-                echo "Failed to prepare statement!";
+                
+                // Close the database connection
+                $conn = null;
+
+            } catch (PDOException $e) {
+                //echo "Error: " . $e->getMessage();
             }
         }
         return null;

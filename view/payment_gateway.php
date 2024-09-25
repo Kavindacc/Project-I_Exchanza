@@ -1,3 +1,13 @@
+<?php
+include_once '../model/DbConnector.php';
+include_once '../model/wishlist.php';
+include_once '../model/addtocart.php';
+session_start();
+if (isset($_SESSION['userid'])) {
+    $userid = $_SESSION['userid'];
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -8,7 +18,7 @@
     <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' rel='stylesheet'>
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
     <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-    <link rel="stylesheet" href="payment_gateway_style.css">
+    <link rel="stylesheet" href="../css/payment_gateway.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
     <title>payment</title>
@@ -18,7 +28,7 @@
 <body className='snippet-body'>
     <div class="card">
         <div class="card-top border-bottom text-center">
-            <a href="#"> Back to cart</a>
+            <a href="addtocart.php"> Back to cart</a>
             <span id="logo"></span>
         </div>
         <div class="card-body">            
@@ -131,47 +141,61 @@
                             
 
 
-            </div>
-        </div>
                 <div id="summary" class="col-md-5">
                     <div class="right border">
                         <div class="header">Order Summary</div>
                         <hr>
-                        <p>2 items</p>
-                        <hr>
 
                         <span class="item">
+                            <?php
+                               
+                                
+                                $obj = new Cart();
+                                $obj->setUserId($userid);
+                                $obj2 = new DbConnector();
+                                $con = $obj2->getConnection();
+                                $rows = $obj->cartItemDetails($con);
 
-                            <div class="row item">
-                                <div class="col-4 align-self-center"><img class="img-fluid" src="https://i.imgur.com/79M6pU0.png"></div>
-                                <div class="col-8">
-                                    <div class="row"><b><span id="unit_price">$ 26.99</span></b></div>
-                                    <div class="row text-muted"><span id="unit_name">Be Legandary Lipstick-Nude rose</span></div>
-                                    <div class="row"><span id="unit_qty">Qty:1</span></div>
-                                </div>
-                            </div>
+                            ?>
 
+                            <?php if (!empty($rows)) { ?>
+                                <?php foreach ($rows as $row) { ?>
+                                    <table>
+
+                                        <tr>
+                                            <div class="col-6 align-self-center"><img class="img-fluid" src="<?php echo $row['coverimage']; ?>"></div>
+                                        </tr>
+                                        <div class="col-8">
+                                            <tr><b>Unit price : </b>Rs.<?php echo $row['price']; ?></tr><br>
+                                            <tr><b>Unit name : </b><?php echo $row['itemname']; ?></tr><br>
+                                            <tr><b>Quantity : </b><?php echo $row['quantity']; ?></tr><br>
+                                        </div>
+
+                                    </table>
+                                    <hr>
+                                <?php } ?>
+                            <?php } ?>
                         </span>
+                        
 
                         <hr>
-                           
-                            <div class="row lower">
-                                <div class="col text-left">Subtotal</div>
-                                <div class="col text-right"><span id="subtotal">$ 46.98</span></div>
-                            </div>
 
-                            <div class="row lower">
-                                <div class="col text-left">Delivery</div>
-                                <div class="col text-right"><span id="delivery">Free</span></div>
-                            </div>
+                        <div class="row lower">
+                            <div class="col text-left">Subtotal</div>
+                            <div class="col text-right"><span id="subtotal">Rs. 46.98</span></div>
+                        </div>
 
-                            <div id="totalpay" class="row lower">
-                                <div class="col text-left"><b>Total to pay</b></div>
-                                <div class="col text-right"><b><span id="tot">$ 46.98</span></b></div>
-                            </div>
+                        <div class="row lower">
+                            <div class="col text-left">Delivery</div>
+                            <div class="col text-right"><span id="delivery">Free</span></div>
+                        </div>
 
-                        
-                        
+                        <div id="totalpay" class="row lower">
+                            <div class="col text-left"><b>Total to pay</b></div>
+                            <div class="col text-right"><b><span id="tot">Rs. 46.98</span></b></div>
+                        </div>
+
+
                         <hr>
 
                         <input type="button" value="Buy now" class="btn btn-primary" onclick="errormsg()" >
