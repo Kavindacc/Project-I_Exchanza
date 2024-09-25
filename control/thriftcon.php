@@ -11,6 +11,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $subcategory=$_POST['subcategory'];
     $condition=$_POST['condition'];
     $size = isset($_POST['size']) ? $_POST['size'] : null;
+    $quantity=1;
     $userid=$_POST['userid'];
 
     $errors=[];
@@ -98,7 +99,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         $dsn=new DbConnector();
         $con=$dsn->getConnection();
 
-        $item=new Item($sitemname, $sprice,  $color, $description,$scategory,$ssubcategory, $scondition,$size,$filePath,$filePatho,$userid);
+        $item=new Item($sitemname, $sprice,  $color, $description,$scategory,$ssubcategory, $scondition,$size,$filePath,$filePatho, $quantity,$userid);
         if($item->addItemForThrifting($con)){
             header("Location:../view/thrift.php?success=Item Add Successfully.");
             exit();
