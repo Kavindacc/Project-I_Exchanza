@@ -137,9 +137,10 @@ if (isset($_SESSION['userid'])) {
                     </li>
                 </ul>
 
-                <a href="totalpay"><input type="submit" value="Submit" class="btn btn-primary"></a>
+                <input type="submit" value="Submit" class="btn btn-primary">
                             
-
+</div>
+</div>
 
                 <div id="summary" class="col-md-5">
                     <div class="right border">
@@ -176,7 +177,7 @@ if (isset($_SESSION['userid'])) {
                                 <?php } ?>
                             <?php } ?>
                         </span>
-                        
+
 
                         <hr>
 
