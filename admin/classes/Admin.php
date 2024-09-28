@@ -7,7 +7,7 @@ class Admin {
     }
 
     public function getTotalUsers() {
-        $stmt = $this->pdo->query("SELECT COUNT(*) as total FROM usern");
+        $stmt = $this->pdo->query("SELECT COUNT(*) as total FROM user");
         return $stmt->fetch()['total'];
     }
 
@@ -40,9 +40,9 @@ class Admin {
     
 
     public function getMessages() {
-        $stmt = $this->pdo->query("SELECT messages.id, usern.name AS username, messages.message, messages.reply 
-                                   FROM messages 
-                                   JOIN usern ON messages.user_id = usern.userid");
+        $stmt = $this->pdo->query("SELECT reviews.review_id, user.firstname AS username, reviews.review_text, reviews.rating 
+                                   FROM reviews 
+                                   JOIN user ON reviews.user_id = user.userid");
         return $stmt->fetchAll();
     }
     

@@ -1,7 +1,7 @@
 <?php
 session_start();
 include("includes/header.php");
-require '../model/dbconnection.php';
+require '../model/DbConnector.php';
 require 'classes/Admin.php';
 
 /*if (!isset($_SESSION['admin_id'])) {
@@ -9,7 +9,8 @@ require 'classes/Admin.php';
     exit();
 }*/
 
-$admin = new Admin(Dbh::connect());
+$dbConnector = new DbConnector();
+$admin = new Admin($dbConnector->getConnection());
 $messages = $admin->getMessages();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -42,10 +43,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <tbody>
                             <?php foreach ($messages as $message) : ?>
                                 <tr>
-                                    <td><?php echo $message['id']; ?></td>
+                                    <td><?php echo $message['review_id']; ?></td>
                                     <td><?php echo $message['username']; ?></td>
-                                    <td><?php echo $message['message']; ?></td>
-                                    <td><?php echo $message['reply']; ?></td>
+                                    <td><?php echo $message['review_text']; ?></td>
+                                    <td><?php echo $message['rating']; ?></td>
                                     <td>
                                         <form method="post">
                                             <input type="hidden" name="message_id" value="<?php echo $message['id']; ?>">

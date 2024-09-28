@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../model/dbconnection.php';
+require '../model/DbConnector.php';
 require 'classes/Admin.php';
 include("includes/header.php");
 
@@ -8,8 +8,8 @@ include("includes/header.php");
     header("Location: login.php");
     exit();
 }*/
-
-$admin = new Admin(Dbh::connect());
+$dbConnector = new DbConnector();
+$admin = new Admin($dbConnector->getConnection());
 $sellers = $admin->getSellers();
 ?>
 

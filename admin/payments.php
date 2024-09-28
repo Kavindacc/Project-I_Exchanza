@@ -1,7 +1,7 @@
 <?php
 session_start();
 include("includes/header.php");
-require '../model/dbconnection.php';
+require '../model/DbConnector.php';
 require 'classes/Admin.php';
 
 /*if (!isset($_SESSION['admin_id'])) {
@@ -9,7 +9,8 @@ require 'classes/Admin.php';
     exit();
 }*/
 
-$admin = new Admin(Dbh::connect());
+$dbConnector = new DbConnector();
+$admin = new Admin($dbConnector->getConnection());
 $payments = $admin->getPayments();
 ?>
 

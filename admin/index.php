@@ -5,8 +5,8 @@ require 'classes/Admin.php';
 include("includes/header.php");
 
 // Instantiate the Admin class
-$admin = new Admin(DbConnector::getConnection());
-
+$dbConnector = new DbConnector();
+$admin = new Admin($dbConnector->getConnection());
 // Get counts from the database
 $totalUsers = $admin->getTotalUsers();
 $totalSales = $admin->getTotalSales();
