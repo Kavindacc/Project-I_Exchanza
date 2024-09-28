@@ -118,7 +118,7 @@ if (isset($_SESSION['userid'])) {
                         </td>
                         <td><strong><?php echo $row['itemname']; ?></strong></td>
                         <td class="price"><strong><?php echo $row['price']; ?></strong></td>
-                        <td><form action="payment_gateway.php" method="POST"><input type="number" name="quantity" min="1" max="1" class="quantity" value="1"></form></td>
+                        <td><form action="payment_gateway.php" method="POST"><input type="number" name="quantity" min="1" max="5" class="quantity" value="1"></form></td>
                         <td class="subtotal"><?php echo $row['price']; ?></td>
                     </tr>
             <?php }

@@ -1,6 +1,5 @@
-
 <?php
-
+require '../control/save.php';
     class validateCardDetails{
         function validation(){
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -46,10 +45,9 @@
 
         // Check the validation result and output it
         if ($validationResult === true) {
-            $po = new save();
+            $po = new Save();
             $spo = $po->place_orderdb();
-            $cd = new save();
-            $scd = $cd->card_detailsdb();
+            $scd = $po->card_detailsdb();
         } 
 
     }
