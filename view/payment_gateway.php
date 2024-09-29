@@ -2,6 +2,7 @@
 include_once '../model/DbConnector.php';
 //include_once '../model/wishlist.php';
 include_once '../model/addtocart.php';
+//include_once '../view/addtocart.php';
 
 
 session_start();
@@ -42,7 +43,7 @@ class PaymentGateway {
         <body className='snippet-body'>
             <div class="card">
                 <div class="card-top border-bottom text-center">
-                    <a href="addtocart.php"> Back to cart</a>
+                    <a href="addtocart.php"><h5> Back to cart </h5></a>
                     <span id="logo"></span>
                 </div>
                 <div class="card-body">
@@ -87,7 +88,7 @@ class PaymentGateway {
                                                 </div>
                                             </div>
                                             <span>Cardholder's name:</span>
-                                            <input type="text" name="name" placeholder="Kasun Janith" required autocomplete="on">
+                                            <input type="text" name="name" placeholder="Kasun J" required autocomplete="on">
                                             <span>Card Number:</span>
                                             <input type="text" name="cardNumber" placeholder="0125 6780 4567 9909" required autocomplete="on">
                                             <div class="row">
@@ -140,7 +141,7 @@ class PaymentGateway {
 
                                 <div class="row lower">
                                     <div class="col text-left">Subtotal</div>
-                                    <div class="col text-right"><span id="subtotal">Rs. 46.98</span></div>
+                                    <div class="col text-right"><span id="cart-subtotal"></span></div>
                                 </div>
 
                                 <div class="row lower">
@@ -150,7 +151,7 @@ class PaymentGateway {
 
                                 <div id="totalpay" class="row lower">
                                     <div class="col text-left"><b>Total to pay</b></div>
-                                    <div class="col text-right"><b><span id="tot">Rs. 46.98</span></b></div>
+                                    <div class="col text-right"><b><span id="cart-total"></span></b></div>
                                 </div>
 
                                 <hr>
@@ -177,6 +178,8 @@ class PaymentGateway {
             ?>
 
             <script>
+
+            updateCartTotal();
 
             var myLink = document.querySelector('a[href="#"]');
             myLink.addEventListener('click', function(e) {
@@ -213,6 +216,7 @@ class PaymentGateway {
             }
         }
 
+        
         </script>
 
         </body>
@@ -228,9 +232,9 @@ class PaymentGateway {
         $con = $obj2->getConnection();
         $rows = $obj->cartItemDetails($con);
 
-       
 
         if (!empty($rows)) {
+            $i = 0;
             foreach ($rows as $row) {
                 echo "
                 <table>
@@ -245,6 +249,7 @@ class PaymentGateway {
                     </div>
                 </table>
                 <hr>";
+                
             }
         }
     }
