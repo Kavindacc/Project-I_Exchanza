@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="card">
             <div class="card-header">
                 <div class="messages">
-                    <h4>Messages</h4>
+                    <h4>User Feedbacks</h4>
                 </div>
                 <div class="card-body">
 
@@ -35,8 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <tr>
                                 <th>ID</th>
                                 <th>Username</th>
-                                <th>Message</th>
-                                <th>Reply</th>
+                                <th>Review</th>
+                                <th>Rating</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
