@@ -5,6 +5,6 @@ require 'classes/AdminLogin.php';
 $adminLogin = new AdminLogin(null);
 $adminLogin->logout();
 
-header("Location: login.php");
+header("Location:../view/login_admin.php");
 exit();
 ?>
