@@ -1,6 +1,7 @@
 <?php
 include_once '../model/DbConnector.php';
 include_once '../model/User.php';
+include_once '../admin/classes/Admin.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -35,9 +36,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
         else if($usertype == 'admin'){
+            $dsn = new DbConnector();
+            $con = $dsn->getConnection(); 
+        
+            
+            $admin = new Admin($con); 
+            
+        
+            if ($admin->login($email, $password)) {
+                
+                header("Location: ../admin/index.php");
+                exit();
+            } else {
+                
+                header("Location: ../view/login_admin.php?error=Incorrect email or password.");
+                exit();
+            }
+        }
 
         }
 
       
     }
-}
+
