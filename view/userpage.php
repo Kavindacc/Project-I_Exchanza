@@ -340,13 +340,23 @@ if (isset($_SESSION['userid'])) {
                 </div>
 
                 <div class="col-md-9 py-2 mt-5" id="producttable" style="display:none;"><!--order table-->
-                    <?php $obj = new MyOrders($userid);
+                    <?php if (!empty($_GET['s'])) {
+                        if ($_GET['s'] == 1) { ?>
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Order Confirm Success</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                    <?php }
+                    } ?>
+                    <?php
+                    $obj = new MyOrders($userid);
                     $rows = $obj->getOrderDetails($con);
                     if (!empty($rows)) { ?>
-                        <table class="table  table-striped table-hover table-sm">
+                        <table class="table table-striped table-hover table-sm">
                             <thead>
                                 <tr class="table-primary">
-                                    <th scope="col">Product_Name</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Product Name</th>
                                     <th scope="col">Price</th>
                                     <th scope="col">Date</th>
                                     <th scope="col">Order Confirm</th>
@@ -354,20 +364,61 @@ if (isset($_SESSION['userid'])) {
                             </thead>
                             <tbody>
                                 <?php foreach ($rows as $row) { ?>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                        <td><button type="button" class="btn btn-outline-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;">Confirm</button>
+                                    <tr class="vertical-center">
+                                        <td><img src="<?php echo $row['coverimage']; ?>" class="table-image"></td>
+                                        <th scope="row"><?php echo $row['itemname']; ?></th>
+                                        <td><?php echo $row['price']; ?></td>
+                                        <td><?php echo $row['order_date']; ?></td>
+                                        <td>
+                                            <!-- Confirm button triggers the modal -->
+                                            <?php if ($row['order_status'] == 0) { ?>
+                                                <button type="button" class="btn btn-outline-success"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#confirmModal"
+                                                    data-orderid="<?php echo $row['order_id']; ?>"
+                                                    data-itemname="<?php echo $row['itemname']; ?>">
+                                                    Confirm
+                                                </button>
+
+                                            <?php } else { ?>
+                                                <button type="button" class="btn btn-success">
+                                                    Recived
+                                                </button>
+                                            <?php } ?>
+
                                         </td>
                                     </tr>
                                 <?php } ?>
                             </tbody>
                         </table>
                     <?php } else { ?>
-                        No Bought Items<?php } ?>
+                        <h2>No Bought Items</h2>
+                    <?php } ?>
                 </div>
+
+                <!--model confirm-->
+                <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmModalLabel">Confirm Order</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <!-- Form confirm -->
+                            <form action="../control/confirm_order.php" method="POST" id="confirmOrderForm">
+                                <div class="modal-body">
+                                    Are you sure you want to confirm the order for <strong id="modalItemName"><?php echo $row['itemname']; ?></strong>?
+                                    <input type="hidden" name="orderid" id="modalOrderId" value=<?php echo $row['order_id']; ?>>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-success">Confirm Order</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
