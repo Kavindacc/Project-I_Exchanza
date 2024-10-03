@@ -3,6 +3,7 @@ include_once '../model/DbConnector.php';
 include_once '../model/User.php';
 include_once '../model/wishlist.php';
 include_once '../model/addtocart.php';
+include_once '../model/MyOrders.php';
 if (isset($_SESSION['userid'])) {
     $userid = $_SESSION['userid']; ?>
 
@@ -64,8 +65,8 @@ if (isset($_SESSION['userid'])) {
                             $obj->setUserId($userid);
                             $count = $obj->cartItemCount($con); ?>
                             <a href="addtocart.php" class="nav-link  text-decoration-none mx-1"><i class="fa-solid fa-cart-plus position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp"><?php if (isset($count)) {
-                                                                                                                                                                                                                                                echo $count;
-                                                                                                                                                                                                                                            } ?></span></i></a><!--addtocart-->
+                                                                                                                                                                                                                                        echo $count;
+                                                                                                                                                                                                                                    } ?></span></i></a><!--addtocart-->
                             <?php
 
 
@@ -107,7 +108,7 @@ if (isset($_SESSION['userid'])) {
                     <button type="button" class="btn  " onclick="showItemTable()" id="item">My Iteams</button>
 
                 </div>
-                <div class="col-md-8 pt-4  mx-auto mt-5 " id="personalinfo"><!--personal information -->
+                <div class="col-md-8 p-4  mx-auto my-5 " id="personalinfo"><!--personal information -->
                     <?php if (isset($_SESSION['success'])) { ?><!--change personal information-->
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <strong><?php echo $_SESSION['success']; ?></strong>
@@ -164,7 +165,7 @@ if (isset($_SESSION['userid'])) {
 
                     </form><!--form end-->
 
-                    <div class="float-sm-end me-4"><button type="button" class="btn btn-outline-warning p-btn" data-bs-toggle="modal" data-bs-target="#changeimgModal" style="--bs-btn-color:#FFFF;--bs-btn-bg:#897062;--bs-btn-border-color:none; --bs-btn-hover-bg:#FFA500;">Change Profile picture</button></div>
+                    <div class="float-sm-end"><button type="button" class="btn btn-outline-warning p-btn m-3" data-bs-toggle="modal" data-bs-target="#changeimgModal" style="--bs-btn-color:#FFFF;--bs-btn-bg:#897062;--bs-btn-border-color:none; --bs-btn-hover-bg:#FFA500;">Change Profile picture</button></div>
                     <div class="modal fade" id="changeimgModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content" style="background:#AE9D92;color:#ffff;">
@@ -190,7 +191,7 @@ if (isset($_SESSION['userid'])) {
                     </div>
 
                     <!-- Change Password Button -->
-                    <div class="float-sm-end me-4"><button type="button" class="btn btn-outline-warning p-btn" data-bs-toggle="modal" data-bs-target="#changePasswordModal" style="--bs-btn-color:#FFFF;--bs-btn-bg:#897062;--bs-btn-border-color:none; --bs-btn-hover-bg:#FFA500;">Change Password</button></div>
+                    <div class="float-sm-end"><button type="button" class="btn btn-outline-warning p-btn m-3" data-bs-toggle="modal" data-bs-target="#changePasswordModal" style="--bs-btn-color:#FFFF;--bs-btn-bg:#897062;--bs-btn-border-color:none; --bs-btn-hover-bg:#FFA500;">Change Password</button></div>
 
                     <!-- Change Password Modal -->
                     <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
@@ -339,28 +340,33 @@ if (isset($_SESSION['userid'])) {
                 </div>
 
                 <div class="col-md-9 py-2 mt-5" id="producttable" style="display:none;"><!--order table-->
-                    <table class="table  table-striped table-hover table-sm">
-                        <thead>
-                            <tr class="table-primary">
-                                <th scope="col">Product_Id</th>
-                                <th scope="col">Product_Name</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td><button type="button" class="btn btn-outline-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;"> Edit</button>&nbsp;&nbsp;
-                                    <button type="button" class="btn btn-outline-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .6rem; --bs-btn-font-size: .75rem;"> Delete</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <?php $obj = new MyOrders($userid);
+                    $rows = $obj->getOrderDetails($con);
+                    if (!empty($rows)) { ?>
+                        <table class="table  table-striped table-hover table-sm">
+                            <thead>
+                                <tr class="table-primary">
+                                    <th scope="col">Product_Name</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Order Confirm</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($rows as $row) { ?>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>@mdo</td>
+                                        <td><button type="button" class="btn btn-outline-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;">Confirm</button>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    <?php } else { ?>
+                        No Bought Items<?php } ?>
                 </div>
             </div>
 
