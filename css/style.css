@@ -170,10 +170,10 @@ input[type=submit]:hover{
 }
 #personalinfo{
     background: #f4f4f4;
-    max-height: 16rem;
+    max-height: 18rem;
     border-radius: .6rem;
 }
-#information,#order,#item{
+#information,#order,#item,#orders{
     --bs-btn-color:#FFFF;
     --bs-btn-bg:#897062;
     --bs-btn-border-color:none;
@@ -197,6 +197,9 @@ input[type=submit]:hover{
 
 .rating-stars .fa-star.filled {
     color: #ffd700; 
+}
+.p-btn{
+    width:200px;
 }
 @media screen and (max-width:720px){
     .item .side{

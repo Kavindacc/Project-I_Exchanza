@@ -3,6 +3,7 @@ include_once '../model/DbConnector.php';
 include_once '../model/item.php';
 include_once '../model/wishlist.php';
 include_once '../model/User.php';
+include_once '../model/addtocart.php';
 if (isset($_SESSION['userid'])) {
     $userid = $_SESSION['userid']; ?>
     <!DOCTYPE html>
@@ -51,22 +52,17 @@ if (isset($_SESSION['userid'])) {
 
                         <!--login nav-link-a-color-->
                         <div class="d-flex flex-column float-start flex-lg-row justify-content-center  align-items-center mt-3 mt-lg-0 gap-3">
-
-                            <?php
-                            /*$dsn=new DbConnector();
-                            $con=$dsn->getConnection();
-
-                            $obj = new wishlist();
-                            $obj->setUserId($userid);
-                            $count = $obj->itemCount($con); */ ?>
-                            <a href="view/cart.php" class="nav-link  text-decoration-none mx-1"><i class="fa-solid fa-cart-plus position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp"><?php if (isset($count)) {
-                                                                                                                                                                                                                                        echo $count;
-                                                                                                                                                                                                                                    } else {
-                                                                                                                                                                                                                                        echo '0';
-                                                                                                                                                                                                                                    } ?></span></i></a><!--addtocart-->
                             <?php
                             $dsn = new DbConnector();
                             $con = $dsn->getConnection();
+                            $obj = new Cart();
+                            $obj->setUserId($userid);
+                            $count = $obj->cartItemCount($con); ?>
+                            <a href="addtocart.php" class="nav-link  text-decoration-none mx-1"><i class="fa-solid fa-cart-plus position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp"><?php if (isset($count)) {
+                                                                                                                                                                                                                                        echo $count;
+                                                                                                                                                                                                                                    } ?></span></i></a><!--addtocart-->
+                            <?php
+
 
                             $obj = new wishlist();
                             $obj->setUserId($userid);
@@ -482,11 +478,6 @@ if (isset($_SESSION['userid'])) {
                                 <button type="button" class="btn btn-primary mt-2  equal-width" style="--bs-btn-color:black;--bs-btn-bg:none;--bs-btn-border-color:black; --bs-btn-hover-bg:#4c3f31;"><i class="fa-regular fa-heart"></i>&nbsp;Add to Wishlist</button>
                             </a>
 
-                            <!-- Write Review Button -->
-                            <a href="login_user.php" style="text-decoration: none;">
-                                <button type="button" class="btn btn-primary mt-2  equal-width" style="--bs-btn-color:black;--bs-btn-bg:none;--bs-btn-border-color:black; --bs-btn-hover-bg:#4c3f31;"><i class="fa-regular fa-heart"></i>&nbsp;Write a Review</button>
-                            </a>
-                            
                         </div>
                     </div>
 
