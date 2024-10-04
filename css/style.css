@@ -173,7 +173,7 @@ input[type=submit]:hover{
     max-height: 18rem;
     border-radius: .6rem;
 }
-#information,#order,#item{
+#information,#order,#item,#orders{
     --bs-btn-color:#FFFF;
     --bs-btn-bg:#897062;
     --bs-btn-border-color:none;

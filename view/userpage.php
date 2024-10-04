@@ -4,6 +4,8 @@ include_once '../model/User.php';
 include_once '../model/wishlist.php';
 include_once '../model/addtocart.php';
 include_once '../model/MyOrders.php';
+include_once '../model/Order.php';
+
 if (isset($_SESSION['userid'])) {
     $userid = $_SESSION['userid']; ?>
 
@@ -105,7 +107,8 @@ if (isset($_SESSION['userid'])) {
 
                     <button type="button" class="btn  my-2" onclick="showInformation()" id="information">Pesonal information</button>
                     <button type="button" class="btn  mb-2" onclick="showOrderTable()" id="order">My Orders</button>
-                    <button type="button" class="btn  " onclick="showItemTable()" id="item">My Iteams</button>
+                    <button type="button" class="btn  mb-2" onclick="showOrdersTable()" id="orders">Orders</button><!-- other user bought items-->
+                    <button type="button" class="btn  mb-2" onclick="showItemTable()" id="item">My Iteams</button>
 
                 </div>
                 <div class="col-md-8 p-4  mx-auto my-5 " id="personalinfo"><!--personal information -->
@@ -339,7 +342,7 @@ if (isset($_SESSION['userid'])) {
                     <?php } ?>
                 </div>
 
-                <div class="col-md-9 py-2 mt-5" id="producttable" style="display:none;"><!--order table-->
+                <div class="col-md-9 py-2 mt-5 table-responsive overflow-auto" id="producttable" style="display:none;max-height: 400px;"><!--my order table-->
                     <?php if (!empty($_GET['s'])) {
                         if ($_GET['s'] == 1) { ?>
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -359,6 +362,7 @@ if (isset($_SESSION['userid'])) {
                                     <th scope="col">Product Name</th>
                                     <th scope="col">Price</th>
                                     <th scope="col">Date</th>
+                                    <th scope="col">Tracking Number</th>
                                     <th scope="col">Order Confirm</th>
                                 </tr>
                             </thead>
@@ -369,19 +373,20 @@ if (isset($_SESSION['userid'])) {
                                         <th scope="row"><?php echo $row['itemname']; ?></th>
                                         <td><?php echo $row['price']; ?></td>
                                         <td><?php echo $row['order_date']; ?></td>
+                                        <td><?php echo $row['trackingnum']; ?></td>
                                         <td>
                                             <!-- Confirm button triggers the modal -->
                                             <?php if ($row['order_status'] == 0) { ?>
-                                                <button type="button" class="btn btn-outline-success"
+                                                <button type="button" class="btn btn-outline-success"style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#confirmModal"
                                                     data-orderid="<?php echo $row['order_id']; ?>"
                                                     data-itemname="<?php echo $row['itemname']; ?>">
-                                                    Confirm
+                                                    Confirm Order Received
                                                 </button>
 
                                             <?php } else { ?>
-                                                <button type="button" class="btn btn-success">
+                                                <button type="button" class="btn btn-success"style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;">
                                                     Recived
                                                 </button>
                                             <?php } ?>
@@ -394,10 +399,7 @@ if (isset($_SESSION['userid'])) {
                     <?php } else { ?>
                         <h2>No Bought Items</h2>
                     <?php } ?>
-                </div>
-
-                <!--model confirm-->
-                <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true"><!--model confirm-->
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -418,6 +420,109 @@ if (isset($_SESSION['userid'])) {
                         </div>
                     </div>
                 </div>
+                </div>
+                
+                <div class="col-md-9 py-2 mt-5 table-responsive overflow-auto" id="ordertable" style="display:none;max-height: 400px;"><!--orders table-->
+                    <?php if (!empty($_GET['s'])) {
+                        if ($_GET['s'] == 1) { ?>
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Order Confirm Success</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                    <?php }
+                    } ?>
+                    <?php
+                    $obj = new Orders($userid);
+                    $rows = $obj->getOrderDetails($con);
+                    if (!empty($rows)) { ?>
+                        <table class="table table-striped table-hover table-sm">
+                            <thead>
+                                <tr class="table-primary">
+                                    <th scope="col">Order Id</th>
+                                    <th scope="col">Product_Name</th>
+                                    <th scope="col">Price(Rs.)</th>
+                                    <th scope="col">Custormer name</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($rows as $row) {
+                                    $modalId = "staticBackdrop" . $row['order_id'];
+                                    $confirmModalId = "editModal" . $row['order_id'];
+                                ?>
+                                    <tr class="vertical-center">
+                                        <td><?php echo $row['order_id']; ?></td>
+                                        <td><?php echo ucwords($row['itemname']); ?></td>
+                                        <td><?php echo $row['price']; ?></td>
+                                        <td><?php echo ucfirst($row['firstname']); ?></td>
+                                        <td><?php echo ucfirst($row['order_date']); ?></td>
+                                        <td>
+                                        <?php if($row['confirm']==0){?>
+                                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#<?php echo $confirmModalId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;">
+                                                Confirm
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#<?php echo $modalId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .6rem; --bs-btn-font-size: .75rem;">
+                                                Cancel
+                                            </button>
+                                            <!-- Modal confirm -->
+                                            <div class="modal fade" id="<?php echo $confirmModalId; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="<?php echo $confirmModalId; ?>Label" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content" style="background:#AE9D92;color:#ffff;">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="<?php echo $confirmModalId; ?>Label">Do You Want Confirm Order <br><strong><?php echo ucwords($row['itemname']); ?></strong></h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <form action="../control/confirm_seller_orders.php" method="post">
+                                                                <input type="hidden" name="orderid" value="<?php echo $row['order_id']; ?>">
+                                                                <button type="submit" class="btn btn-success">Confirm order</button>
+                                                            </form>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Modal delete -->
+                                            <div class="modal fade" id="<?php echo $modalId; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="<?php echo $modalId; ?>Label" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-sm">
+                                                    <div class="modal-content" style="background:#AE9D92;color:#ffff;">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title fs-5" id="<?php echo $modalId; ?>Label">Do you Want to Cancel Order?<strong><?php echo ucwords($row['itemname']); ?></strong></h4>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <form action="" method="post">
+                                                                <input type="hidden" name="productid" value="<?php echo $row['order_id']; ?>">
+                                                                <button type="submit" class="btn btn-danger" name="delete">Cancel</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <?php }else{?>
+                                            <button type="button" class="btn btn-success"style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;">
+                                                    Confirmed
+                                                </button>
+                                            <?php }?>
+                                        </td>
+                                        
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+
+
+                    <?php } else { ?>
+                        <h2>No Items Yet</h2>
+                    <?php } ?>
+                </div>
+
+
+
 
             </div>
 

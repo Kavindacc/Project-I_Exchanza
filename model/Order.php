@@ -1,28 +1,28 @@
 <?php
-class MyOrders
-{
 
-    private $userid;
-    private $itemid;
-    private $orderid;
+class Orders{
+     private $userid;
+     private $itemid;
+     private $orderid;
 
-    public function __construct($userid = null)
-    {
-        $this->userid = $userid;
-    }
+     public function __construct($userid = null)
+     {
+         $this->userid = $userid;
+     }
 
-    public function setOrderId($orderid)
-    {
-        $this->orderid = $orderid;
-    }
+     public function setOrderId($orderid)
+     {
+         $this->orderid = $orderid;
+     }
 
-    public function confirmReceived($con)
+     public function confirmOrder($con,$trackingnum)
     {
         try {
-            $sql = "UPDATE orders SET order_status =? WHERE order_id = ?";
+            $sql = "UPDATE orders SET trackingnum =?,confirm=? WHERE order_id = ?";
             $pstmt = $con->prepare($sql);
-            $pstmt->bindValue(1, "1");
-            $pstmt->bindValue(2, $this->orderid);
+            $pstmt->bindValue(1,$trackingnum);
+            $pstmt->bindValue(2,"1");
+            $pstmt->bindValue(3, $this->orderid);
             $pstmt->execute();
             if ($pstmt->rowCount() > 0) {
                 return true;
@@ -37,14 +37,14 @@ class MyOrders
     public function getOrderDetails($con)
     {
         try {
-            $sql = "SELECT o.order_id,o.order_date,oi.quantity, i.itemname,i.coverimage, oi.price, o.order_status,o.trackingnum 
+            $sql = "SELECT o.order_id,o.order_date,oi.quantity, i.itemname,oi.price,u.firstname ,o.confirm
         FROM orders o
         JOIN order_item oi ON o.order_id = oi.order_id
         JOIN item i ON oi.item_id = i.itemid
-        WHERE o.user_id =? AND o.confirm =?";
+        JOIN user u ON o.user_id = u.userid
+        WHERE i.userid = ?";
             $pstmt = $con->prepare($sql);
             $pstmt->bindValue(1, $this->userid);
-            $pstmt->bindValue(2,"1");
             $pstmt->execute();
             if ($pstmt->rowCount() > 0) {
                 $rows = $pstmt->fetchAll(PDO::FETCH_ASSOC);
@@ -56,4 +56,14 @@ class MyOrders
             echo "Error: " . $e->getMessage();
         }
     }
+
+    public function delete($con){
+
+    }
+
+    
+
+ 
 }
+
+?>
