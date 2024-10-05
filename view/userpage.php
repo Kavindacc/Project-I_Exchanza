@@ -142,9 +142,9 @@ if (isset($_SESSION['userid'])) {
                     <?php unset($_SESSION['perror']);
                     } ?>
 
-                    <form><!--from-->
+                    <form style="margin:25px auto;"><!--from-->
                         <div class="row mb-3">
-                            <div class="col-md-6">
+                            <div class="col-md-6 mb-3">
                                 <label for="" class="form-label">First Name</label>
                                 <input type="text" class="form-control" placeholder="<?php echo ucfirst($row['firstname']); ?>" name="fname" id="name" disabled>
                             </div>
@@ -155,11 +155,11 @@ if (isset($_SESSION['userid'])) {
 
                         </div>
                         <div class="row mb-3">
-                            <div class="col-md-6">
+                            <div class="col-md-6 mb-3">
                                 <label for="" class="form-label">Email</label>
                                 <input type="email" class="form-control" placeholder="<?php echo $row['email']; ?>" id="email" name="email" disabled>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 mb-3">
                                 <label for="" class="form-label">Phone Number</label>
                                 <input type="tel" class="form-control" placeholder="<?php echo $row['phonenum']; ?>" name="phoneno" id="phoneno" disabled>
                             </div>
@@ -314,7 +314,7 @@ if (isset($_SESSION['userid'])) {
 
                                             <!-- Modal delete -->
                                             <div class="modal fade" id="<?php echo $modalId; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="<?php echo $modalId; ?>Label" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered modal-sm">
+                                                <div class="modal-dialog  modal-sm">
                                                     <div class="modal-content" style="background:#AE9D92;color:#ffff;">
                                                         <div class="modal-header">
                                                             <h4 class="modal-title fs-5" id="<?php echo $modalId; ?>Label">Do you Want to Delete?<strong><?php echo ucwords($row['itemname']); ?></strong></h4>
@@ -377,7 +377,7 @@ if (isset($_SESSION['userid'])) {
                                         <td>
                                             <!-- Confirm button triggers the modal -->
                                             <?php if ($row['order_status'] == 0) { ?>
-                                                <button type="button" class="btn btn-outline-success"style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;"
+                                                <button type="button" class="btn btn-outline-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#confirmModal"
                                                     data-orderid="<?php echo $row['order_id']; ?>"
@@ -386,7 +386,7 @@ if (isset($_SESSION['userid'])) {
                                                 </button>
 
                                             <?php } else { ?>
-                                                <button type="button" class="btn btn-success"style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;">
+                                                <button type="button" class="btn btn-success disabled" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;">
                                                     Recived
                                                 </button>
                                             <?php } ?>
@@ -400,37 +400,43 @@ if (isset($_SESSION['userid'])) {
                         <h2>No Bought Items</h2>
                     <?php } ?>
                     <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true"><!--model confirm-->
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="confirmModalLabel">Confirm Order</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmModalLabel">Confirm Order</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <!-- Form confirm -->
+                                <form action="../control/confirm_order.php" method="POST" id="confirmOrderForm">
+                                    <div class="modal-body">
+                                        Are you sure you want to confirm the order for <strong id="modalItemName"><?php echo $row['itemname']; ?></strong>?
+                                        <input type="hidden" name="orderid" id="modalOrderId" value=<?php echo $row['order_id']; ?>>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-success">Confirm Order</button>
+                                    </div>
+                                </form>
                             </div>
-                            <!-- Form confirm -->
-                            <form action="../control/confirm_order.php" method="POST" id="confirmOrderForm">
-                                <div class="modal-body">
-                                    Are you sure you want to confirm the order for <strong id="modalItemName"><?php echo $row['itemname']; ?></strong>?
-                                    <input type="hidden" name="orderid" id="modalOrderId" value=<?php echo $row['order_id']; ?>>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-success">Confirm Order</button>
-                                </div>
-                            </form>
                         </div>
                     </div>
                 </div>
-                </div>
-                
+
                 <div class="col-md-9 py-2 mt-5 table-responsive overflow-auto" id="ordertable" style="display:none;max-height: 400px;"><!--orders table-->
-                    <?php if (!empty($_GET['s'])) {
-                        if ($_GET['s'] == 1) { ?>
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <strong>Order Confirm Success</strong>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                    <?php }
-                    } ?>
+                    <?php if (!empty($_GET['s']) && $_GET['s'] == 1) { ?>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Order Confirmed Successfully</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php } ?>
+                    <?php if (!empty($_GET['d']) && $_GET['d'] == 1) { ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Order Canceled</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php } ?>
+
+                    <!-- Fetch and Display Orders -->
                     <?php
                     $obj = new Orders($userid);
                     $rows = $obj->getOrderDetails($con);
@@ -438,91 +444,94 @@ if (isset($_SESSION['userid'])) {
                         <table class="table table-striped table-hover table-sm">
                             <thead>
                                 <tr class="table-primary">
-                                    <th scope="col">Order Id</th>
-                                    <th scope="col">Product_Name</th>
-                                    <th scope="col">Price(Rs.)</th>
-                                    <th scope="col">Custormer name</th>
+                                    <th scope="col">Order ID</th>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Price (Rs.)</th>
+                                    <th scope="col">Customer Name</th>
                                     <th scope="col">Date</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach ($rows as $row) {
-                                    $modalId = "staticBackdrop" . $row['order_id'];
-                                    $confirmModalId = "editModal" . $row['order_id'];
+                                    $cancelModalId = "cancelModal" . $row['order_id'];
+                                    $confirmModalId = "confirmModal" . $row['order_id'];
                                 ?>
-                                    <tr class="vertical-center">
+                                    <tr>
                                         <td><?php echo $row['order_id']; ?></td>
                                         <td><?php echo ucwords($row['itemname']); ?></td>
                                         <td><?php echo $row['price']; ?></td>
-                                        <td><?php echo ucfirst($row['firstname']); ?></td>
-                                        <td><?php echo ucfirst($row['order_date']); ?></td>
+                                        <td><?php echo ucfirst($row['firstname'])." ".ucfirst($row['lastname']); ?></td>
+                                        <td><?php echo $row['order_date']; ?></td>
                                         <td>
-                                        <?php if($row['confirm']==0){?>
-                                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#<?php echo $confirmModalId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;">
-                                                Confirm
-                                            </button>
-                                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#<?php echo $modalId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .6rem; --bs-btn-font-size: .75rem;">
-                                                Cancel
-                                            </button>
-                                            <!-- Modal confirm -->
-                                            <div class="modal fade" id="<?php echo $confirmModalId; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="<?php echo $confirmModalId; ?>Label" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content" style="background:#AE9D92;color:#ffff;">
-                                                        <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="<?php echo $confirmModalId; ?>Label">Do You Want Confirm Order <br><strong><?php echo ucwords($row['itemname']); ?></strong></h1>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                            <form action="../control/confirm_seller_orders.php" method="post">
-                                                                <input type="hidden" name="orderid" value="<?php echo $row['order_id']; ?>">
-                                                                <button type="submit" class="btn btn-success">Confirm order</button>
-                                                            </form>
-                                                        </div>
+                                            <?php if ($row['confirm'] == 0) { ?>
+                                                <!-- Confirm Button -->
+                                                <button type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#<?php echo $confirmModalId; ?>">
+                                                    Confirm
+                                                </button>
+                                                <!-- Cancel Button -->
+                                                <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#<?php echo $cancelModalId; ?>">
+                                                    Cancel
+                                                </button>
 
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!-- Modal delete -->
-                                            <div class="modal fade" id="<?php echo $modalId; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="<?php echo $modalId; ?>Label" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered modal-sm">
-                                                    <div class="modal-content" style="background:#AE9D92;color:#ffff;">
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title fs-5" id="<?php echo $modalId; ?>Label">Do you Want to Cancel Order?<strong><?php echo ucwords($row['itemname']); ?></strong></h4>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                            <form action="" method="post">
-                                                                <input type="hidden" name="productid" value="<?php echo $row['order_id']; ?>">
-                                                                <button type="submit" class="btn btn-danger" name="delete">Cancel</button>
-                                                            </form>
+                                                <!-- Confirm Modal -->
+                                                <div class="modal fade" id="<?php echo $confirmModalId; ?>" tabindex="-1" aria-labelledby="<?php echo $confirmModalId; ?>Label" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content" style="background:#AE9D92; color:#fff;">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="<?php echo $confirmModalId; ?>Label">Confirm Order</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Do you want to confirm the order for <strong><?php echo ucwords($row['itemname']); ?></strong>?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <form action="../control/confirm_seller_orders.php" method="post">
+                                                                    <input type="hidden" name="orderid" value="<?php echo $row['order_id']; ?>">
+                                                                    <button type="submit" class="btn btn-success">Confirm Order</button>
+                                                                </form>
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <?php }else{?>
-                                            <button type="button" class="btn btn-success"style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;">
+
+                                                <!-- Cancel Modal -->
+                                                <div class="modal fade" id="<?php echo $cancelModalId; ?>" tabindex="-1" aria-labelledby="<?php echo $cancelModalId; ?>Label" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content" style="background:#AE9D92; color:#fff;">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="<?php echo $cancelModalId; ?>Label">Cancel Order</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Are you sure you want to cancel the order for <strong><?php echo ucwords($row['itemname']); ?></strong>?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <form action="../control/Delete_order.php" method="post">
+                                                                    <input type="hidden" name="orderid" value="<?php echo $row['order_id']; ?>">
+                                                                    <button type="submit" class="btn btn-danger">Cancel Order</button>
+                                                                </form>
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <!-- Confirmed Button -->
+                                                <button type="button" class="btn btn-success btn-sm" disabled>
                                                     Confirmed
                                                 </button>
-                                            <?php }?>
+                                            <?php } ?>
                                         </td>
-                                        
                                     </tr>
                                 <?php } ?>
                             </tbody>
                         </table>
-
-
                     <?php } else { ?>
                         <h2>No Items Yet</h2>
                     <?php } ?>
                 </div>
-
-
-
 
             </div>
 
