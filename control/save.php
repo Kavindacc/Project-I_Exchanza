@@ -1,6 +1,5 @@
 <?php
-
-require '../model/DbConnector.php'; // Make sure this path is correct
+//require '../model/DbConnector.php'; // Make sure this path is correct
 
 class Save {
     
@@ -19,6 +18,7 @@ class Save {
             if ($save === "save" && $card === "card") {
                 try {
                     // Get the database connection
+                    //require '../control/save.php';
                     $db = new DbConnector();
                     $conn = $db->getConnection();
                     
