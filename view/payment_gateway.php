@@ -88,7 +88,7 @@ class PaymentGateway {
                                                 </div>
                                             </div>
                                             <span>Cardholder's name:</span>
-                                            <input type="text" name="name" placeholder="Kasun J" required autocomplete="on">
+                                            <input type="text" name="name" placeholder="Geeth Liyanage" required autocomplete="on">
                                             <span>Card Number:</span>
                                             <input type="text" name="cardNumber" placeholder="0125 6780 4567 9909" required autocomplete="on">
                                             <div class="row">
@@ -110,17 +110,8 @@ class PaymentGateway {
                             <span id="error_msg" class="text-danger"></span>
                         </div>
 
-                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <span class="header">
-                        <div class="header">Cash On Delivery &nbsp</div>
-                        </span>
-                        </a>
-                        <ul class="collapse list-unstyled" id="pageSubmenu">
-                            <li>
-                                &nbsp Cash On Delivery  &nbsp <input type="checkbox" name="cod"> 
-                                <span class="text-danger">*required</span>
-                            </li>
-                        </ul>
+                        
+                        
 
                         <input type="submit" value="Submit" class="btn btn-primary">
                                     
