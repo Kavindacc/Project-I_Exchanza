@@ -174,6 +174,7 @@ class RegisteredCustomer extends User
         }
     }
 
+
     function verifyPassword($con) //change password function
     {
 

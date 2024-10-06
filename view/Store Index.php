@@ -51,6 +51,10 @@
                         <div class="d-flex flex-column float-start flex-lg-row justify-content-center  align-items-center mt-3 mt-lg-0 gap-3">
 
                         <?php
+                            session_start();
+                            $userid = $_SESSION['userid'];
+                            include_once '../model/DbConnector.php';
+                            include_once '../model/addtocart.php';
                             $dsn = new DbConnector();
                             $con = $dsn->getConnection();
 
@@ -61,7 +65,7 @@
                                                                                                                                                                                                                                                 echo $count;
                                                                                                                                                                                                                                             } ?></span></i></a><!--addtocart-->
                             <?php
-
+                            include_once '../model/wishlist.php';
                             $obj = new wishlist();
                             $obj->setUserId($userid);
                             $count = $obj->itemCount($con); ?>
@@ -126,7 +130,7 @@
               <div class="product-item">
                 <div class="image-holder">
                   <span class="new-label">New</span>  
-                  <img src="item-1.jpg" class="product-img" alt="Product 1"><!--product img 1k--->
+                  <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--product img 1k--->
                   <div class="cart-concern">
                 
                     <button type="button" class="btn-cart">
@@ -362,7 +366,7 @@
                   <div class="store-item">
                     <a href="StoreTem.html">
                       <div class="image-st">
-                        <img src="store-1.jpg" class="store-img" alt="storeprofilepic"><!---- Store profile pic 1k wens wenna oni-->
+                        <img src="../imgg/store-1.jpg" class="store-img" alt="storeprofilepic"><!---- Store profile pic 1k wens wenna oni-->
                       </div>
                     </a>
                     <div class="store-detail">
@@ -382,7 +386,7 @@
                   <div class="store-item">
                     <a href="StoreTem.html">
                       <div class="image-st">
-                        <img src="store-1.jpg" class="store-img" alt="storeprofilepic"><!---- Store profile pic 1k wens wenna oni-->
+                        <img src="../imgg/store-1.jpg" class="store-img" alt="storeprofilepic"><!---- Store profile pic 1k wens wenna oni-->
                       </div>
                     </a>
                     <div class="store-detail">

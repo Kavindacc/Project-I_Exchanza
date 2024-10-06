@@ -15,7 +15,7 @@ class Save {
             $save = $_POST['save'] ?? '';
 
             // Check if the save button was clicked and if card is set
-            if ($save === "save" && $card === "card") {
+            if ($save === "save") {
                 try {
                     // Get the database connection
                     //require '../control/save.php';

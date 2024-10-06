@@ -1,3 +1,7 @@
+<?php
+include_once '../model/DbConnector.php';
+include_once '../model/wishlist.php';
+include_once '../model/addtocart.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +12,11 @@
     <link rel="stylesheet" href="../css/Storestyle.css"> 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
     rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-      <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/thriftW.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
    
     <title>StoreTem</title>
@@ -52,6 +60,10 @@
                         <div class="d-flex flex-column float-start flex-lg-row justify-content-center  align-items-center mt-3 mt-lg-0 gap-3">
 
                         <?php
+                            session_start();
+                            $userid = $_SESSION['userid'];
+                            include_once '../model/DbConnector.php';
+                            include_once '../model/addtocart.php';
                             $dsn = new DbConnector();
                             $con = $dsn->getConnection();
 
@@ -62,7 +74,7 @@
                                                                                                                                                                                                                                                 echo $count;
                                                                                                                                                                                                                                             } ?></span></i></a><!--addtocart-->
                             <?php
-
+                            include_once '../model/wishlist.php';
                             $obj = new wishlist();
                             $obj->setUserId($userid);
                             $count = $obj->itemCount($con); ?>
@@ -84,15 +96,45 @@
     <main>
 
 
-      <!-- Store main banner -->
+    <?php
+      // Start the session and fetch the user ID from session
+     
+      $userid = $_SESSION['userid']; 
+
+      // Include your database connection file
+      include_once '../model/DbConnector.php';
+
+      // Establish a database connection
+      $dsn = new DbConnector();
+      $con = $dsn->getConnection(); // Assuming getConnection() returns a PDO object
+
+      // Prepare SQL query to fetch store details for the logged-in user
+      $sql = "SELECT store_name, slogan, profile_pic, cover_pic FROM stores WHERE user_id = :userid";
+      $stmt = $con->prepare($sql);
+      $stmt->bindParam(':userid', $userid, PDO::PARAM_INT);
+      $stmt->execute();
+
+      // Fetch the data and store in an associative array
+      $store = $stmt->fetch(PDO::FETCH_ASSOC);
+
+      // Extract data from the array
+      $store_name = htmlspecialchars($store['store_name']);
+      $slogan = htmlspecialchars($store['slogan']);
+      $profile_pic = htmlspecialchars($store['profile_pic']);
+      $cover_pic = htmlspecialchars($store['cover_pic']);
+  ?>
+
+      
+      
+
     
       <div class="sbanner">
-        <img src="../img/storecover.jpg" alt="Cover Photo" class="cover-photo"><!----Meka thmnt kamathi widiht wes krnn sellert plwn wenn oni-->
+        <img src="<?php echo $cover_pic ?>" alt="Cover Photo" class="cover-photo"><!----Meka thmnt kamathi widiht wes krnn sellert plwn wenn oni-->
         <div class="profile-container">
-          <img src="store-1.jpg" alt="Profile Photo" class="profile-photo"><!----Profile photo 1k wens krnn sellert plwn wenn oni-->
-          <h2 class="store-name">Bella Boutique</h2><!----Store name 1k wens krnn sellert plwn wenn oni-->
+          <img src="<?php echo $profile_pic ?>" alt="Profile Photo" class="profile-photo"><!----Profile photo 1k wens krnn sellert plwn wenn oni-->
+          <h2 class="store-name"><?php echo $store_name ?></h2><!----Store name 1k wens krnn sellert plwn wenn oni-->
         </div>
-        <div class="now-in-stock">FIND YOUR PERFECT <br>FIT</div> <!----Methn tyn quote 1k wens krnn sellert plwn wenn oni-->
+        <div class="now-in-stock"><?php echo $slogan ?></div> <!----Methn tyn quote 1k wens krnn sellert plwn wenn oni-->
       </div>
         
 
@@ -130,14 +172,15 @@
 
 
          <!-- Products Section -->
+        <!--
          <section id="newproducts" class="product-store">
             
           <div class="product-grid">
-            <!-- Example product item -->
+            
             <div class="product-item">
               <div class="image-holder">
-                <span class="new-label">New</span>  <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="item-1.jpg" class="product-img" alt="Product 1">
+                <span class="new-label">New</span>  
+                <img src="../img/item-1.jpg" class="product-img" alt="Product 1">
                 <div class="cart-concern">
               
                   <button type="button" class="btn-cart">
@@ -158,20 +201,199 @@
                 </div>
               </div>
               <div class="product-detail">
-                <h3 class="product-name">Product Name 1</h3><!-----product name enna oni methnt-->
-                <p class="category-type">Category Type</p><!-----men/women/kids enna oni methnt - -->
-                <p class="product-price">$49.99</p><!-----product price enna oni methnt-->
+                <h3 class="product-name">Product Name 1</h3>
+                <p class="category-type">Category Type</p>
+                <p class="product-price">$49.99</p>
               </div>
             </div>   
           </div>
 
         </section>   
+        -->
 
 <br>
 
            <!-----Recommendation Section   -->
+
+
+
+<div>
+<div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0"></div>
+                <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0"></div>
+                <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0"></div>
+                <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0"></div>
+            </div>
+
+        </div>
+        <!-- <a href="sidepanel.php" target="_blank" aria-label="Plus Icon">  -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle" id="openPanel">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="16"></line>
+            <line x1="8" y1="12" x2="16" y2="12"></line>
+        </svg>
+        <!-- </a> -->
+    </div>
+    <!-- sidepanel -->
+    <div id="sidePanel" class="side-panel">
+        <button id="closePanel" class="close-btn">&times;</button>
+        
+       
+        <?php if (isset($_SESSION['userid'])) {
+            $userid = $_SESSION['userid']; ?>
+            <button class="add-item-btn" style="width:100%;" onclick="showForm()">Add Item</button>
+        <?php } else { ?>
+            <a href="login_user.php" style="text-decoration: none;">
+                <button class="add-item-btn" style="width:100%;">Add Item</button>
+            </a>
+        <?php } ?>
+
+
+    </div>
+    <!-- Popup overlay and form -->
+    <div id="popupForm" class="popup-overlay">
+        <div class="popup-content">
+            <button id="closePopup" class="close-btn">&times;</button>
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2 class="mb-4">Add Item to My Store</h2>
+                        <form action="../control/.php" method="post" enctype="multipart/form-data" id="resellForm"> <!--form start add to item-->
+                            <input type="hidden" name="userid" value="<?php echo $userid; ?>">
+                            <div class="form-group">
+                                <label for="itemName" class="bold">Item Name</label>
+                                <input type="text" class="form-control" id="itemName" placeholder="Enter item name" name="itemname" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="price" class="bold">Price (Rs.)</label>
+                                <input type="number" class="form-control" id="price" placeholder="Enter price" name="price" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="color" class="bold">Color</label>
+                                <input type="color" class="form-control" id="color" name="colour" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="coverImage" class="bold">Cover Image</label>
+                                <input type="file" class="form-control-file" id="coverImage" name="image" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="otherImages" class="bold">Other Images (Optional)</label>
+                                <input type="file" class="form-control-file" id="otherImages" name="otherimage">
+                            </div>
+                            <div class="form-group">
+                                <label for="description" class="bold">Description</label>
+                                <textarea class="form-control" id="description" rows="3" placeholder="Enter description" name="description" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="category" class="bold">Category</label>
+                                <select class="form-control" id="category" name="category" required>
+                                    <option value="">Select Category</option>
+                                    <option value="men">Men</option>
+                                    <option value="women">Women</option>
+                                    <option value="kids">Kids</option>
+                                </select>
+                            </div>
+                            <div class="form-group hidden" id="subcategoryWrapper">
+                                <label for="subcategory" class="bold">Subcategory</label>
+                                <select class="form-control" id="subcategory" name="subcategory">
+                                    <option value="">Select Subcategory</option>
+                                    <option value="tops">Tops</option>
+                                    <option value="dresses">Dresses</option>
+                                    <option value="pants">Pants</option>
+                                    <option value="accessories">Accessories</option>
+                                    <option value="bags">Bags</option>
+                                    <option value="shoes">Shoes</option>
+                                </select>
+                            </div>
+                            <div class="form-group hidden" id="sizeChartWrapper">
+                                <label class="bold">Size</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizeS" value="S">
+                                    <label class="form-check-label" for="sizeS">S</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizeM" value="M">
+                                    <label class="form-check-label" for="sizeM">M</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizeL" value="L">
+                                    <label class="form-check-label" for="sizeL">L</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizeXL" value="XL">
+                                    <label class="form-check-label" for="sizeXL">XL</label>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary ssubmit" name="submit">Submit</button>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <h2>Preview</h2>
+                        <div class="card card-preview">
+                            <img id="previewImage" src="https://via.placeholder.com/150" alt="Item image">
+                            <div class="card-body">
+                                <h5 class="card-title" id="previewName">Item Name</h5>
+                                <p class="card-text" id="previewDescription">Description</p>
+                                <p class="card-text" id="previewCategory">Category</p>
+                                <p class="card-text" id="previewSubcategory">Subcategory</p>
+                                <p class="card-text" id="previewSize">Size</p>
+                                <p class="card-text" id="previewTimesUsed">Times Used: 0</p>
+                                <h5 class="card-text" id="previewPrice">Rs. 0.00</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!--footer-->
+    <div class="container-fluid footer">
+        <div class="container p-3">
+            <div class="row">
+                <div class="col">
+                    <img src="../img/Exchanza.png" width="200px">
+                </div>
+            </div>
+            <div class="row  mt-4" style="border-bottom:1px solid black;">
+                <div class="col">
+                    <p class=""><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;+94 112 555 444</p>
+                    <p class=""><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;exchanza@gmail.com</p>
+                    <p class=""><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;No.56/2,Kotta Rd,Colombo
+                        05,<br>&nbsp;&nbsp;&nbsp;&nbsp;Sri Lanka</p>
+                </div>
+                <div class="col lin">
+                    <h5>Information</h5>
+                    <p><a href="#1">Privacy &amp; Policy</a></p>
+                    <p><a href="#1">About Us</a></p>
+                    <p><a href="#1">Terms &amp; Condition</a></p>
+                </div>
+                <div class="col lin">
+                    <h5>Connect with Us</h5>
+                    <p><a href=""><i class="fa-brands fa-facebook" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><i class="fa-brands fa-instagram" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><i class="fa-brands fa-youtube" style="font-size:50px;"></i></a></p>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="d-flex justify-content-between flex-column flex-md-row">
+                    <div><i class="fa-brands fa-cc-visa" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-mastercard" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-amex" style="font-size:50px;"></i></div>
+                    <div>&copy;Exchanze All Rights are reserved</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/sidepanel.js"></script>
+
+</div>
+
+
+        <hr>   
         <section class="recommendations">
-          <h2>Share Your Thoughts with Us</h2>
+          <h5>Share Your Thoughts with Us</h5>
           <br>
      
           <div class="recommendation-form">
@@ -179,7 +401,6 @@
             <button id="submit-recommendation">Submit</button>
           </div>
           <div class="recommendation-list">
-            <h4>Previous Suggestions</h4>
     <ul>
       </ul>
           </div>
@@ -295,6 +516,10 @@ function fetchPreviousSuggestions() {
 
 fetchPreviousSuggestions();
   </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/sidepanel.js"></script>
 
 </body>
 </html>

@@ -71,6 +71,12 @@ class PaymentGateway {
                                 <option value="Central">Central</option>
                                 <option value="Eastern">Eastern</option>
                                 <!-- Add the remaining options -->
+                            </select><br>
+                            <lable for="province">Country: </lable><br>
+                            <select name="country" id="country" required>
+                                <option value="srilanka">Sri Lanka</option>
+                                <option value="india">India</option>
+                                <!-- Add the remaining options -->
                             </select><br><br>
                             <ul class="list-unstyled components mb-5">
                                 <li class="active">
@@ -79,7 +85,7 @@ class PaymentGateway {
                                         </span></a>
                                     <ul class="collapse list-unstyled" id="homeSubmenu">
                                         <li>
-                                            Card Payment &nbsp <input type="checkbox" name="card" value="card"> <span class="text-danger">*required</span>
+                                            
                                             <div class="row">
                                                 <div class="icons">
                                                     <img src="https://img.icons8.com/color/48/000000/visa.png" />
