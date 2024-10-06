@@ -1,0 +1,691 @@
+/*-------Store page details without header & footer---------*/       
+  .clr {
+    margin: 0;
+    padding: 0;
+    background-color: #e3e2dd;
+    border-right: 10px solid #faf8f0;
+    border-left: 10px solid #faf8f0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+   
+/*---------Store Index Template-----------*/  
+/*----------Banner-----------*/
+#billboard .banner-content {
+    padding-bottom: 3rem; /* Add more space under banner - NEW */ 	/* Section Spacing */ 
+    height: 100%;
+    padding-top: 5rem;
+  }
+  .banner-content h1.display-1 {
+    font-size: 3.8em;  /* Reduced from 4.5em */
+    font-family: 'Times New Roman' , serif;
+    line-height: 1.2; /*--NEW--*/
+  }
+ .banner-content p {
+    width: 50%;
+    font-family: Georgia, serif;
+    color: #3F3F3F;
+    font-size: 1.3em;  /*------1.5em-----*/
+    line-height: 1.6; /*-----NEW-----*/
+    padding-top: 3rem;
+    padding-bottom: 4rem;
+  }
+  .banner-content span{
+    width: 50%;
+    font-size: 1.8em;  
+    font-family:Georgia, serif; 
+  }
+
+/* Animation Styles */
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+.fadeInDown {
+  animation-name: fadeInDown;
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform:   
+ translateY(0);
+  }
+}
+.fadeInUp {
+  animation-name: fadeInUp;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); 
+   }
+}
+  @media only screen and (max-width: 1200px) {
+    #billboard .banner-content {
+      height: 100%;
+    }
+    .banner-content h1.display-1 {
+      font-size: 4em;   /* Reduced from 4.5em */ 
+      
+    }
+    .banner-content p {
+      width: 90%;
+    }
+  }
+     /* Adjust Text for Mobile */
+  @media only screen and (max-width: 768px) {
+    .banner-content h1.display-1 {
+      font-size: 3.2em;     /*----3.5em--NEW------4em-->3.2em-----*/
+    }
+    .banner-content p {
+      font-size: 1.2em;  /*------1.3em ----> 0.8em-----*/
+    }
+    .banner-content h2{
+      font-size: 2.2em;   /*------3em ----> 2.2em-----*/
+      width: 80%;
+      color: #dcd2b2;
+  }
+  }
+  @media only screen and (max-width: 598px) {
+    .banner-content p {
+      color: #3f4b3c;
+    }
+  }
+  
+    /*------New arrivals---------*/
+    /*---------Store Index Template-----------*/
+    .head {
+      font-family: Georgia, serif;
+      font-size: 2.7em; 
+      text-align: center;
+      padding: 3rem 1rem; /* Increased padding - 2rem */
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+      background-color: #4c3f31; /* Soft navy */
+      color: #ffffff; /* White text for a crisp look */
+      }
+      
+    /*---------Store Index and Store Templates-----------*/
+    .new{
+      font-family: Georgia, serif;
+      font-size: 2.3em; /* Reduced from 2.9em */
+      font-weight: bold;
+      text-align: center;
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+      color: #3F3F3F;
+      }
+         /* Adjust Text for Mobile */
+      @media only screen and (max-width: 768px) {
+        .head {
+          font-size: 2em;
+        }
+        .new{
+          font-size: 1.8em; 
+        }
+      }  
+      @media only screen and (max-width: 598px) {
+        .head {
+          font-size: 1.55em;
+        }
+        .new{
+          font-size: 1.25em; 
+        }
+      }  
+
+
+    /*---------Store Index Templates-----------*/   
+
+    /*---------New Products Section - Product Card -------*/
+    /* Container for product grid */
+    .product-store .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 20px;
+    }
+    /* Product card styles */
+    .product-item {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #cec0b9;
+      padding: 15px; /* Reduced padding for a slimmer frame */
+      border-radius: 5px;
+      text-align: center;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    /* Image holder to contain the buttons */
+    .image-holder {
+      position: relative;
+    }
+    /* Product image styling */
+    .product-img {
+      width: 100%; /* Take full width of the card */
+      height: auto;
+      border-radius: 5px;
+      transition: transform 0.3s ease;
+      margin-bottom: 20px; /* Add space between image and product name */
+    }
+    /* Button container on hover */
+    .cart-concern {
+      position: absolute;
+      bottom: 15px; /* Position at the bottom of the image */
+      left: 50%;
+      transform: translateX(-50%); /* Center horizontally */
+      display: flex;
+      gap: 10px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    /* Buttons on cart-concern */
+    .btn-cart{
+          font-family: Arial, Helvetica, sans-serif;
+          padding: 0.4rem 0.8rem;
+          border-radius: 5px;
+          font-size: 1em;
+          width: 50%;
+          color:  #ffffff;
+          background-color: #8DA78C;
+          border-color: #8DA78C;
+          cursor: pointer;
+          transition: 0.3s;
+    }
+    .btn-cart:hover { 
+      color:  #ffffff;
+      background-color:  #3A4750;
+      border-color: #3A4750;  
+    }
+    .btn-whishlist{
+      font-family: Arial, Helvetica, sans-serif;
+      padding: 0.4rem 0.8rem;
+      border-radius: 5px;
+      font-size: 1em;
+      width: 50%;
+      color:  #ffffff;
+      background-color: #8DA78C;
+      border-color: #8DA78C;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .btn-whishlist:hover { 
+      color:  #ffffff;
+      background-color:  #3A4750;
+      border-color: #3A4750;  
+    }
+    /* Hover effect for the product card */
+    .product-item:hover {
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+      transform: scale(1.05);
+    }
+    
+    .product-item:hover .cart-concern {
+      opacity: 1; /* Display buttons */
+    }
+    .product-item:hover .product-img {
+      transform: scale(1.05); /* Slight zoom-in effect */
+    }
+    /* Product details */
+    .product-name {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      font-weight: bold;
+      color: #3f3f3f;
+    }
+    .category-type {
+      font-size: 1.1em;
+      color: #3f3f3f;
+    }
+    .product-price {
+      font-size: 1.1em;
+      color: #D2691E;
+    }
+    /* New label styles - product card */
+    .new-label {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      padding: 5px 10px;
+      background-color: #f73636;
+      color: #fff;
+      font-weight: bold;
+      font-size: 0.8em;
+      border-radius: 3px;
+      z-index: 1; /* Ensure the label is above the image */
+    }
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+  }
+ 
+}
+
+@media screen and (max-width: 598px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+ 
+
+/*--------- Category Card Section-------*/
+    /* Container for product grid */
+    .category-icon .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 20px;
+    }
+
+    /* category card styles */
+    .category-item {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #cec0b9;
+      padding: 10px; /* Reduced padding for a slimmer frame */
+      border-radius: 5px;
+      text-align: center;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .category-item:hover {
+      box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+      transform: scale(1.05);
+    }
+
+    /* Image holder to contain the buttons */
+    .image-cat {
+      position: relative;
+    }
+    /* category image styling */
+    .category-img {
+      width: 100%; /* Take full width of the card */
+      height: 100%;
+      border-radius: 5px;
+      transition: transform 0.3s ease;
+      margin-bottom: 20px; /* Add space between image and product name */
+    }
+    .category-item:hover .category-img {
+      transform: scale(1.05); /* Slight zoom-in effect */
+    }
+    /* category details */
+    .category-name {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      font-weight: bold;
+      color: #3f3f3f;
+    }
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .category-grid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+  }  
+}
+
+@media screen and (max-width: 598px) {
+  .category-grid {
+      grid-template-columns: 1fr;
+  }
+}
+
+
+/*--------- store Card Section-------*/
+    /* Container for store grid */
+    .store-icon .store-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 20px;
+    }
+
+    /* store card styles */
+    .store-item {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #cec0b9;
+      padding: 15px; /* Reduced padding for a slimmer frame 10px  NEW*/
+      border-radius: 5px;/* 10px NEW */
+      text-align: center;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .store-item:hover {
+      box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+      transform: scale(1.05);
+    }
+    
+
+    /* Image holder to contain the buttons */
+    .image-st {
+      position: relative;
+    }
+    /* store image styling */
+    .store-img {
+      width: 100%; /* Take full width of the card */
+      height: 100%;
+      border-radius: 5px;/* 10px NEW */
+      transition: transform 0.3s ease;
+      margin-bottom: 20px; /* Add space between image and product name */
+      object-fit: cover;
+    }
+    .store-item:hover .store-img {
+      transform: scale(1.05); /* Slight zoom-in effect */
+    }
+   
+   
+    /* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .store-grid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+  }
+}
+
+@media screen and (max-width: 598px) {
+  .store-grid {
+      grid-template-columns: 1fr;
+  }
+}
+ 
+ 
+   
+    /*---------Category Main Template-----------*/  
+     /*---------Category Main Banner----------*/  
+    header {
+      text-align: center;
+    }
+    .banner {
+      position: relative;
+      width: 100%;
+      height: 400px; /* Adjust height as needed */
+      overflow: hidden;
+    }
+    .banner img {
+      width: 100%;
+      height: 900px;
+      object-fit: cover;
+    }
+    .banner-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    
+    .banner-text span{
+      font-size: 3.2em;  /* Reduced from 4.5em */
+      font-family: 'Times New Roman' , serif;  
+      color: #ffffff; /* Adjust color as needed */
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Subtle shadow for readability */
+    }
+   .banner-text p {
+      font-family: Georgia, serif;
+      color: #E0E0E0;
+      font-size: 2em;  /*------1.5em-----*/
+      padding-top: 3rem;
+      padding-bottom: 4rem; 
+    }
+
+    .banner-text span, .banner-text p {
+      animation: fadeInUp 1s ease-in-out;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Responsive styles */
+    @media only screen and (max-width: 1200px) {
+      .banner-text span {
+        font-size: 32px;
+      }
+    } 
+    @media only screen and (max-width: 768px) {
+      .banner-text span {
+        font-size: 2.9em;
+      }
+      .banner-text p { 
+        font-size: 1.5em;
+      }
+      .banner {
+        height: 300px; /* Adjust height as needed */
+      }
+    } 
+    @media only screen and (max-width: 598px) {
+      .banner-text span {
+        font-size: 2.4em;
+        padding-top: 6rem;
+      }
+      .banner-text p {
+        font-size: 1.5em;
+      }
+      .banner {
+        height: 250px; /* Adjust height as needed */
+      }
+
+    }
+    
+  
+
+      
+   
+
+
+
+ /*---------Store Template - Personal----------*/  
+     /*---------Store Main Banner----------*/     
+.sbanner {
+  position: relative;
+  height: 350px; /* Adjust height as needed */
+  overflow: hidden;
+}
+.cover-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.profile-container {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center; /* Center vertically */
+}
+.profile-photo {
+  width: 130px;
+  height: 130px;
+  border: 2px solid #f8f7eb;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+.store-name {
+  font-size: 28px;
+  margin: 0;  
+  text-align: center; /* Center horizontally */
+  font-family: 'Times New Roman' , serif;
+  font-weight: bold;
+}
+/* New CSS for "Now In Stock" text */
+.now-in-stock {
+  font-family: 'Times New Roman' , serif;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #0c0d2c;
+  padding: 20px 30px;
+  font-size: 45px;
+  border-radius: 10px;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 1px;
+}
+/* Media queries for different screen sizes */
+@media screen and (max-width: 768px) {
+  .sbanner {
+    height: 275px;
+  }
+  .profile-container {
+    bottom: 10px;
+    left: 10px;
+  }
+  .profile-photo {
+    width: 80px;
+    height: 80px;
+  }
+  .store-name {
+    font-size: 20px;
+  }
+  .now-in-stock {
+    font-size: 30px;
+    padding: 15px;
+  }
+}
+@media screen and (max-width: 598px) {
+  .sbanner {
+    height: 220px;
+  }
+  .profile-container {
+    bottom: 5px;
+    left: 5px;
+  }
+  .profile-photo {
+    width: 60px;
+    height: 60px;
+  }
+  .store-name {
+    font-size: 18px;
+  }
+  .now-in-stock {
+    font-size: 25px;
+  }
+}
+
+
+/*---------Store Template- blue banner----------*/
+.heads {
+  font-family: Georgia, serif;
+  font-size: 1.2em; 
+  text-align: center;
+  padding: 3rem 1rem; /* Increased padding - 2rem */
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  background-color: #4c3f31; /*---dark brownish-gray---*/
+  color: #ffffff; /* White text for a crisp look */
+  }
+
+     /* Adjust Text for Mobile */
+  @media only screen and (max-width: 768px) {
+    .heads {
+      font-size: 1em;
+    }
+  }  
+  @media only screen and (max-width: 598px) {
+    .heads {
+      font-size: 0.75em;
+    }
+  }  
+
+  /* Additional style for the grid */
+.grid {
+  display: flex;
+  justify-content: space-between; /* Adjust spacing between columns */
+}
+
+.g-col-6 {
+  flex: 1; /* Ensure columns take up equal space */
+}
+
+  /*----Recommendation Section---*/
+.recommendations {
+  margin-top: 40px;
+  padding: 30px;
+  background-color: #f5f5f5;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column; /* Change to row for horizontal layout */
+  justify-content: space-between; /* Create space between form and list */
+}
+
+.recommendation-form {
+  margin-bottom: 30px;
+  width: 40%; /* Adjust width as needed */
+}
+
+.recommendation-text {
+  width: 100%;
+  height: 200px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+#submit-recommendation {
+  background-color:  #746557;
+  padding: 12px 24px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+}
+
+#submit-recommendation:hover {
+  background-color: #4c3f31; 
+}
+
+.recommendation-list {
+  list-style: none;
+  padding: 0;
+  width: 50%; /* Adjust width as needed */
+}
+
+.recommendation-item {
+  margin-bottom: 20px;
+}
+
+#recommendation-text {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-left: 20px; /* Indent recommendation text */
+  font-size: 14px;
+  color: #666;
+}
