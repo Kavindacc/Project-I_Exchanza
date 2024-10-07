@@ -39,7 +39,7 @@ $admin = new Admin($dbConnector->getConnection());
                     <tbody>
                         <?php
                         $query = "SELECT * FROM user";
-                        
+
                         // Use the instance of DbConnector
                         $statement = $dbConnector->getConnection()->prepare($query);
                         $statement->execute();

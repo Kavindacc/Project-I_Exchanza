@@ -68,11 +68,22 @@ class Admin
         return $stmt->fetch();
     }
 
-    public function updateSettings($contact_details, $social_media_links)
-    {
-        $stmt = $this->pdo->prepare("UPDATE settings SET contact_details = :contact_details, social_media_links = :social_media_links WHERE id = 1");
-        $stmt->execute(['contact_details' => $contact_details, 'social_media_links' => $social_media_links]);
-    }
+    public function updateSettings($email, $phone, $address, $facebook_link, $instagram_link, $youtube_link)
+{
+    $stmt = $this->pdo->prepare("UPDATE settings 
+                                 SET email = :email, phone = :phone, address = :address, 
+                                     facebook_link = :facebook, instagram_link = :instagram, youtube_link = :youtube 
+                                 WHERE id = 1");
+    $stmt->execute([
+        'email' => $email,
+        'phone' => $phone,
+        'address' => $address,
+        'facebook' => $facebook_link,
+        'instagram' => $instagram_link,
+        'youtube' => $youtube_link
+    ]);
+}
+
 
     public function getPayments()
     {

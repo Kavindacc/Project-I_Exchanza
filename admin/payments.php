@@ -50,4 +50,4 @@ $payments = $admin->getPayments();
             </div>
         </div>
     </div>
-</div>
+</div><?php include("includes/footer.php"); ?>
