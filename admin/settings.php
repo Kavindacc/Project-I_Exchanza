@@ -16,8 +16,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $instagram_link = $_POST['instagram'];
     $youtube_link = $_POST['youtube'];
 
+    // Update the settings in the database
     $admin->updateSettings($email, $phone, $address, $facebook_link, $instagram_link, $youtube_link);
+
+    // Set the session message to display on page reload
+    $_SESSION['message'] = 'Settings saved successfully.';
+
+    // Redirect to avoid form resubmission
     header("Location: settings.php");
+    exit;
 }
 
 $settings = $admin->getSettings();
@@ -33,6 +40,13 @@ if (!$settings) {
         'youtube_link' => ''
     ];
 }
+
+// Check if there's a session message to display
+$message = '';
+if (isset($_SESSION['message'])) {
+    $message = $_SESSION['message'];
+    unset($_SESSION['message']); // Clear the message after displaying
+}
 ?>
 
 <div class="row">
@@ -41,7 +55,16 @@ if (!$settings) {
             <div class="card-header">
                 <h4>Site Settings</h4>
             </div>
+
             <div class="card-body">
+                <!-- Display success message if available with dismiss button -->
+                <?php if ($message): ?>
+                    <div class="alert alert-success alert-dismissible" role="alert" style="position: relative;">
+                        <?php echo $message; ?>
+                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php endif; ?>
+
                 <form method="post">
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -78,6 +101,6 @@ if (!$settings) {
     </div>
 </div>
 
-<?php include("includes/footer.php"); 
+<?php include("includes/footer.php");
 ob_end_flush();
 ?>
