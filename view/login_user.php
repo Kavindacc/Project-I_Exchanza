@@ -92,7 +92,7 @@
                 </div>
                 <div class="row justify-content-center mt-2">
                     <div class="col-md-8 col-lg-5 login-btn">
-                        <input class="btn btn-primary w-100" type="submit" value="Sign In" name="signin" style="background:#897062;border:none;">
+                        <input class="btn btn-primary w-100" type="submit" value="Log In" name="signin" style="background:#897062;border:none;">
                     </div>
                 </div>
             </form>
