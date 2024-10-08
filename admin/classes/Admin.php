@@ -32,6 +32,18 @@ class Admin
         return $stmt->fetch()['total'];
     }
 
+    public function banUser($userId)
+    {
+        $stmt = $this->pdo->prepare("UPDATE user SET status = 1 WHERE userid = :userId");
+        return $stmt->execute(['userId' => $userId]);
+    }
+
+    public function getUsers()
+    {
+        $stmt = $this->pdo->query("SELECT * FROM user");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function getCustomers()
     {
         $stmt = $this->pdo->query("SELECT * FROM users WHERE role = 'customer'");
@@ -69,20 +81,20 @@ class Admin
     }
 
     public function updateSettings($email, $phone, $address, $facebook_link, $instagram_link, $youtube_link)
-{
-    $stmt = $this->pdo->prepare("UPDATE settings 
+    {
+        $stmt = $this->pdo->prepare("UPDATE settings 
                                  SET email = :email, phone = :phone, address = :address, 
                                      facebook_link = :facebook, instagram_link = :instagram, youtube_link = :youtube 
                                  WHERE id = 1");
-    $stmt->execute([
-        'email' => $email,
-        'phone' => $phone,
-        'address' => $address,
-        'facebook' => $facebook_link,
-        'instagram' => $instagram_link,
-        'youtube' => $youtube_link
-    ]);
-}
+        $stmt->execute([
+            'email' => $email,
+            'phone' => $phone,
+            'address' => $address,
+            'facebook' => $facebook_link,
+            'instagram' => $instagram_link,
+            'youtube' => $youtube_link
+        ]);
+    }
 
 
     public function getPayments()
@@ -90,16 +102,17 @@ class Admin
         $stmt = $this->pdo->query("SELECT * FROM payments");
         return $stmt->fetchAll();
     }
-    public function login($email, $password) {
+    public function login($email, $password)
+    {
         try {
             // Prepare SQL query with placeholders to prevent SQL injection
             $stmt = $this->pdo->prepare("SELECT * FROM admins WHERE email = :email");
             $stmt->bindParam(':email', $email, PDO::PARAM_STR);
             $stmt->execute();
-    
+
             // Fetch the admin data
             $admin = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
             // If admin exists, verify the password
             if ($admin) {
                 if ($password === $admin['password']) { // Check plaintext password directly
@@ -121,7 +134,8 @@ class Admin
             return false;
         }
     }
-    public function logout() {
+    public function logout()
+    {
         session_unset();
         session_destroy();
     }

@@ -12,14 +12,14 @@
                 </a>
             </li>
             <li class="nav-item mt-3">
-                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Feedbacks</h6>
+                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Enquiries</h6>
             </li>
             <li class="nav-item">
                 <a class="nav-link  " href="messages.php">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fa fa-bullhorn text-dark text-lg"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Feedbacks</span>
+                    <span class="nav-link-text ms-1">Enquiries</span>
                 </a>
             </li>
 
