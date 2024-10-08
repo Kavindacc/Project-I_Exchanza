@@ -256,6 +256,10 @@ class RegisteredCustomer extends User
             $pstmt->bindValue(2, $this->userid);
             $pstmt->execute();
             if ($pstmt->rowCount() > 0) {
+                $sql = "DELETE FROM wishlist WHERE itemid=?";
+                $pstmt = $con->prepare($sql);
+                $pstmt->bindValue(1, $this->itemid);
+                $pstmt->execute();
                 return true;
             } else {
                 return false;
