@@ -331,7 +331,7 @@ if (isset($_SESSION['userid'])) {
                         <!--login nav-link-a-color-->
                         <div class="d-flex flex-column float-start flex-lg-row justify-content-center  align-items-center mt-3 mt-lg-0 gap-3">
 
-                            <a href="view/cart.php" class="nav-link  text-decoration-none mx-1"><i class="fa-solid fa-cart-plus position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp">0</span></i></a><!--addtocart-->
+                            <a href="view/addtocart.php" class="nav-link  text-decoration-none mx-1"><i class="fa-solid fa-cart-plus position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp">0</span></i></a><!--addtocart-->
                             <a href="view/wishlist.php" class="nav-link  text-decoration-none mx-1"><i class="fa-regular fa-heart position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp">0</span></i></a>
                             <a href="view/userpage.php" class=" text-decoration-none"><button class="lo-button btn-sm ms-2 px-3" style="color:#ffff;">login</button></a>
 
@@ -374,7 +374,7 @@ if (isset($_SESSION['userid'])) {
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, ab laborum ut accusamus, fugiat earum alias
                     beatae ipsa harum quos atque culpa architecto similique deleniti impedit, facilis at aliquam deserunt!
                 </p>
-                <button><a href="../Project-I_Exchanza/view/thrift.php">Shop Now&nbsp;>></a></button>
+                <button><a href="./view/thrift.php">Shop Now&nbsp;>></a></button>
             </div>
         </div>
         <div class="thirf d-flex flex-row thirf-right thirf-two">
