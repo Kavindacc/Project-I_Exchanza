@@ -5,8 +5,8 @@ const preBtn = [...document.querySelectorAll('.pre-btn')];
 
 // Background Popup Window
 function addBidForm() {
-    var blur = document.getElementById('blur');
-    blur.classList.toggle('active');
+    // var blur = document.getElementById('blur');
+    // blur.classList.toggle('active');
     var bidpopupform = document.getElementById('bidpopupform');
     bidpopupform.classList.toggle('active');
 }

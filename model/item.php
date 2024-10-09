@@ -14,9 +14,10 @@ class Item
     protected  $subcategory;
     private $condition;
     private $size;
+    private  $quantity;
     protected $userid;
 
-    public function __construct($itemname = null, $price = null, $color = null, $description = null, $category = null, $subcategory = null, $condition = null, $size = null, $coverimage = null, $otherimage = null, $userid = null)
+    public function __construct($itemname = null, $price = null, $color = null, $description = null, $category = null, $subcategory = null, $condition = null, $size = null, $coverimage = null, $otherimage = null, $quantity=null, $userid = null)
     {
 
         $this->itemname = $itemname;
@@ -29,6 +30,7 @@ class Item
         $this->subcategory = $subcategory;
         $this->condition = $condition;
         $this->size = $size;
+        $this->quantity=$quantity;
         $this->userid = $userid;
     }
 
@@ -51,7 +53,7 @@ class Item
     public function addItemForThrifting($con)
     {
         try {
-            $sql = "INSERT INTO item(itemname, price, color, description, category, subcategory, `condition`, size, coverimage, otherimage, userid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO item(itemname, price, color, description, category, subcategory, `condition`, size, coverimage, otherimage,quantity, userid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
             $pstmt = $con->prepare($sql);
             $pstmt->bindValue(1, $this->itemname);
             $pstmt->bindValue(2, $this->price);
@@ -63,7 +65,8 @@ class Item
             $pstmt->bindValue(8, $this->size);
             $pstmt->bindValue(9, $this->coverimage);
             $pstmt->bindValue(10, $this->otherimage);
-            $pstmt->bindValue(11, $this->userid);
+            $pstmt->bindValue(11,$this->quantity);
+            $pstmt->bindValue(12, $this->userid);
             $pstmt->execute();
 
             if ($pstmt->rowCount() > 0) {
@@ -85,6 +88,53 @@ class Item
             echo "Error: " . $e->getMessage();
         }
     }
+
+    // Method to add a bid product
+    public function addItemForBidding($con, $start_time, $end_time, $start_price)
+    {
+        try {
+            // Insert the item into the 'item' table
+            $sql = "INSERT INTO item(itemname, price, color, description, category, subcategory, `condition`, size, coverimage, otherimage, userid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $pstmt = $con->prepare($sql);
+            $pstmt->bindValue(1, $this->itemname);
+            $pstmt->bindValue(2, $this->price);
+            $pstmt->bindValue(3, $this->color);
+            $pstmt->bindValue(4, $this->description);
+            $pstmt->bindValue(5, $this->category);
+            $pstmt->bindValue(6, $this->subcategory);
+            $pstmt->bindValue(7, $this->condition);
+            $pstmt->bindValue(8, $this->size);
+            $pstmt->bindValue(9, $this->coverimage);
+            $pstmt->bindValue(10, $this->otherimage);
+            $pstmt->bindValue(11, $this->userid);
+            $pstmt->execute();
+
+            if ($pstmt->rowCount() > 0) {
+                $item_id = $con->lastInsertId();
+
+                // Insert bidding details into the 'auction' table
+                $sql = "INSERT INTO auction (item_id, userid, start_time, end_time, start_price) VALUES (?, ?, ?, ?, ?)";
+                $pstmt = $con->prepare($sql);
+                $pstmt->bindValue(1, $item_id);
+                $pstmt->bindValue(2, $this->userid);
+                $pstmt->bindValue(3, $start_time);
+                $pstmt->bindValue(4, $end_time);
+                $pstmt->bindValue(5, $start_price);
+                $pstmt->execute();
+
+                if ($pstmt->rowCount() > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
 
     public function delete($con) //item delete function
     {

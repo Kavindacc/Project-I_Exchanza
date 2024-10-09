@@ -1,60 +1,95 @@
 <?php
-require '../model/usern.php';
-require '../model/DbConnector.php';
+include_once '../model/DbConnector.php';
+include_once '../model/item.php';
+session_start();
 
-if (isset($_POST['submitBid'])) {
-    $productname = ucfirst($_POST['itemname']);
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submitBid'])) {
+
+    $itemname = $_POST['itemname'];
     $price = $_POST['price'];
-    $colour = $_POST[''];
+    $color = isset($_POST['colour']) ? $_POST['colour'] : null;
     $description = $_POST['description'];
-    $category = strtolower($_POST['']);
-    $subcategory = strtolower($_POST['']);
-    $size = isset($_POST['']) ? $_POST[''] : null; // Use ternary operator
-    $condition = $_POST[''];
+    $category = $_POST['category'];
+    $subcategory = $_POST['subcategory'];
+    $condition = $_POST['condition'];
+    $size = isset($_POST['size']) ? $_POST['size'] : null;
     $start_time = $_POST['bidstarttime'];
-    $end_time = $_POST['bitendtime'];
-    $start_price = $_POST['price'];
+    $end_time = $_POST['bidendtime'];
+    $start_price = $_POST['start_price'];
     $userid = $_SESSION['userid'];
 
     $errors = [];
-    $filePath = null; // File upload start
 
-    if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
-        $file = $_FILES['image'];
-        $filename = $file['name'];
-        $filetmpname = $file['tmp_name'];
-        $filesize = $file['size'];
-        $fileext = explode('.', $filename); // String convert array
-        $fileactualext = strtolower(end($fileext));
-        $allowed = ['jpg', 'jpeg', 'png'];
+    // Input validation
+    if (!empty($itemname) && !empty($price) && !empty($description) && !empty($category) && !empty($subcategory) && !empty($condition) && !empty($start_time) && !empty($end_time) && !empty($start_price)) {
 
-        if (in_array($fileactualext, $allowed)) {
-            if ($filesize < 2000000) { // 2MB file size limit
-                $fileNewName = uniqid('', true) . "." . $fileactualext;
-                $fileDestination = '../upload/' . $fileNewName;
-                if (move_uploaded_file($filetmpname, $fileDestination)) {
-                    $filePath = $fileDestination;
+        if (is_string($itemname)) {
+            $itemname = filter_var($itemname, FILTER_SANITIZE_STRING);
+        }
+        if (is_numeric($price)) {
+            $price = filter_var($price, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        } else {
+            $errors[] = "Price must be a number.";
+        }
+        if (is_numeric($start_price)) {
+            $start_price = filter_var($start_price, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        } else {
+            $errors[] = "Start price must be a number.";
+        }
+
+        // File upload handling
+        if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
+            $file = $_FILES['image'];
+            $filename = $file['name'];
+            $filetmpname = $file['tmp_name'];
+            $filesize = $file['size'];
+            $fileext = explode('.', $filename);
+            $fileactualext = strtolower(end($fileext));
+            $allowed = ['jpg', 'jpeg', 'png'];
+
+            if (in_array($fileactualext, $allowed)) {
+                if ($filesize < 2000000) { // 2MB file size limit
+                    $fileNewName = uniqid('', true) . "." . $fileactualext;
+                    $fileDestination = '../upload/' . $fileNewName;
+                    if (move_uploaded_file($filetmpname, $fileDestination)) {
+                        $filePath = $fileDestination;
+                    } else {
+                        $errors[] = "Failed to move uploaded file.";
+                    }
                 } else {
-                    $errors[] = "Failed to move uploaded file.";
+                    $errors[] = "File is too big.";
                 }
             } else {
-                $errors[] = "File is too big.";
+                $errors[] = "Please upload a jpg, jpeg, or png file.";
+            }
+        }
+
+        if (empty($errors) && isset($filePath)) {
+            // Initialize database connection
+            $dsn = new DbConnector();
+            $con = $dsn->getConnection();
+
+            // Create new Item object for bidding
+            $item = new Item($itemname, $price, $color, $description, $category, $subcategory, $condition, $size, $filePath, null, $userid);
+
+            // Call the method to add item for bidding
+            if ($item->addItemForBidding($con, $start_time, $end_time, $start_price)) {
+                header("Location: ../view/bidding.php?success=Item added successfully for bidding.");
+                exit();
+            } else {
+                header("Location: ../view/bidding.php?error=Failed to add item for bidding.");
+                exit();
             }
         } else {
-            $errors[] = "Please upload jpg, jpeg, or png type.";
+            foreach ($errors as $error) {
+                header("Location: ../view/bidding.php?error=$error");
+                exit();
+            }
         }
-    } 
-
-    if ($filePath !== null) {
-        $obj = new Seller();
-        $obj->addItemForBidding($productname, $price, $colour, $description, $category, $subcategory, $size, $condition, $filePath, $userid, $start_time, $end_time, $start_price, Dbh::connect());
     } else {
-        $errors[] = "File upload failed or no file uploaded.";
-    }
-
-    if (!empty($errors)) {
+        $errors[] = "All input fields are required.";
         foreach ($errors as $error) {
-            header("Location: ../view/bidding.php?error=$error.");//auction page
+            header("Location: ../view/bidding.php?error=$error");
             exit();
         }
     }
