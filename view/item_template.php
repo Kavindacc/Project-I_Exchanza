@@ -15,6 +15,11 @@ if (isset($_SESSION['userid'])) {
         <link rel="stylesheet" href="../css/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <title>Item Template</title>
+
+        <!-- Popper.js -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-RXf+QSDMFZ+7hz/qFFFmvnH7Cjmx1ka37U64yk8PEAgH6FZJvEFqPB3F7KbbtXgX" crossorigin="anonymous"></script>
     </head>
 
     <body>
@@ -104,19 +109,32 @@ if (isset($_SESSION['userid'])) {
                         Sort
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="sortDropdown">
-                        <li><a class="dropdown-item" href="#">Price: Low to High</a></li>
-                        <li><a class="dropdown-item" href="#">Price: High to Low</a></li>
-                        <li><a class="dropdown-item" href="#">Newest Arrivals</a></li>
+                        <li><a class="dropdown-item" href="?price=LH">Price: Low to High</a></li>
+                        <li><a class="dropdown-item" href="?price=HL">Price: High to Low</a></li>
+                        <li><a class="dropdown-item" href="?price=NA">Newest Arrivals</a></li>
                     </ul>
                 </div>
+
                 <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Filter
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="filterDropdown">
-                        <li><a class="dropdown-item" href="#">Category</a></li>
-                        <li><a class="dropdown-item" href="#">Type</a></li>
-                        <li><a class="dropdown-item" href="#">Size</a></li>
+                        <li class="dropdown-submenu dropend">
+                            <a class="dropdown-item dropdown-toggle" href="#" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">Size</a>
+                            <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+
+
+                                <li><a class="dropdown-item" href="?selected_size=s">S</a></li>
+                                <li><a class="dropdown-item" href="?selected_size=m">M</a></li>
+                                <li><a class="dropdown-item" href="?selected_size=l">L</a></li>
+                                <li><a class="dropdown-item" href="?selected_size=xl">XL</a></li>
+                                <li><a class="dropdown-item" href="?selected_size=xxl">XXL</a></li>
+                                <li><a class="dropdown-item" href="?selected_size=o">Other</a></li>
+
+
+                            </ul>
+                        </li>
                         <li><a class="dropdown-item" href="#">Colour</a></li>
                     </ul>
                 </div>
@@ -174,12 +192,23 @@ if (isset($_SESSION['userid'])) {
             $user = new Thrift($userid);
             $user->setCategory($category);
             $user->setSubCategory($subcategory);
-            $rows = $user->getThriftItemsLogin($con);
+
+            if (isset($_GET['selected_size'])) {
+                $size = $_GET['selected_size'];
+                $rows = $user->getThriftItemsBySize($con, $size);
+            } elseif (isset($_GET['price'])) {
+                $price = $_GET['price'];
+                $rows = $user->getThriftItemsBySort($con, $price);
+            } else {
+                $rows = $user->getThriftItemsLogin($con);
+            }
 
             if (!empty($rows)) {
                 foreach ($rows as $row) { ?>
                     <div class="card mb-3 pt-2" style="width: 17rem;">
+                    <a href="item_template.php?productId=<?php echo $row['product_id']; ?>"> 
                         <img src="../upload/<?php echo $row['coverimage'] ?>" class="card-img-top" alt="..." style="height:10rem;">
+                    </a>
                         <div class="card-body">
                             <h3 class="card-title"><?php echo $row['itemname']; ?></h3>
                             <?php if (isset($row['size'])) { ?>
@@ -274,16 +303,105 @@ if (isset($_SESSION['userid'])) {
                             </div>
                         </div>
                     </div>
-
+        
                 <?php }
             } else { ?>
-                <h2>No Iteam</h2>
+                <h2>No Item</h2>
             <?php } ?>
 
 
         </div>
+        //product detail hidden div 
+        <?php if (isset($_GET['id'])) {
+                    $pid = $_GET['id'];
+                } ?>
+        <div id="itemDetails" style="display:none">
+        <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <?php
+                $dsn = new DbConnector();
+                $con = $dsn->getConnection();
+    
+                $user = new Thrift($userid);
+                $rows = $user->loaditemDetails($con,$pid);
+
+
+                ?>
+
+                <div class="product-image-container">
+
+                    <img id="mainImage" src="../upload/<?php echo $row['image']; ?>" class="img-fluid product-image" alt="Product Image" style="width: 400px; height: 400px;">
+                </div>
+                <div class="mt-3 d-flex item">
+                    <img src="../upload/<?php echo $row['otherimage']; ?>" class="img-thumbnail thumbnail" alt="Thumbnail 1" onclick="changeImage(this)">
+                    <img src="../upload/<?php echo $row['other_image_2']; ?>" class="img-thumbnail thumbnail" alt="Thumbnail 2"
+                        onclick="changeImage(this)">
+                    <img src="../upload/<?php echo $row['other_image_3']; ?>" class="img-thumbnail thumbnail" alt="Thumbnail 3"
+                        onclick="changeImage(this)">
+                         https://via.placeholder.com/120
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h1><?php echo $row['product_name']; ?>
+                <svg class="heart-icon" id="heartIcon" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 
+                            0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z">
+                        </path>
+                    </svg>
+            </h1>
+                <h2>LKR <?php echo $row['price']; ?></h2>
+                
+                <p><span class="fw-bold">Code:</span> <?php echo $row['product_id']; ?></p>
+                <div class="d-flex flex-column">
+                    <p class="fw-bold"><?php echo $row['colour']; ?></p>
+                    <div class="d-flex gap-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                Image 01
+                            </label>
+                        </div>
+                        <!-- <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                Image 02
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                Image 03
+                            </label> -->
+                        </div>
+                    </div>
+
+                </div>
+                <div class="mt-4">
+                    <?php
+                    if (isset($row['size'])) { ?>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-secondary"><?php echo $row['size']; ?></button>
+                        </div>
+                    <?php  }
+                    ?>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
+        <div id="toast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" style="background-color: #897062;">
+            <div class="toast-body" id="toastBody" style="color: white;">
+            </div>
+        </div>
+    </div>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://unpkg.com/scrollreveal"></script>
         <script src="../js/main.js"></script>
+        <script src="../js/itemtemp.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>
 
@@ -298,6 +416,11 @@ if (isset($_SESSION['userid'])) {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="../css/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <!-- Popper.js -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-RXf+QSDMFZ+7hz/qFFFmvnH7Cjmx1ka37U64yk8PEAgH6FZJvEFqPB3F7KbbtXgX" crossorigin="anonymous"></script>
+
         <title>Item Template</title>
     </head>
 
@@ -367,9 +490,9 @@ if (isset($_SESSION['userid'])) {
                         Sort
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="sortDropdown">
-                        <li><a class="dropdown-item" href="#">Price: Low to High</a></li>
-                        <li><a class="dropdown-item" href="#">Price: High to Low</a></li>
-                        <li><a class="dropdown-item" href="#">Newest Arrivals</a></li>
+                        <li><a class="dropdown-item" href="?price=LH">Price: Low to High</a></li>
+                        <li><a class="dropdown-item" href="?price=HL">Price: High to Low</a></li>
+                        <li><a class="dropdown-item" href="?price=NA">Newest Arrivals</a></li>
                     </ul>
                 </div>
                 <div class="dropdown">
@@ -377,9 +500,21 @@ if (isset($_SESSION['userid'])) {
                         Filter
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="filterDropdown">
-                        <li><a class="dropdown-item" href="#">Category</a></li>
-                        <li><a class="dropdown-item" href="#">Type</a></li>
-                        <li><a class="dropdown-item" href="#">Size</a></li>
+                        <li class="dropdown-submenu dropend">
+                            <a class="dropdown-item dropdown-toggle" href="#" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">Size</a>
+                            <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+
+
+                                <li><a class="dropdown-item" href="#">S</a></li>
+                                <li><a class="dropdown-item" href="#">M</a></li>
+                                <li><a class="dropdown-item" href="#">L</a></li>
+                                <li><a class="dropdown-item" href="#">XL</a></li>
+                                <li><a class="dropdown-item" href="#">XXL</a></li>
+                                <li><a class="dropdown-item" href="#">Other</a></li>
+
+
+                            </ul>
+                        </li>
                         <li><a class="dropdown-item" href="#">Colour</a></li>
                     </ul>
                 </div>
@@ -430,11 +565,23 @@ if (isset($_SESSION['userid'])) {
             $user = new Thrift();
             $user->setCategory($category);
             $user->setSubCategory($subcategory);
-            $rows = $user->getThriftItems($con);
+
+            // $rows = $user->getThriftItemsLogin($con);
+            if (isset($_GET['selected_size'])) {
+                $size = $_GET['selected_size'];
+                $rows = $user->getThriftItemsBySize($con, $size);
+            } elseif (isset($_GET['price'])) {
+                $price = $_GET['price'];
+                $rows = $user->getThriftItemsBySort($con, $price);
+            } else {
+                $rows = $user->getThriftItemsLogin($con);
+            }
             if (!empty($rows)) {
                 foreach ($rows as $row) { ?>
                     <div class="card mb-3 pt-2" style="width: 17rem;">
+                    <a href="item_template.php?productId=<?php echo $row['thrift_id']; ?>"> 
                         <img src="../upload/<?php echo $row['coverimage'] ?>" class="card-img-top" alt="..." style="height:10rem;">
+                    </a>
                         <div class="card-body">
                             <h3 class="card-title"><?php echo $row['itemname']; ?></h3>
                             <?php if (isset($row['size'])) { ?>
@@ -486,11 +633,14 @@ if (isset($_SESSION['userid'])) {
                             <a href="login_user.php" style="text-decoration: none;">
                                 <button type="button" class="btn btn-primary mt-2  equal-width" style="--bs-btn-color:black;--bs-btn-bg:none;--bs-btn-border-color:black; --bs-btn-hover-bg:#4c3f31;"><i class="fa-regular fa-heart"></i>&nbsp;Write a Review</button>
                             </a>
-                            
+
                         </div>
                     </div>
 
-                <?php }
+        
+
+
+                <?php } 
                 /* if (!empty($rows)) {
                 foreach ($rows as $row) { ?>
                     <div class="card m- pt-2" style="width: 17rem;">
@@ -511,15 +661,107 @@ if (isset($_SESSION['userid'])) {
                         </div>
                     </div>
                 <?php }*/
+
+
+
+                
             } else { ?>
-                <h2>No Iteam</h2>
+                <h2>No Iteasm</h2>
             <?php } ?>
 
 
         </div>
+        <?php if (isset($_GET['productId'])) {
+                    $pid = $_GET['productId'];
+                 ?>
+
+        <div id="itemDetails">
+        <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <?php
+                
+            $dsn = new DbConnector();
+            $con = $dsn->getConnection();
+
+            $user = new Thrift();
+            $rows = $user->loaditemDetails($con,$pid);
+
+
+                ?>
+
+                <div class="product-image-container">
+
+                    <img id="mainImage" src="../upload/<?php echo $rows['coverimage']; ?>" class="img-fluid product-image" alt="Product Image" style="width: 400px; height: 400px;">
+                </div>
+                <div class="mt-3 d-flex item">
+                    <img src="../upload/<?php echo $rows['otherimage']; ?>" class="img-thumbnail thumbnail" alt="Thumbnail 1" onclick="changeImage(this)">
+
+                         https://via.placeholder.com/120
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h1><?php echo $rows['itemname']; ?>
+                <svg class="heart-icon" id="heartIcon" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 
+                            0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z">
+                        </path>
+                    </svg>
+            </h1>
+                <h2>LKR <?php echo $rows['price']; ?></h2>
+                
+                <p><span class="fw-bold">Code:</span> <?php echo $rows['product_id']; ?></p>
+                <div class="d-flex flex-column">
+                    <p class="fw-bold"><?php echo $rows['colour']; ?></p>
+                    <div class="d-flex gap-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                Image 01
+                            </label>
+                        </div>
+                        <!-- <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                Image 02
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                Image 03
+                            </label> -->
+                        </div>
+                    </div>
+
+                </div>
+                <div class="mt-4">
+                    <?php
+                    if (isset($rows['size'])) { ?>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-secondary"><?php echo $rows['size']; ?></button>
+                        </div>
+                    <?php  }
+                    ?>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
+        <div id="toast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" style="background-color: #897062;">
+            <div class="toast-body" id="toastBody" style="color: white;">
+            </div>
+        </div>
+    </div>
+<?php } ?>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
         <script src="https://unpkg.com/scrollreveal"></script>
         <script src="../js/main.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script src="../js/itemtemp.js"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
     </body>
 
     </html>
