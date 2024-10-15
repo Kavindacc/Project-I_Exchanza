@@ -1,5 +1,8 @@
 <?php 
 session_start(); 
+$userid = $_SESSION['userid'] ?? null;
+
+
 include_once '../model/DbConnector.php';
 include_once '../model/wishlist.php';
 include_once '../model/addtocart.php';
@@ -219,7 +222,7 @@ $finishedBids = $auction->getFinishedAuctions();
             @apply text-[#897062] border border-[#AE9D92] font-medium text-sm  file:cursor-pointer cursor-pointer file:border-0 file:py-2 file:px-4 file:mr-4 file:bg-[#CEC0B9] file:hover:bg-[#d6c5bc] file:text-[#4C3F31] rounded-md;
         }
         .form-control-time{
-            @apply  w-[92%] p-2   text-[#7b6457]  border border-[#AE9D92] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#CEC0B9] focus:border-[#CEC0B9] sm:text-sm uppercase;
+            @apply  w-[92%] p-2 text-[#7b6457]  border border-[#AE9D92] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#CEC0B9] focus:border-[#CEC0B9] sm:text-sm uppercase;
         }
         .plsBid-btn{
             @apply p-[6px] my-2 w-[22%] uppercase font-semibold border-2 border-[#AE9D92] bg-[#CEC0B9] rounded-[4px] duration-[0.5s] cursor-pointer text-[#4C3F31] hover:scale-105 active:cursor-progress;
@@ -364,11 +367,11 @@ $finishedBids = $auction->getFinishedAuctions();
                                 <span class="countdown-tag">
                                     <span id="ongoingCountdown<?php echo $auction['auction_id']; ?>"></span>
                                 </span>
-                                <img src="<?php echo htmlspecialchars($auction['image']); ?>" class="product-thumb" alt="">
-                                <a href="bidProduct_view.php?product_id=<?php echo $auction['product_id']; ?>" class="card-btn">Bid Now</a>
+                                <img src="<?php echo htmlspecialchars($auction['coverimage']); ?>" class="product-thumb" alt="">
+                                <a href="bidProduct_view.php?itemid=<?php echo $auction['itemid']; ?>" class="card-btn">Bid Now</a>
                             </div>
                             <div class="product-info">
-                                <h2 class="product-brand"><?php echo htmlspecialchars($auction['product_name']); ?></h2>
+                                <h2 class="product-brand"><?php echo htmlspecialchars($auction['itemname']); ?></h2>
                                 <p class="product-short-description"><?php echo htmlspecialchars($auction['description']); ?></p>
                                 <span class="price">Rs.<?php echo htmlspecialchars($auction['price']); ?></span>
                             </div>
@@ -392,11 +395,11 @@ $finishedBids = $auction->getFinishedAuctions();
                                 <span class="countdown-tag">
                                     <span id="upcomingCountdown<?php echo $auction['auction_id']; ?>"></span>
                                 </span>
-                                <img src="<?php echo htmlspecialchars($auction['image']); ?>" class="product-thumb" alt="">
-                                <a href="bidProduct_view.php?product_id=<?php echo $auction['product_id']; ?>" class="card-btn">View Bid</a>
+                                <img src="<?php echo htmlspecialchars(($auction['image']?? '')); ?>" class="product-thumb" alt="">
+                                <a href="bidProduct_view.php?itemid=<?php echo $auction['itemid']; ?>" class="card-btn">View Bid</a>
                             </div>
                             <div class="product-info">
-                                <h2 class="product-brand"><?php echo htmlspecialchars($auction['product_name']); ?></h2>
+                                <h2 class="product-brand"><?php echo htmlspecialchars($auction['itemname']); ?></h2>
                                 <p class="product-short-description"><?php echo htmlspecialchars($auction['description']); ?></p>
                                 <span class="price">Rs.<?php echo htmlspecialchars($auction['price']); ?></span>
                             </div>
@@ -420,11 +423,11 @@ $finishedBids = $auction->getFinishedAuctions();
                                 <span class="countdown-tag">
                                     <span id="finishedCountdown<?php echo $auction['auction_id']; ?>"></span>
                                 </span>
-                                <img src="<?php echo htmlspecialchars($auction['image']); ?>" class="product-thumb" alt="">
-                                <a href="bidProduct_view.php?product_id=<?php echo $auction['product_id']; ?>" class="card-btn">View Bid</a>
+                                <img src="<?php echo htmlspecialchars($auction['coverimage']); ?>" class="product-thumb" alt="">
+                                <a href="bidProduct_view.php?itemid=<?php echo $auction['itemid']; ?>" class="card-btn">View Bid</a>
                             </div>
                             <div class="product-info">
-                                <h2 class="product-brand"><?php echo htmlspecialchars($auction['product_name']); ?></h2>
+                                <h2 class="product-brand"><?php echo htmlspecialchars($auction['itemname']); ?></h2>
                                 <p class="product-short-description"><?php echo htmlspecialchars($auction['description']); ?></p>
                                 <span class="price">Rs.<?php echo htmlspecialchars($auction['price']); ?></span>
                             </div>  
@@ -441,6 +444,7 @@ $finishedBids = $auction->getFinishedAuctions();
             <div class="flex mx-10 my-2 gap-4">
                 <div class="w-[60%] border-r-2 border-[#AE9D92]">
                     <h2 class="f-title">ADD YOUR BID</h2>
+                    <!-- Form for adding a bid -->
                     <form action="../control/biddingcon.php" method="POST" enctype="multipart/form-data" id="">
                         <div class="bform-items">
                                     <label for="itemName"  class="bflable">Item Name</label>
@@ -474,6 +478,8 @@ $finishedBids = $auction->getFinishedAuctions();
                                     <label for="description" class="bflable">Description</label>
                                     <textarea class="form-control" id="description" rows="3" placeholder="Enter description" name="description" required></textarea>
                         </div>
+                        <input type="hidden" name="userid" value="<?php echo $userid; ?>">
+                        <input type="hidden" name="submitBid" value="submitBid">
                         <div>
                             <button class="plsBid-btn" name="submitBid">
                                 Place Your Bid
@@ -537,7 +543,7 @@ $finishedBids = $auction->getFinishedAuctions();
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../js/bidScript.js"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
-    <script src="main.js"></script>
+    <script src="../js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
     <script>
