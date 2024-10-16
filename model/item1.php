@@ -2,7 +2,6 @@
 
 class Item
 {
-
     private $itemid;
     private $itemname;
     private $price;
@@ -19,7 +18,6 @@ class Item
 
     public function __construct($itemname = null, $price = null, $color = null, $description = null, $category = null, $subcategory = null, $condition = null, $size = null, $coverimage = null, $otherimage = null, $quantity = null, $userid = null)
     {
-
         $this->itemname = $itemname;
         $this->price = $price;
         $this->color = $color;
@@ -38,22 +36,26 @@ class Item
     {
         $this->itemid = $itemid;
     }
+
     public function setItemName($itemname)
     {
         $this->itemname = $itemname;
     }
+
     public function setPrice($price)
     {
         $this->price = $price;
     }
+
     public function setCoverImage($coverimage)
     {
         $this->coverimage = $coverimage;
     }
+
     public function addItemForThrifting($con)
     {
         try {
-            $sql = "INSERT INTO item(itemname, price, color, description, category, subcategory, `condition`, size, coverimage, otherimage,quantity, userid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+            $sql = "INSERT INTO item(itemname, price, color, description, category, subcategory, `condition`, size, coverimage, otherimage, quantity, userid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $pstmt = $con->prepare($sql);
             $pstmt->bindValue(1, $this->itemname);
             $pstmt->bindValue(2, $this->price);
@@ -71,7 +73,7 @@ class Item
 
             if ($pstmt->rowCount() > 0) {
                 $item_id = $con->lastInsertId();
-                $sql = "INSERT INTO thrift (item_id, user_id)  VALUES (?,?)";
+                $sql = "INSERT INTO thrift (item_id, user_id) VALUES (?, ?)";
                 $pstmt = $con->prepare($sql);
                 $pstmt->bindValue(1, $item_id);
                 $pstmt->bindValue(2, $this->userid);
@@ -133,7 +135,7 @@ class Item
         }
     }
 
-    public function delete($con) //item delete function
+    public function delete($con)
     {
         try {
             $sql = "DELETE FROM item WHERE itemid = ?";
@@ -150,10 +152,10 @@ class Item
         }
     }
 
-    public function updateitem($con) //update iteam details
+    public function updateitem($con)
     {
         try {
-            $sql = "UPDATE item SET itemname=?, price=?,coverimage=? WHERE itemid=?";
+            $sql = "UPDATE item SET itemname=?, price=?, coverimage=? WHERE itemid=?";
             $pstmt = $con->prepare($sql);
             $pstmt->bindValue(1, $this->itemname);
             $pstmt->bindValue(2, $this->price);
@@ -187,9 +189,9 @@ class Item
         }
     }
 }
+
 class Thrift extends Item
 {
-
     public function __construct($userid = null)
     {
         $this->userid = $userid;
@@ -199,14 +201,16 @@ class Thrift extends Item
     {
         $this->category = $category;
     }
+
     public function setSubCategory($subcategory)
     {
         $this->subcategory = $subcategory;
     }
+
     public function getThriftItemsLogin($con)
     {
         try {
-            $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE t.user_id = ? AND i.category=? AND i.subcategory=?"; //change it
+            $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE t.user_id = ? AND i.category=? AND i.subcategory=?";
             $pstmt = $con->prepare($sql);
             $pstmt->bindValue(1, $this->userid);
             $pstmt->bindValue(2, $this->category);
@@ -218,10 +222,11 @@ class Thrift extends Item
             echo "Error: " . $e->getMessage();
         }
     }
+
     public function getThriftItems($con)
     {
         try {
-            $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE i.category=? AND i.subcategory=?"; //change it
+            $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE i.category=? AND i.subcategory=?";
             $pstmt = $con->prepare($sql);
             $pstmt->bindValue(1, $this->category);
             $pstmt->bindValue(2, $this->subcategory);
@@ -233,3 +238,4 @@ class Thrift extends Item
         }
     }
 }
+?>

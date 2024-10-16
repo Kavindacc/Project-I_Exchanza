@@ -395,7 +395,7 @@ $finishedBids = $auction->getFinishedAuctions();
                                 <span class="countdown-tag">
                                     <span id="upcomingCountdown<?php echo $auction['auction_id']; ?>"></span>
                                 </span>
-                                <img src="<?php echo htmlspecialchars(($auction['image']?? '')); ?>" class="product-thumb" alt="">
+                                <img src="<?php echo htmlspecialchars($auction['coverimage']); ?>" class="product-thumb" alt="">
                                 <a href="bidProduct_view.php?itemid=<?php echo $auction['itemid']; ?>" class="card-btn">View Bid</a>
                             </div>
                             <div class="product-info">
