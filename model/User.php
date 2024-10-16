@@ -122,7 +122,7 @@ class User
             $pstmt->execute();
             $row = $pstmt->fetch(PDO::FETCH_ASSOC);
             if ($row) {
-                if (password_verify($this->password, $row['password'])) {
+                if (password_verify($this->password, $row['password']) && $row['status']=="active") {
                     $_SESSION['userid'] = $row['userid'];
                     $_SESSION['name'] = $row['firstname'] . ' ' . $row['lastname'];
                     return true;
