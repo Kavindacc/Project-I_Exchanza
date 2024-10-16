@@ -163,6 +163,7 @@ if (isset($_SESSION['userid'])) {
             } ?>
         </div>
         <div class="container d-flex justify-content-start flex-wrap mt-5 gap-4"><!--get iteam-->
+
             <?php
             $dsn = new DbConnector();
             $con = $dsn->getConnection();
@@ -173,9 +174,10 @@ if (isset($_SESSION['userid'])) {
             $rows = $user->getThriftItemsLogin($con);
 
             if (!empty($rows)) {
-                foreach ($rows as $row) { ?>
+                foreach ($rows as $row) {
+                    $modalId = $row['itemid']; ?>
                     <div class="card mb-3 pt-2" style="width: 17rem;">
-                        <img src="../upload/<?php echo $row['coverimage'] ?>" class="card-img-top" alt="..." style="height:10rem;">
+                        <img src="../upload/<?php echo $row['coverimage'] ?>" class="card-img-top" alt="..." style="height:10rem;" data-bs-toggle="modal" data-bs-target="#<?php echo $modalId; ?>">
                         <div class="card-body">
                             <h3 class="card-title"><?php echo $row['itemname']; ?></h3>
                             <?php if (isset($row['size'])) { ?>
@@ -270,17 +272,53 @@ if (isset($_SESSION['userid'])) {
                             </div>
                         </div>
                     </div>
-
-                <?php }
-            } else { ?>
-                <h2>No Iteam</h2>
-            <?php } ?>
-
-
+                    <!-- Modal pop up display click item-->
+                    <div class="modal fade" id="<?php echo $modalId; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="<?php echo $modalId; ?> aria-hidden=" true">
+                        <div class="modal-dialog ">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id=id="<?php echo $modalId; ?>">Modal title</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <!-- item details-->
+                                <div class="modal-body">
+                                    <div class="card mb-3 pt-2">
+                                        <img src="../upload/<?php echo $row['coverimage'] ?>" class="card-img-top" alt="..." style="height:10rem;" data-bs-toggle="modal" data-bs-target="#<?php echo $modalId; ?>">
+                                        <div class="card-body">
+                                            <h3 class="card-title"><?php echo $row['itemname']; ?></h3>
+                                            <?php if (isset($row['size'])) { ?>
+                                                <h5 class="card-text"><strong>Size: </strong><?php echo $row['size']; ?></h5>
+                                            <?php } ?>
+                                            <h5 class="card-text"><strong>Price:</strong><?php echo 'Rs.' . $row['price']; ?></h5>
+                                        </div>
+                                        <!-- Wishlist Form -->
+                                        <form action="../control/wishlistcon.php" method="post">
+                                            <input type="hidden" name="productid" value="<?php echo $row['itemid']; ?>">
+                                            <input type="hidden" name="userid" value="<?php echo $userid; ?>">
+                                            <input type="hidden" name="cat" value="<?php echo  $category; ?>">
+                                            <input type="hidden" name="sub" value="<?php echo $subcategory; ?>">
+                                            <button type="submit" class="btn btn-primary mt-2  equal-width" name="wishlist" style="--bs-btn-color:black;--bs-btn-bg:none;--bs-btn-border-color:black; --bs-btn-hover-bg:#4c3f31;">
+                                                <i class="fa-regular fa-heart"></i>&nbsp;Add to Wishlist
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
         </div>
-        <script src="https://unpkg.com/scrollreveal"></script>
-        <script src="../js/main.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <?php }
+            } else { ?>
+    <h2>No Iteam</h2>
+<?php } ?>
+
+
+</div>
+
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="../js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>
 
     </html>
