@@ -176,7 +176,7 @@ if (isset($_SESSION['userid'])) {
             if (!empty($rows)) {
                 foreach ($rows as $row) {
                     $modalId = $row['itemid']; ?>
-                    <div class="card mb-3 pt-2" style="width: 17rem;">
+                    <div class="card mb-3" style="width: 17rem;">
                         <img src="../upload/<?php echo $row['coverimage'] ?>" class="card-img-top" alt="..." style="height:10rem;" data-bs-toggle="modal" data-bs-target="#<?php echo $modalId; ?>">
                         <div class="card-body">
                             <h3 class="card-title"><?php echo $row['itemname']; ?></h3>
@@ -282,7 +282,7 @@ if (isset($_SESSION['userid'])) {
                                 </div>
                                 <!-- item details-->
                                 <div class="modal-body">
-                                    <div class="card mb-3 pt-2">
+                                    <div class="card mb-3 p-2">
                                         <img src="../upload/<?php echo $row['coverimage'] ?>" class="card-img-top" alt="..." style="height:10rem;" data-bs-toggle="modal" data-bs-target="#<?php echo $modalId; ?>">
                                         <div class="card-body">
                                             <h3 class="card-title"><?php echo $row['itemname']; ?></h3>

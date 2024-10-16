@@ -14,10 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if($usertype == 'user'){
             if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $semail = filter_var($email, FILTER_SANITIZE_EMAIL);
-            } else {
-                header("Location:../view/login_user.php?error=Enter Valid Email Address.");
-                exit();
-            }
+            } 
     
             $dsn = new DbConnector();
             $con = $dsn->getConnection();
@@ -30,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 exit();
                 
             } else {
-                header("Location:../view/login_user.php?error=Incorrect emial and password.");
+                header("Location:../view/login_user.php?error=Invalid email or password");
                 exit();
                
             }
