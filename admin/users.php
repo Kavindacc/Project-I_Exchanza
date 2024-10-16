@@ -54,10 +54,15 @@ $admin = new Admin($dbConnector->getConnection());
                                     <td><?= $row['lastname']; ?></td>
                                     <td><?= $row['email']; ?></td>
                                     <td><?= $row['phonenum']; ?></td>
-                                    <td><?= $row['status'] == 1 ? 'Banned' : 'Active'; ?></td>
+                                    <td><?= $row['status'] === 'banned' ? 'Banned' : 'Active'; ?></td>
+
                                     <td>
-                                        <a href="users-edit.php?id=<?= $row['userid']; ?>" style="background-color:#897062; color:white;" class="btn btn-sm" onclick="return confirm('Are you sure you want to ban this user?')">Ban user</a>
+                                        <a href="../control/ban-user.php?id=<?= $row['userid']; ?>"
+                                            style="background-color:#897062; color:white;"
+                                            class="btn btn-sm"
+                                            onclick="return confirm('Are you sure you want to ban this user?')">Ban user</a>
                                     </td>
+
                                 </tr>
                             <?php
                             }
