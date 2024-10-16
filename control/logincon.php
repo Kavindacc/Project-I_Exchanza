@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 exit();
                 
             } else {
-                header("Location:../view/login_user.php?error=Invalid email and password");
+                header("Location:../view/login_user.php?error=Invalid email or password");
                 exit();
                
             }
