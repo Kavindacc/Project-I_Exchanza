@@ -14,9 +14,10 @@ class Item
     protected  $subcategory;
     private $condition;
     private $size;
+    private  $quantity;
     protected $userid;
 
-    public function __construct($itemname = null, $price = null, $color = null, $description = null, $category = null, $subcategory = null, $condition = null, $size = null, $coverimage = null, $otherimage = null, $userid = null)
+    public function __construct($itemname = null, $price = null, $color = null, $description = null, $category = null, $subcategory = null, $condition = null, $size = null, $coverimage = null, $otherimage = null, $quantity=null, $userid = null)
     {
 
         $this->itemname = $itemname;
@@ -29,6 +30,7 @@ class Item
         $this->subcategory = $subcategory;
         $this->condition = $condition;
         $this->size = $size;
+        $this->quantity=$quantity;
         $this->userid = $userid;
     }
 
@@ -51,7 +53,7 @@ class Item
     public function addItemForThrifting($con)
     {
         try {
-            $sql = "INSERT INTO item(itemname, price, color, description, category, subcategory, `condition`, size, coverimage, otherimage, userid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO item(itemname, price, color, description, category, subcategory, `condition`, size, coverimage, otherimage,quantity, userid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
             $pstmt = $con->prepare($sql);
             $pstmt->bindValue(1, $this->itemname);
             $pstmt->bindValue(2, $this->price);
@@ -63,7 +65,8 @@ class Item
             $pstmt->bindValue(8, $this->size);
             $pstmt->bindValue(9, $this->coverimage);
             $pstmt->bindValue(10, $this->otherimage);
-            $pstmt->bindValue(11, $this->userid);
+            $pstmt->bindValue(11,$this->quantity);
+            $pstmt->bindValue(12, $this->userid);
             $pstmt->execute();
 
             if ($pstmt->rowCount() > 0) {

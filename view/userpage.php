@@ -3,6 +3,9 @@ include_once '../model/DbConnector.php';
 include_once '../model/User.php';
 include_once '../model/wishlist.php';
 include_once '../model/addtocart.php';
+include_once '../model/MyOrders.php';
+include_once '../model/Order.php';
+
 if (isset($_SESSION['userid'])) {
     $userid = $_SESSION['userid']; ?>
 
@@ -64,8 +67,8 @@ if (isset($_SESSION['userid'])) {
                             $obj->setUserId($userid);
                             $count = $obj->cartItemCount($con); ?>
                             <a href="addtocart.php" class="nav-link  text-decoration-none mx-1"><i class="fa-solid fa-cart-plus position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp"><?php if (isset($count)) {
-                                                                                                                                                                                                                                                echo $count;
-                                                                                                                                                                                                                                            } ?></span></i></a><!--addtocart-->
+                                                                                                                                                                                                                                        echo $count;
+                                                                                                                                                                                                                                    } ?></span></i></a><!--addtocart-->
                             <?php
 
 
@@ -104,10 +107,11 @@ if (isset($_SESSION['userid'])) {
 
                     <button type="button" class="btn  my-2" onclick="showInformation()" id="information">Pesonal information</button>
                     <button type="button" class="btn  mb-2" onclick="showOrderTable()" id="order">My Orders</button>
-                    <button type="button" class="btn  " onclick="showItemTable()" id="item">My Iteams</button>
+                    <button type="button" class="btn  mb-2" onclick="showOrdersTable()" id="orders">Orders</button><!-- other user bought items-->
+                    <button type="button" class="btn  mb-2" onclick="showItemTable()" id="item">My Iteams</button>
 
                 </div>
-                <div class="col-md-8 pt-4  mx-auto mt-5 " id="personalinfo"><!--personal information -->
+                <div class="col-md-8 p-4  mx-auto my-5 " id="personalinfo"><!--personal information -->
                     <?php if (isset($_SESSION['success'])) { ?><!--change personal information-->
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <strong><?php echo $_SESSION['success']; ?></strong>
@@ -138,9 +142,9 @@ if (isset($_SESSION['userid'])) {
                     <?php unset($_SESSION['perror']);
                     } ?>
 
-                    <form><!--from-->
+                    <form style="margin:25px auto;"><!--from-->
                         <div class="row mb-3">
-                            <div class="col-md-6">
+                            <div class="col-md-6 mb-3">
                                 <label for="" class="form-label">First Name</label>
                                 <input type="text" class="form-control" placeholder="<?php echo ucfirst($row['firstname']); ?>" name="fname" id="name" disabled>
                             </div>
@@ -151,11 +155,11 @@ if (isset($_SESSION['userid'])) {
 
                         </div>
                         <div class="row mb-3">
-                            <div class="col-md-6">
+                            <div class="col-md-6 mb-3">
                                 <label for="" class="form-label">Email</label>
                                 <input type="email" class="form-control" placeholder="<?php echo $row['email']; ?>" id="email" name="email" disabled>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 mb-3">
                                 <label for="" class="form-label">Phone Number</label>
                                 <input type="tel" class="form-control" placeholder="<?php echo $row['phonenum']; ?>" name="phoneno" id="phoneno" disabled>
                             </div>
@@ -164,7 +168,7 @@ if (isset($_SESSION['userid'])) {
 
                     </form><!--form end-->
 
-                    <div class="float-sm-end me-4"><button type="button" class="btn btn-outline-warning p-btn" data-bs-toggle="modal" data-bs-target="#changeimgModal" style="--bs-btn-color:#FFFF;--bs-btn-bg:#897062;--bs-btn-border-color:none; --bs-btn-hover-bg:#FFA500;">Change Profile picture</button></div>
+                    <div class="float-sm-end"><button type="button" class="btn btn-outline-warning p-btn m-3" data-bs-toggle="modal" data-bs-target="#changeimgModal" style="--bs-btn-color:#FFFF;--bs-btn-bg:#897062;--bs-btn-border-color:none; --bs-btn-hover-bg:#FFA500;">Change Profile picture</button></div>
                     <div class="modal fade" id="changeimgModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content" style="background:#AE9D92;color:#ffff;">
@@ -190,7 +194,7 @@ if (isset($_SESSION['userid'])) {
                     </div>
 
                     <!-- Change Password Button -->
-                    <div class="float-sm-end me-4"><button type="button" class="btn btn-outline-warning p-btn" data-bs-toggle="modal" data-bs-target="#changePasswordModal" style="--bs-btn-color:#FFFF;--bs-btn-bg:#897062;--bs-btn-border-color:none; --bs-btn-hover-bg:#FFA500;">Change Password</button></div>
+                    <div class="float-sm-end"><button type="button" class="btn btn-outline-warning p-btn m-3" data-bs-toggle="modal" data-bs-target="#changePasswordModal" style="--bs-btn-color:#FFFF;--bs-btn-bg:#897062;--bs-btn-border-color:none; --bs-btn-hover-bg:#FFA500;">Change Password</button></div>
 
                     <!-- Change Password Modal -->
                     <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
@@ -310,7 +314,7 @@ if (isset($_SESSION['userid'])) {
 
                                             <!-- Modal delete -->
                                             <div class="modal fade" id="<?php echo $modalId; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="<?php echo $modalId; ?>Label" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered modal-sm">
+                                                <div class="modal-dialog  modal-sm">
                                                     <div class="modal-content" style="background:#AE9D92;color:#ffff;">
                                                         <div class="modal-header">
                                                             <h4 class="modal-title fs-5" id="<?php echo $modalId; ?>Label">Do you Want to Delete?<strong><?php echo ucwords($row['itemname']); ?></strong></h4>
@@ -338,30 +342,197 @@ if (isset($_SESSION['userid'])) {
                     <?php } ?>
                 </div>
 
-                <div class="col-md-9 py-2 mt-5" id="producttable" style="display:none;"><!--order table-->
-                    <table class="table  table-striped table-hover table-sm">
-                        <thead>
-                            <tr class="table-primary">
-                                <th scope="col">Product_Id</th>
-                                <th scope="col">Product_Name</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td><button type="button" class="btn btn-outline-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;"> Edit</button>&nbsp;&nbsp;
-                                    <button type="button" class="btn btn-outline-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .6rem; --bs-btn-font-size: .75rem;"> Delete</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="col-md-9 py-2 mt-5 table-responsive overflow-auto" id="producttable" style="display:none;max-height: 400px;"><!--my order table-->
+                    <?php if (!empty($_GET['s'])) {
+                        if ($_GET['s'] == 1) { ?>
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Order Confirm Success</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                    <?php }
+                    } ?>
+                    <?php
+                    $obj = new MyOrders($userid);
+                    $rows = $obj->getOrderDetails($con);
+                    if (!empty($rows)) { ?>
+                        <table class="table table-striped table-hover table-sm">
+                            <thead>
+                                <tr class="table-primary">
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Tracking Number</th>
+                                    <th scope="col">Order Confirm</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($rows as $row) { ?>
+                                    <tr class="vertical-center">
+                                        <td><img src="<?php echo $row['coverimage']; ?>" class="table-image"></td>
+                                        <th scope="row"><?php echo $row['itemname']; ?></th>
+                                        <td><?php echo $row['price']; ?></td>
+                                        <td><?php echo $row['order_date']; ?></td>
+                                        <td><?php echo $row['trackingnum']; ?></td>
+                                        <td>
+                                            <!-- Confirm button triggers the modal -->
+                                            <?php if ($row['order_status'] == 0) { ?>
+                                                <button type="button" class="btn btn-outline-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#confirmModal"
+                                                    data-orderid="<?php echo $row['order_id']; ?>"
+                                                    data-itemname="<?php echo $row['itemname']; ?>">
+                                                    Confirm Order Received
+                                                </button>
+
+                                            <?php } else { ?>
+                                                <button type="button" class="btn btn-success disabled" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;">
+                                                    Recived
+                                                </button>
+                                            <?php } ?>
+
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    <?php } else { ?>
+                        <h2>No Bought Items</h2>
+                    <?php } ?>
+                    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true"><!--model confirm-->
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmModalLabel">Confirm Order</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <!-- Form confirm -->
+                                <form action="../control/confirm_order.php" method="POST" id="confirmOrderForm">
+                                    <div class="modal-body">
+                                        Are you sure you want to confirm the order for <strong id="modalItemName"><?php echo $row['itemname']; ?></strong>?
+                                        <input type="hidden" name="orderid" id="modalOrderId" value=<?php echo $row['order_id']; ?>>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-success">Confirm Order</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="col-md-9 py-2 mt-5 table-responsive overflow-auto" id="ordertable" style="display:none;max-height: 400px;"><!--orders table-->
+                    <?php if (!empty($_GET['s']) && $_GET['s'] == 1) { ?>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Order Confirmed Successfully</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php } ?>
+                    <?php if (!empty($_GET['d']) && $_GET['d'] == 1) { ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Order Canceled</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php } ?>
+
+                    <!-- Fetch and Display Orders -->
+                    <?php
+                    $obj = new Orders($userid);
+                    $rows = $obj->getOrderDetails($con);
+                    if (!empty($rows)) { ?>
+                        <table class="table table-striped table-hover table-sm">
+                            <thead>
+                                <tr class="table-primary">
+                                    <th scope="col">Order ID</th>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Price (Rs.)</th>
+                                    <th scope="col">Customer Name</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($rows as $row) {
+                                    $cancelModalId = "cancelModal" . $row['order_id'];
+                                    $confirmModalId = "confirmModal" . $row['order_id'];
+                                ?>
+                                    <tr>
+                                        <td><?php echo $row['order_id']; ?></td>
+                                        <td><?php echo ucwords($row['itemname']); ?></td>
+                                        <td><?php echo $row['price']; ?></td>
+                                        <td><?php echo ucfirst($row['firstname'])." ".ucfirst($row['lastname']); ?></td>
+                                        <td><?php echo $row['order_date']; ?></td>
+                                        <td>
+                                            <?php if ($row['confirm'] == 0) { ?>
+                                                <!-- Confirm Button -->
+                                                <button type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#<?php echo $confirmModalId; ?>">
+                                                    Confirm
+                                                </button>
+                                                <!-- Cancel Button -->
+                                                <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#<?php echo $cancelModalId; ?>">
+                                                    Cancel
+                                                </button>
+
+                                                <!-- Confirm Modal -->
+                                                <div class="modal fade" id="<?php echo $confirmModalId; ?>" tabindex="-1" aria-labelledby="<?php echo $confirmModalId; ?>Label" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content" style="background:#AE9D92; color:#fff;">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="<?php echo $confirmModalId; ?>Label">Confirm Order</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Do you want to confirm the order for <strong><?php echo ucwords($row['itemname']); ?></strong>?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <form action="../control/confirm_seller_orders.php" method="post">
+                                                                    <input type="hidden" name="orderid" value="<?php echo $row['order_id']; ?>">
+                                                                    <button type="submit" class="btn btn-success">Confirm Order</button>
+                                                                </form>
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Cancel Modal -->
+                                                <div class="modal fade" id="<?php echo $cancelModalId; ?>" tabindex="-1" aria-labelledby="<?php echo $cancelModalId; ?>Label" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content" style="background:#AE9D92; color:#fff;">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="<?php echo $cancelModalId; ?>Label">Cancel Order</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Are you sure you want to cancel the order for <strong><?php echo ucwords($row['itemname']); ?></strong>?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <form action="../control/Delete_order.php" method="post">
+                                                                    <input type="hidden" name="orderid" value="<?php echo $row['order_id']; ?>">
+                                                                    <button type="submit" class="btn btn-danger">Cancel Order</button>
+                                                                </form>
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <!-- Confirmed Button -->
+                                                <button type="button" class="btn btn-success btn-sm" disabled>
+                                                    Confirmed
+                                                </button>
+                                            <?php } ?>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    <?php } else { ?>
+                        <h2>No Items Yet</h2>
+                    <?php } ?>
+                </div>
+
             </div>
 
         </div>

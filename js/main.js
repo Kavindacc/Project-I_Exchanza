@@ -12,13 +12,17 @@ function showItemTable() {//iteam button disable
     document.getElementById('itemtable').style.display = 'block';
     document.getElementById('producttable').style.display = 'none';
     document.getElementById('personalinfo').style.display='none';
+    document.getElementById('ordertable').style.display = 'none';
     document.getElementById('item').disabled = true;
     document.getElementById('order').disabled = false;
+    document.getElementById('orders').disabled = false;
     document.getElementById('information').disabled = false;
     document.getElementById('item').style.background = '#4c3f31';
     document.getElementById('item').style.color = 'white';
     document.getElementById('order').style.background = '';
     document.getElementById('order').style.color = '';
+    document.getElementById('orders').style.background = '';
+    document.getElementById('orders').style.color = '';
     document.getElementById('information').style.background = '';
     document.getElementById('information').style.color = '';  
     
@@ -29,11 +33,35 @@ function showOrderTable() {//order button disable
     document.getElementById('itemtable').style.display = 'none';
     document.getElementById('producttable').style.display = 'block';
     document.getElementById('personalinfo').style.display='none';
+    document.getElementById('ordertable').style.display = 'none';
     document.getElementById('order').disabled = true;
     document.getElementById('item').disabled = false;
+    document.getElementById('orders').disabled = false;
     document.getElementById('information').disabled = false;
     document.getElementById('order').style.background = '#4c3f31';
     document.getElementById('order').style.color = 'white';
+    document.getElementById('item').style.background = '';
+    document.getElementById('item').style.color = '';
+    document.getElementById('information').style.background = '';
+    document.getElementById('information').style.color = '';
+    document.getElementById('orders').style.background = '';
+    document.getElementById('orders').style.color = '';
+   
+}
+
+function showOrdersTable() {//order button disable
+    document.getElementById('itemtable').style.display = 'none';
+    document.getElementById('ordertable').style.display = 'block';
+    document.getElementById('producttable').style.display = 'none';
+    document.getElementById('personalinfo').style.display='none';
+    document.getElementById('order').disabled = false;
+    document.getElementById('item').disabled = false;
+    document.getElementById('orders').disabled = true;
+    document.getElementById('information').disabled = false;
+    document.getElementById('orders').style.background = '#4c3f31';
+    document.getElementById('orders').style.color = 'white';
+    document.getElementById('order').style.background = '';
+    document.getElementById('order').style.color = '';
     document.getElementById('item').style.background = '';
     document.getElementById('item').style.color = '';
     document.getElementById('information').style.background = '';
@@ -45,15 +73,19 @@ function showInformation(){//information button disable
     document.getElementById('personalinfo').style.display='block';
     document.getElementById('itemtable').style.display = 'none';
     document.getElementById('producttable').style.display = 'none';
+    document.getElementById('ordertable').style.display = 'none';
     document.getElementById('information').disabled = true;
     document.getElementById('order').disabled = false;
     document.getElementById('item').disabled = false;
+    document.getElementById('orders').disabled = false;
     document.getElementById('information').style.background = '#4c3f31';
     document.getElementById('information').style.color = 'white';
     document.getElementById('item').style.background = '';
     document.getElementById('item').style.color = '';
     document.getElementById('order').style.background = ''; 
     document.getElementById('order').style.color = '';
+    document.getElementById('orders').style.background = '';
+    document.getElementById('orders').style.color = '';
     
 }
 
