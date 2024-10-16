@@ -12,10 +12,14 @@ $admin = new Admin($dbConnector->getConnection());
 <div class="row">
     <div class="col-md-12">
 
-        <?php if (isset($_SESSION['message'])) : ?>
-            <h6 class="alert alert-success"><?= $_SESSION['message']; ?></h6>
-            <?php unset($_SESSION['message']); ?>
-        <?php endif; ?>
+    <?php if (isset($_SESSION['message'])) : ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <?= $_SESSION['message']; ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <?php unset($_SESSION['message']); ?>
+<?php endif; ?>
+
 
         <div class="card">
             <div class="card-header">
@@ -57,11 +61,19 @@ $admin = new Admin($dbConnector->getConnection());
                                     <td><?= $row['status'] === 'banned' ? 'Banned' : 'Active'; ?></td>
 
                                     <td>
-                                        <a href="../control/ban-user.php?id=<?= $row['userid']; ?>"
-                                            style="background-color:#897062; color:white;"
-                                            class="btn btn-sm"
-                                            onclick="return confirm('Are you sure you want to ban this user?')">Ban user</a>
+                                        <?php if ($row['status'] === 'banned'): ?>
+                                            <a href="../control/activate-user.php?id=<?= $row['userid']; ?>"
+                                                style="background-color:green; color:white;"
+                                                class="btn btn-sm"
+                                                onclick="return confirm('Are you sure you want to activate this user?')">Activate</a>
+                                        <?php else: ?>
+                                            <a href="../control/ban-user.php?id=<?= $row['userid']; ?>"
+                                                style="background-color:#897062; color:white;"
+                                                class="btn btn-sm"
+                                                onclick="return confirm('Are you sure you want to ban this user?')">Ban user</a>
+                                        <?php endif; ?>
                                     </td>
+
 
                                 </tr>
                             <?php

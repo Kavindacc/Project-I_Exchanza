@@ -33,11 +33,17 @@ class Admin
     }
 
     public function banUser($userId)
-{
-    
-    $stmt = $this->pdo->prepare("UPDATE user SET status = 'banned' WHERE userid = :userId");
-    return $stmt->execute(['userId' => $userId]);
-}
+    {
+
+        $stmt = $this->pdo->prepare("UPDATE user SET status = 'banned' WHERE userid = :userId");
+        return $stmt->execute(['userId' => $userId]);
+    }
+
+    public function activateUser($userId)
+    {
+        $stmt = $this->pdo->prepare("UPDATE user SET status = 'active' WHERE userid = :userId");
+        return $stmt->execute(['userId' => $userId]);
+    }
 
 
     public function getUsers()
