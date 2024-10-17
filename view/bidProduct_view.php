@@ -3,7 +3,7 @@ require_once '../model/DbConnector.php';
 include_once '../model/wishlist.php';
 include_once '../model/addtocart.php'; 
 session_start();
-date_default_timezone_set('Asia/Colombo');l
+date_default_timezone_set('Asia/Colombo');  
 
 if (isset($_GET['itemid'])) {
     $itemid = $_GET['itemid'];
