@@ -423,7 +423,7 @@ if (isset($_SESSION['userid'])) {
             </div>
         </div>
         <!--iteam-->
-        <div class="item d-flex justify-content-around flex-column flex-md-row">
+        <div class="item d-flex justify-content-around flex-column flex-sm-row">
             <div class="d-flex flex-column  p-4 side side-left">
                 <div class="icon"><i class="fa-solid fa-recycle" style="font-size:50px;"></i>
                 </div><br>
