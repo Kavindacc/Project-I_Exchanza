@@ -205,7 +205,7 @@ if (isset($_SESSION['userid'])) {
                 </div>
             </div>
         </div>
-        <!--iteam-->
+        <!--item-->
         <div class="item d-flex justify-content-around flex-column flex-md-row">
             <div class="d-flex flex-column  p-4 side side-left">
                 <div class="icon"><i class="fa-solid fa-recycle" style="font-size:50px;"></i>
@@ -235,7 +235,7 @@ if (isset($_SESSION['userid'])) {
             </div>
         </div>
 
-        <!--footer-->
+        <!-- new footer-->
         <div class="container-fluid footer">
             <div class="container p-3">
                 <div class="row">
@@ -245,27 +245,31 @@ if (isset($_SESSION['userid'])) {
                 </div>
                 <div class="row  mt-4" style="border-bottom:1px solid black;">
                     <div class="col-sm-6 col-md-4 text-center text-md-start ">
-                        <p class=""><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;+94 112 565 444</p>
-                        <p class=""><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;exchanza@gmail.com</p>
-                        <p class=""><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;No.56/2,Kotta Rd,Colombo
-                            05,<br>&nbsp;&nbsp;&nbsp;&nbsp;Sri Lanka</p>
+                        
+                        <p><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['phone']) ?></p>
+                        <p><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['email']) ?></p>
+                        <p><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['address']) ?></p>
                     </div>
                     <div class="col-sm-6 col-md-4 text-center text-md-start lin">
                         <h5>Information</h5>
                         <p><a href="#1">Privacy &amp; Policy</a></p>
                         <p><a href="#1">About Us</a></p>
                         <p><a href="#1">Terms &amp; Condition</a></p>
+                        <p><a href="view/enquiry.php">Enquire Now </a></p>
                     </div>
-                    <div class=" col-md-4 text-center text-md-start  lin">
+                    <div class="col-md-4 text-center text-md-start lin">
                         <h5>Connect with Us</h5>
-                        <p><a href=""><i class="fa-brands fa-facebook" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><i class="fa-brands fa-instagram" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><i class="fa-brands fa-youtube" style="font-size:50px;"></i></a></p>
+                        <p>
+                            <a href="<?= htmlspecialchars($settings['facebook_link']) ?>"target="_blank"><i class="fa-brands fa-facebook" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="<?= htmlspecialchars($settings['instagram_link']) ?>"target="_blank"><i class="fa-brands fa-instagram" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="<?= htmlspecialchars($settings['youtube_link']) ?>"target="_blank"><i class="fa-brands fa-youtube" style="font-size:50px;"></i></a>
+                        </p>
                     </div>
                 </div>
                 <div class="row mt-2 text-center text-md-none">
                     <div class="d-flex justify-content-between flex-column flex-md-row">
                         <div><i class="fa-brands fa-cc-visa" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-mastercard" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-amex" style="font-size:50px;"></i></div>
                         <div>&copy;Exchanze All Rights are reserved</div>
-
                     </div>
                 </div>
             </div>
@@ -364,7 +368,7 @@ if (isset($_SESSION['userid'])) {
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
-        <!--trift,bit container-->
+        <!--trift,bid container-->
         <div class="thirf d-flex flex-row thirf-left thirf-one">
             <div class="pic">
                 <img src="img/pexels-kseniachernaya-3965545.jpg" width="100%">
@@ -402,7 +406,7 @@ if (isset($_SESSION['userid'])) {
             </div>
         </div>
 
-        <!--treanding-->
+        <!--trending-->
         <div class="mx-auto px-4 my-5 tread">
             <div class="row p-3">
                 <div class="col">
@@ -444,7 +448,7 @@ if (isset($_SESSION['userid'])) {
                 </div>
             </div>
         </div>
-        <!--iteam-->
+        <!--item-->
         <div class="item d-flex justify-content-around flex-column flex-md-row">
             <div class="d-flex flex-column  p-4 side side-left">
                 <div class="icon"><i class="fa-solid fa-recycle" style="font-size:50px;"></i>
@@ -494,6 +498,7 @@ if (isset($_SESSION['userid'])) {
                         <p><a href="#1">Privacy &amp; Policy</a></p>
                         <p><a href="#1">About Us</a></p>
                         <p><a href="#1">Terms &amp; Condition</a></p>
+                        <p><a href="view/enquiry.php">Enquire Now </a></p>
                     </div>
                     <div class="col-md-4 text-center text-md-start lin">
                         <h5>Connect with Us</h5>
