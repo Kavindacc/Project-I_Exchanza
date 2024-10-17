@@ -277,7 +277,7 @@ if (isset($_SESSION['userid'])) {
                         <div class="modal-dialog ">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id=id="<?php echo $modalId; ?>">Modal title</h1>
+                                    <h1 class="modal-title fs-5" id=id="<?php echo $modalId; ?>">Item Details</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <!-- item details-->
