@@ -338,7 +338,7 @@ if (isset($_SESSION['userid'])) {
 
     <?php }
             } else { ?>
-    <h2>No Iteam</h2>
+    <h2>No Items</h2>
 <?php } ?>
 
 
@@ -620,7 +620,7 @@ if (isset($_SESSION['userid'])) {
                     </div>
                 <?php }*/
             } else { ?>
-                <h2>No Iteam</h2>
+                <h2>No Items</h2>
             <?php } ?>
 
 
