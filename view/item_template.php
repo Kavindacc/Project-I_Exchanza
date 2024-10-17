@@ -295,9 +295,9 @@ if (isset($_SESSION['userid'])) {
                                         <form action="../control/wishlistcon.php" method="post">
                                             <input type="hidden" name="productid" value="<?php echo $row['itemid']; ?>">
                                             <input type="hidden" name="userid" value="<?php echo $userid; ?>">
-                                            <input type="hidden" name="cat" value="<?php echo  $category; ?>">
+                                            <input type="hidden" name="cat" value="<?php echo $category; ?>">
                                             <input type="hidden" name="sub" value="<?php echo $subcategory; ?>">
-                                            <button type="submit" class="btn btn-primary mt-2  equal-width" name="wishlist" style="--bs-btn-color:black;--bs-btn-bg:none;--bs-btn-border-color:black; --bs-btn-hover-bg:#4c3f31;">
+                                            <button type="submit" class="btn btn-primary mt-2 equal-width" name="wishlist" style="--bs-btn-color:white; --bs-btn-bg:#4c3f31; --bs-btn-border-color:white; --bs-btn-hover-bg:#3e2f23;">
                                                 <i class="fa-regular fa-heart"></i>&nbsp;Add to Wishlist
                                             </button>
                                         </form>
@@ -306,6 +306,8 @@ if (isset($_SESSION['userid'])) {
                             </div>
                         </div>
                     </div>
+
+
         </div>
 
     <?php }

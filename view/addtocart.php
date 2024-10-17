@@ -106,6 +106,7 @@ if (isset($_SESSION['userid'])) {
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Subtotal</th>
+                <th></th>
             </tr>
         </thead>
             <?php 
