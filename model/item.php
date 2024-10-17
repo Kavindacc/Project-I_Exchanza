@@ -202,7 +202,7 @@ class Thrift extends Item
     public function getThriftItemsLogin($con)
     {
         try {
-            $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE t.user_id = ? AND i.category=? AND i.subcategory=?"; //change it
+            $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE t.user_id != ? AND i.category=? AND i.subcategory=?"; //change it
             $pstmt = $con->prepare($sql);
             $pstmt->bindValue(1, $this->userid);
             $pstmt->bindValue(2, $this->category);
