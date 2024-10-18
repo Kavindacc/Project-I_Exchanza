@@ -224,3 +224,29 @@ input[type=submit]:hover{
         margin-bottom: .6rem;
     }
 }
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    display: none; /* Hide dropdown by default */
+    position: absolute;
+    background-color: #fff;
+    min-width: 160px;
+    border: 1px solid #ccc;
+    z-index: 1;
+}
+
+.dropdown-menu.show {
+    display: block; /* Show dropdown when class is added */
+}
+
+.dropdown-item {
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #f1f1f1;
+}

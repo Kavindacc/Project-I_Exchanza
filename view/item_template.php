@@ -95,32 +95,67 @@ if (isset($_SESSION['userid'])) {
 
             <div class="d-flex justify-left gap-2">
 
-                <div class="dropdown">
+            <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Sort
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="sortDropdown">
-                        <li><a class="dropdown-item" href="#">Price: Low to High</a></li>
-                        <li><a class="dropdown-item" href="#">Price: High to Low</a></li>
-                        <li><a class="dropdown-item" href="#">Newest Arrivals</a></li>
+                        <li><a class="dropdown-item" href="item_template.php?price=LH">Price: Low to High</a></li>
+                        <li><a class="dropdown-item" href="item_template.php?price=HL">Price: High to Low</a></li>
+                        <li><a class="dropdown-item" href="item_template.php?price=NA">Newest Arrivals</a></li>
                     </ul>
                 </div>
+
                 <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Filter
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="filterDropdown">
-                        <li><a class="dropdown-item" href="#">Category</a></li>
-                        <li><a class="dropdown-item" href="#">Type</a></li>
-                        <li><a class="dropdown-item" href="#">Size</a></li>
+                        <li class="dropdown-submenu dropend">
+                        <a class="dropdown-item dropdown-toggle" href="#" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">Category</a>
+                            <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+
+                        <?php if ($category == "women") {?>
+                                <li><a class="dropdown-item" href="item_template.php?item=tops">Tops</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?item=dress">Dresses</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?item=pants">Pants</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?item=accss">Accessories</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?item=bags">Bags</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?item=shoes">Shoes</a></li>
+
+                        <?php } 
+                            elseif($category == "men"){?>
+                                <li><a class="dropdown-item" href="item_template.php?item=ts">T Shirts</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?item=shirts">Shirts</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?item=denim">Pants</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?item=suits">Suits</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?item=acs">Accessories</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?item=ms">Shoes</a></li>
+                        <?php } 
+                        
+                            else { ?>
+                                <li><a class="dropdown-item" href="item_template.php?price=toy">Toys</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?price=Kacs">Accessories</a></li>
+
+                        <?php } ?>
+
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown-submenu dropend">
+                        <a class="dropdown-item dropdown-toggle" href="#" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">Size</a>
+                            <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+                                <li><a class="dropdown-item" href="item_template.php?size=xs">XS</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?size=s">S</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?size=m">M</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?size=l">L</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?size=xl">XL</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?size=other">Other</a></li>
+                            </ul>
+                        </li>
+
                         <li><a class="dropdown-item" href="#">Colour</a></li>
                     </ul>
-                </div>
-            </div>
-
-            <div class="collapse mb-4" id="filterOptions">
-                <div class="card card-body">
-                    <!-- Filter options methna danna -->
                 </div>
             </div>
         </div>
@@ -346,6 +381,7 @@ if (isset($_SESSION['userid'])) {
 
 <script src="https://unpkg.com/scrollreveal"></script>
 <script src="../js/main.js"></script>
+<script src="../js/itemtemp.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>
 
@@ -424,34 +460,84 @@ if (isset($_SESSION['userid'])) {
 
             <div class="d-flex justify-left gap-2">
 
-                <div class="dropdown">
+            <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Sort
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="sortDropdown">
-                        <li><a class="dropdown-item" href="#">Price: Low to High</a></li>
-                        <li><a class="dropdown-item" href="#">Price: High to Low</a></li>
-                        <li><a class="dropdown-item" href="#">Newest Arrivals</a></li>
+                        <li><a class="dropdown-item" href="item_template.php?price=LH">Price: Low to High</a></li>
+                        <li><a class="dropdown-item" href="item_template.php?price=HL">Price: High to Low</a></li>
+                        <li><a class="dropdown-item" href="item_template.php?price=NA">Newest Arrivals</a></li>
                     </ul>
                 </div>
+
                 <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Filter
                     </button>
+                    
+
+
                     <ul class="dropdown-menu" aria-labelledby="filterDropdown">
-                        <li><a class="dropdown-item" href="#">Category</a></li>
-                        <li><a class="dropdown-item" href="#">Type</a></li>
-                        <li><a class="dropdown-item" href="#">Size</a></li>
+                    <li class="dropdown-submenu dropend">
+                        <a class="dropdown-item dropdown-toggle" href="#" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">Category</a>
+                            <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+                                <li><a class="dropdown-item" href="thrift.php">Women</a></li>
+                                <li><a class="dropdown-item" href="thrift_men.php?size=s">Men</a></li>
+                                <li><a class="dropdown-item" href="thrift kids.php?size=m">Kids</a></li>
+ 
+                            </ul>
+                        </li>
+
+
+                        <li class="dropdown-submenu dropend">
+                        <a class="dropdown-item dropdown-toggle" href="#" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">Sub Category</a>
+                            <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+
+                        <?php if ($category == "women") {?>
+                                <li><a class="dropdown-item" href="item_template.php?item=tops">Tops</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?item=dress">Dresses</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?item=pants">Pants</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?item=accss">Accessories</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?item=bags">Bags</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?item=shoes">Shoes</a></li>
+
+                        <?php } 
+                            elseif($category == "men"){?>
+                                <li><a class="dropdown-item" href="item_template.php?item=ts">T Shirts</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?item=shirts">Shirts</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?item=denim">Pants</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?item=suits">Suits</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?item=acs">Accessories</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?item=ms">Shoes</a></li>
+                        <?php } 
+                        
+                            else { ?>
+                                <li><a class="dropdown-item" href="item_template.php?price=toy">Toys</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?price=Kacs">Accessories</a></li>
+
+                        <?php } ?>
+
+                            </ul>
+                        </li>
+
+                        <li class="dropdown-submenu dropend">
+                        <a class="dropdown-item dropdown-toggle" href="#" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">Size</a>
+                            <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+                                <li><a class="dropdown-item" href="item_template.php?size=xs">XS</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?size=s">S</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?size=m">M</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?size=l">L</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?size=xl">XL</a></li>
+                                <li><a class="dropdown-item" href="item_template.php?size=other">Other</a></li>
+                            </ul>
+                        </li>
+
                         <li><a class="dropdown-item" href="#">Colour</a></li>
                     </ul>
                 </div>
             </div>
 
-            <div class="collapse mb-4" id="filterOptions">
-                <div class="card card-body">
-                    <!-- Filter options methna danna -->
-                </div>
-            </div>
         </div>
         <div class="container d-flex justify-content-start mt-2"><!--close button-->
             <?php if (isset($_SESSION['msg'])) { ?>
@@ -494,8 +580,8 @@ if (isset($_SESSION['userid'])) {
             $user->setSubCategory($subcategory);
             // $rows = $user->getThriftItems($con);
 
-            if (isset($_GET['selected_size'])) {
-                $size = $_GET['selected_size'];
+            if (isset($_GET['size'])) {
+                $size = $_GET['size'];
                 $rows = $user->getThriftItemsBySize($con, $size);
             } elseif (isset($_GET['price'])) {
                 $price = $_GET['price'];
@@ -637,7 +723,10 @@ if (isset($_SESSION['userid'])) {
         </div>
         <script src="https://unpkg.com/scrollreveal"></script>
         <script src="../js/main.js"></script>
+        <script src="../js/itemtemp.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+
     </body>
 
     </html>
