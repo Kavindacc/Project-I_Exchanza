@@ -2,7 +2,7 @@
 
 class DbConnector{
 
-    private $hostname="localhost";
+    private $hostname="localhost:3308";
     private $dbname="exchanze";
     private $dbuser="root";
     private $dbpw="";

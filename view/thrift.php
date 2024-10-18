@@ -16,7 +16,7 @@ include_once '../model/addtocart.php'; ?>
     <title>Thrift</title>
 </head>
 
-<body style="background: none;">
+<body>
     <!--nav bar-->
     <nav class="navbar navbar-expand-lg sticky-top nav">
         <div class="container-fluid logo"><!--logo-->

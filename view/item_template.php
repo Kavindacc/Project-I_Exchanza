@@ -492,7 +492,17 @@ if (isset($_SESSION['userid'])) {
             $user = new Thrift();
             $user->setCategory($category);
             $user->setSubCategory($subcategory);
-            $rows = $user->getThriftItems($con);
+            // $rows = $user->getThriftItems($con);
+
+            if (isset($_GET['selected_size'])) {
+                $size = $_GET['selected_size'];
+                $rows = $user->getThriftItemsBySize($con, $size);
+            } elseif (isset($_GET['price'])) {
+                $price = $_GET['price'];
+                $rows = $user->getThriftItemsBySort($con, $price);
+            } else {
+                $rows = $user->getThriftItemsLogin($con);
+            }
             if (!empty($rows)) {
                 foreach ($rows as $row) {
                     $modalId = $row['itemid']; ?>

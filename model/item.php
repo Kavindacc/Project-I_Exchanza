@@ -228,4 +228,54 @@ class Thrift extends Item
             echo "Error: " . $e->getMessage();
         }
     }
+    public function getThriftItemsBySize($con, $size)
+    {
+        try {
+            $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE i.size = ?"; // Adjust query to include size
+            $pstmt = $con->prepare($sql);
+            $pstmt->bindValue(1, $size); // Bind the size parameter
+            $pstmt->execute();
+            $rows = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            return $rows;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+    public function getThriftItemsBySort($con,$price){
+        if($price=="LH"){
+            try {
+                $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid ORDER BY price ASC"; 
+                $pstmt = $con->prepare($sql);
+                $pstmt->execute();
+                $rows = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+                return $rows;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        }
+        elseif($price=="HL"){
+            try {
+                $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid ORDER BY price DESC"; 
+                $pstmt = $con->prepare($sql);
+                $pstmt->execute();
+                $rows = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+                return $rows;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        }else{
+            try {
+                $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid ORDER BY itemID DESC"; 
+                $pstmt = $con->prepare($sql);
+                $pstmt->execute();
+                $rows = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+                return $rows;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        }
+
+    }
+
 }
