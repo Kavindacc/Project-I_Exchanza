@@ -20,9 +20,9 @@ class Admin
         return 10; // Placeholder
     }
 
-    public function getTotalFeedbacks()
+    public function getTotalEnquiries()
     {
-        $stmt = $this->pdo->query("SELECT COUNT(*) as total FROM messages");
+        $stmt = $this->pdo->query("SELECT COUNT(*) as total FROM enquiries");
         return $stmt->fetch()['total'];
     }
 
@@ -45,6 +45,7 @@ class Admin
         return $stmt->execute(['userId' => $userId]);
     }
 
+    
 
     public function getUsers()
     {
@@ -147,4 +148,6 @@ class Admin
         session_unset();
         session_destroy();
     }
+
+
 }

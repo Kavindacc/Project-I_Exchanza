@@ -122,7 +122,7 @@ class User
             $pstmt->execute();
             $row = $pstmt->fetch(PDO::FETCH_ASSOC);
             if ($row) {
-                if (password_verify($this->password, $row['password']) && $row['status']=="active") {
+                if (password_verify($this->password, $row['password']) && $row['status'] == "active") {
                     $_SESSION['userid'] = $row['userid'];
                     $_SESSION['name'] = $row['firstname'] . ' ' . $row['lastname'];
                     return true;
@@ -131,6 +131,24 @@ class User
                 }
             } else {
                 return false;
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+    function saveEnquiry($con, $name, $email, $subject, $message)
+    {
+        try {
+            $sql = "INSERT INTO enquiries (name, email, subject, message) VALUES (?, ?, ?, ?)";
+            $pstmt = $con->prepare($sql);
+            $pstmt->bindValue(1, $name);
+            $pstmt->bindValue(2, $email);
+            $pstmt->bindValue(3, $subject);
+            $pstmt->bindValue(4, $message);
+            $pstmt->execute();
+
+            if ($pstmt->rowCount() > 0) {
+                return true;
             }
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
