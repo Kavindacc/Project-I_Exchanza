@@ -86,6 +86,43 @@ class Item
         }
     }
 
+    public function addItemForStore($con)
+    {
+        try {
+            $sql = "INSERT INTO storeitems(itemname, price, color, description, category, subcategory, size, coverimage, otherimage, userid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $pstmt = $con->prepare($sql);
+            $pstmt->bindValue(1, $this->itemname);
+            $pstmt->bindValue(2, $this->price);
+            $pstmt->bindValue(3, $this->color);
+            $pstmt->bindValue(4, $this->description);
+            $pstmt->bindValue(5, $this->category);
+            $pstmt->bindValue(6, $this->subcategory);
+            $pstmt->bindValue(7, $this->size);
+            $pstmt->bindValue(8, $this->coverimage);
+            $pstmt->bindValue(9, $this->otherimage);
+            $pstmt->bindValue(10, $this->userid);
+            $pstmt->execute();
+
+            if ($pstmt->rowCount() > 0) {
+                $item_id = $con->lastInsertId();
+                $sql = "INSERT INTO thrift (item_id, user_id)  VALUES (?,?)";
+                $pstmt = $con->prepare($sql);
+                $pstmt->bindValue(1, $item_id);
+                $pstmt->bindValue(2, $this->userid);
+                $pstmt->execute();
+                if ($pstmt->rowCount() > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
     public function delete($con) //item delete function
     {
         try {

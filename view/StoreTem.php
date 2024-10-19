@@ -258,7 +258,7 @@ include_once '../model/addtocart.php'; ?>
                 <div class="row">
                     <div class="col-md-6">
                         <h2 class="mb-4">Add Item to My Store</h2>
-                        <form action="../control/.php" method="post" enctype="multipart/form-data" id="resellForm"> <!--form start add to item-->
+                        <form action="../control/storecon.php" method="post" enctype="multipart/form-data" id="resellForm"> <!--form start add to item-->
                             <input type="hidden" name="userid" value="<?php echo $userid; ?>">
                             <div class="form-group">
                                 <label for="itemName" class="bold">Item Name</label>
