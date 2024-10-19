@@ -318,6 +318,16 @@ if (isset($_SESSION['userid'])) {
 
                                             </div>
                                         </div>
+                                        <!-- Wishlist Form -->
+                                        <form action="../control/wishlistcon.php" method="post">
+                                            <input type="hidden" name="productid" value="<?php echo $row['itemid']; ?>">
+                                            <input type="hidden" name="userid" value="<?php echo $userid; ?>">
+                                            <input type="hidden" name="cat" value="<?php echo $category; ?>">
+                                            <input type="hidden" name="sub" value="<?php echo $subcategory; ?>">
+                                            <button type="submit" class="btn btn-primary mt-2 equal-width" name="wishlist" style="--bs-btn-color:white; --bs-btn-bg:#4c3f31; --bs-btn-border-color:white; --bs-btn-hover-bg:#3e2f23;">
+                                                <i class="fa-regular fa-heart"></i>&nbsp;Add to Wishlist
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -325,15 +335,19 @@ if (isset($_SESSION['userid'])) {
                     </div>
 
 
-                <?php }
-            } else { ?>
-                <h2>No Iteam</h2>
-            <?php } ?>
         </div>
 
-        <script src="https://unpkg.com/scrollreveal"></script>
-        <script src="../js/main.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <?php }
+            } else { ?>
+    <h2>No Items</h2>
+<?php } ?>
+
+
+</div>
+
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="../js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>
 
     </html>
@@ -607,7 +621,7 @@ if (isset($_SESSION['userid'])) {
                     </div>
                 <?php }*/
             } else { ?>
-                <h2>No Iteam</h2>
+                <h2>No Items</h2>
             <?php } ?>
 
 
