@@ -10,7 +10,7 @@ $admin = new Admin($dbConnector->getConnection());
 // Get counts from the database
 $totalUsers = $admin->getTotalUsers();
 $totalSales = $admin->getTotalSales();
-$totalFeedbacks = $admin->getTotalFeedbacks();
+$totalEnquiries = $admin->getTotalEnquiries();
 $totalEarnings = $admin->getTotalEarnings();
 ?>
 <div class="container mt-5">
@@ -32,9 +32,9 @@ $totalEarnings = $admin->getTotalEarnings();
         <div class="col-md-6 mb-4">
             <div class="card" style="background: #D6B7A8; border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);">
                 <div class="card-body text-center">
-                    <h5 class="card-title font-weight-bold">Total Feedbacks</h5>
-                    <h2 class="font-weight-bolder mb-0"><?php echo $totalFeedbacks; ?></h2>
-                    <p class="card-text">User Feedbacks Received</p>
+                    <h5 class="card-title font-weight-bold">Total Enquiries</h5>
+                    <h2 class="font-weight-bolder mb-0"><?php echo $totalEnquiries; ?></h2>
+                    <p class="card-text">User Enquireies Received</p>
                 </div>
                 <div class="card-footer" style="background: #C99B88; border-radius: 0 0 15px 15px;">
                     <img src="path/to/feedback-icon.png" alt="Feedback Icon" style="width: 50px;">
