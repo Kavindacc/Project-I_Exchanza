@@ -75,9 +75,9 @@
 .side-panel {
     position: fixed;
     right: -250px;
-    top: 15%;
+    top: 10%;
     width: 250px;
-    height:80%;
+    height:90%;
     background-color: rgb(255, 255, 255);
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
     transition: right 0.3s ease;
@@ -222,8 +222,8 @@
 
     position: absolute;
     top: 30%;
-    right: 2%;
-    background: rgba(240, 182, 182, 0.5); /* Black background with 0.5 opacity */
+    right: -3%;
+    /* background: rgba(240, 182, 182, 0.5); */
     width: 60%; 
     /* margin-right: 5%; */
   }
@@ -404,54 +404,25 @@
 }
 
 /* stat */
-.stat .row{
-    align-items: center;
-    display:flex;
-    /* background-color:#746557; */
-    /* flex-wrap: nowrap; */
-    margin-bottom: 1%;
-    border-radius: 8px;
-    
-}
-.stat1, .stat2, .stat3 {
-    position: relative;
-    /* border: 1px solid red; */
-    box-shadow: 0 2px 8px rgba(137, 112, 98,0.677);
-    
-  }
-.stat h3 {
-    position: absolute; 
-    top: 1rem; 
-    left: 50%;
-    transform: translateX(-21%);
-      
-}
-.stat div{
-    display: flex;
-    flex: 1;
-    width:100%;
-}
-.stat p {
-    position:absolute; 
-    left: 50%;
-    transform: translateX(-21%);
-    word-wrap: break-word;
-    margin-right: 1%;  
-    margin-top: 12%;    
-}
 
 .ts1,.ts2,.ts3{
     padding: 0;
+    margin-left: 20%;
     overflow: hidden;
     display: flex;  
     justify-content: center; /* Center horizontally */
     align-items: center;     /* Center vertically */
     background-color: #897062; 
-    height: 150px;           
-    width: 150px;
+    /* height: 100px;           
+    width: 100px; */
     border-radius: 50%; 
     /* margin-right: 15px; */
     flex-shrink: 0;
+
+    width: 50%;            /* Make the image fill the parent width */
+    height: auto;           /* Maintain aspect ratio */
+   
+    object-fit: cover;    
 }
 
 /* responsive for the first part  */
