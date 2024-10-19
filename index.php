@@ -60,7 +60,7 @@ if (isset($_SESSION['userid'])) {
                             $obj = new Cart();
                             $obj->setUserId($userid);
                             $count = $obj->cartItemCount($con); ?>
-                            <a href="view/addtocart.php" class="nav-link  text-decoration-none mx-1"><i class="fa-solid fa-cart-plus position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp"><?php if (isset($count)) {
+                            <a href="../Project-I_Exchanza/view/addtocart.php" class="nav-link  text-decoration-none mx-1"><i class="fa-solid fa-cart-plus position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp"><?php if (isset($count)) {
                                                                                                                                                                                                                                         echo $count;}?></span></i></a><!--addtocart-->
                             <?php 
                            
