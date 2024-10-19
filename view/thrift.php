@@ -1,7 +1,27 @@
 <?php session_start();
 include_once '../model/DbConnector.php';
 include_once '../model/wishlist.php';
-include_once '../model/addtocart.php'; ?>
+include_once '../model/addtocart.php';
+include_once '../admin/classes/Admin.php';
+
+$settings = [
+    'email' => '',
+    'phone' => '',
+    'address' => '',
+    'facebook_link' => '',
+    'instagram_link' => '',
+    'youtube_link' => ''
+];
+$dbConnector = new DbConnector();
+$admin = new Admin($dbConnector->getConnection());
+
+$settingsFromDb = $admin->getSettings();
+
+if ($settingsFromDb) {
+    $settings = $settingsFromDb; // Overwrite default values with the actual settings
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,8 +81,8 @@ include_once '../model/addtocart.php'; ?>
                             $obj->setUserId($userid);
                             $count = $obj->cartItemCount($con); ?>
                             <a href="addtocart.php" class="nav-link  text-decoration-none mx-1"><i class="fa-solid fa-cart-plus position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp"><?php if (isset($count)) {
-                                                                                                                                                                                                                                                echo $count;
-                                                                                                                                                                                                                                            } ?></span></i></a><!--addtocart-->
+                                                                                                                                                                                                                                        echo $count;
+                                                                                                                                                                                                                                    } ?></span></i></a><!--addtocart-->
                             <?php
 
                             $obj = new wishlist();
@@ -375,33 +395,37 @@ include_once '../model/addtocart.php'; ?>
     <div class="container-fluid footer">
         <div class="container p-3">
             <div class="row">
-                <div class="col">
+                <div class="col text-center text-md-start">
                     <img src="../img/Exchanza.png" width="200px">
                 </div>
             </div>
             <div class="row  mt-4" style="border-bottom:1px solid black;">
-                <div class="col">
-                    <p class=""><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;+94 112 555 444</p>
-                    <p class=""><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;exchanza@gmail.com</p>
-                    <p class=""><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;No.56/2,Kotta Rd,Colombo
-                        05,<br>&nbsp;&nbsp;&nbsp;&nbsp;Sri Lanka</p>
+                <div class="col-sm-6 col-md-4 text-center text-md-start ">
+
+                    <p><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['phone']) ?></p>
+                    <p><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['email']) ?></p>
+                    <p><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['address']) ?></p>
                 </div>
-                <div class="col lin">
+                <div class="col-sm-6 col-md-4 text-center text-md-start lin">
                     <h5>Information</h5>
                     <p><a href="#1">Privacy &amp; Policy</a></p>
                     <p><a href="#1">About Us</a></p>
                     <p><a href="#1">Terms &amp; Condition</a></p>
+                    <p><a href="enquiry.php">Enquire Now </a></p>
                 </div>
-                <div class="col lin">
+                <div class="col-md-4 text-center text-md-start lin">
                     <h5>Connect with Us</h5>
-                    <p><a href=""><i class="fa-brands fa-facebook" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><i class="fa-brands fa-instagram" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><i class="fa-brands fa-youtube" style="font-size:50px;"></i></a></p>
+                    <p>
+                        <a href="<?= htmlspecialchars($settings['facebook_link']) ?>" target="_blank"><i class="fa-brands fa-facebook" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="<?= htmlspecialchars($settings['instagram_link']) ?>" target="_blank"><i class="fa-brands fa-instagram" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="<?= htmlspecialchars($settings['youtube_link']) ?>" target="_blank"><i class="fa-brands fa-youtube" style="font-size:50px;"></i></a>
+                    </p>
                 </div>
             </div>
-            <div class="row mt-2">
+            <div class="row mt-2 text-center text-md-none">
                 <div class="d-flex justify-content-between flex-column flex-md-row">
                     <div><i class="fa-brands fa-cc-visa" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-mastercard" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-amex" style="font-size:50px;"></i></div>
                     <div>&copy;Exchanze All Rights are reserved</div>
-
                 </div>
             </div>
         </div>
