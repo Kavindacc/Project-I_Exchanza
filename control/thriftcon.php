@@ -22,7 +22,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                 $sitemname = filter_var($itemname, FILTER_SANITIZE_STRING);        
         }
         if(is_numeric($price)){
-            $sprice=filter_var($price,FILTER_SANITIZE_NUMBER_INT);
+            $sprice=filter_var($price,FILTER_SANITIZE_NUMBER_FLOAT);
         }
         else{
             $errors[] = "Price can only number.";
