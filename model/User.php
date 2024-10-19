@@ -268,6 +268,24 @@ class RegisteredCustomer extends User
             echo "Error: " . $e->getMessage();
         }
     }
+
+    public function removeAddToCart($con)
+    {
+        try {
+            $sql = "DELETE FROM addtocart WHERE item_id=?";
+            $pstmt = $con->prepare($sql);
+            $pstmt->bindValue(1, $this->itemid);
+            $pstmt->execute();
+            if($pstmt->rowCount()>0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
 }
 
 class GeneralCustomer extends RegisteredCustomer
