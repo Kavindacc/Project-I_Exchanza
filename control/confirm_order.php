@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $obj = new MyOrders();
         $obj->setOrderId($orderid);
         if($obj->confirmReceived($con)){
-            header("Location:../view/userpage.php?s=1");
+            header("Location:../view/userpage.php?w=1");
             exit();
         }
     }
