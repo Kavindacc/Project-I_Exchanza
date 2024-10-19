@@ -12,7 +12,7 @@ if (isset($_SESSION['userid'])) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/style.css?v=<?php echo time(); ?>">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <title>index</title>
     </head>
@@ -46,7 +46,7 @@ if (isset($_SESSION['userid'])) {
                                 <a class="nav-link" href="../Project-I_Exchanza/view/bidding.php">Bidding</a>
                             </li>
                             <li class="nav-item mx-2">
-                                <a class="nav-link" href="Store Index.php">Selling</a>
+                                <a class="nav-link" href="view/storeIndex.php">Selling</a>
                             </li>
                         </ul>
 
@@ -302,7 +302,7 @@ if (isset($_SESSION['userid'])) {
                                 <a class="nav-link" href="../Project-I_Exchanza/view/bidding.php">Bidding</a>
                             </li>
                             <li class="nav-item mx-2">
-                                <a class="nav-link" href="#">Selling</a>
+                                <a class="nav-link" href="view/storeIndex.php">Selling</a>
                             </li>
                         </ul>
 
@@ -488,7 +488,7 @@ if (isset($_SESSION['userid'])) {
             </div>
         </div>
         <script src="https://unpkg.com/scrollreveal"></script>
-        <script src="view/main.js"></script>
+        <script src="view/main.js?v=<?php echo time(); ?>"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
 
