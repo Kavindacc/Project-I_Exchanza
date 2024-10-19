@@ -435,7 +435,7 @@ if (isset($_SESSION['userid'])) {
                             </tbody>
                         </table>
                     <?php } else { ?>
-                        <h2>No Bought Items</h2>
+                        <h2>No Bought Items Yet</h2>
                     <?php } ?>
                     <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true"><!--model confirm-->
                         <div class="modal-dialog">
@@ -567,7 +567,7 @@ if (isset($_SESSION['userid'])) {
                             </tbody>
                         </table>
                     <?php } else { ?>
-                        <h2>No Items Yet</h2>
+                        <h2>No Orders Yet</h2>
                     <?php } ?>
                 </div>
 
