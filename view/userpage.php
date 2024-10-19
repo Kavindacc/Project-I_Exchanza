@@ -267,6 +267,7 @@ if (isset($_SESSION['userid'])) {
                                 <?php foreach ($rows as $row) {
                                     $modalId = "staticBackdrop" . $row['itemid'];
                                     $editModalId = "editModal" . $row['itemid'];
+                                    $accordionId = "accordion" . $row['itemid'];
                                 ?>
                                     <tr class="vertical-center">
                                         <td><img src="<?php echo $row['coverimage']; ?>" class="table-image"></td>
@@ -275,66 +276,103 @@ if (isset($_SESSION['userid'])) {
                                         <td><?php echo ucfirst($row['category']); ?></td>
                                         <td><?php echo ucfirst($row['subcategory']); ?></td>
                                         <td>
-                                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#<?php echo $editModalId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;">
+                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#<?php echo $editModalId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;">
                                                 Edit
                                             </button>
-                                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#<?php echo $modalId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .6rem; --bs-btn-font-size: .75rem;">
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#<?php echo $modalId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .6rem; --bs-btn-font-size: .75rem;">
                                                 Delete
                                             </button>
-                                            <!-- Modal edit -->
-                                            <div class="modal fade" id="<?php echo $editModalId; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="<?php echo $editModalId; ?>Label" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content" style="background:#AE9D92;color:#ffff;">
-                                                        <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="<?php echo $editModalId; ?>Label">Edit Product</h1>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <form action="../control/edititemcon.php" method="POST" enctype="multipart/form-data">
-                                                                <input type="hidden" name="productid" value="<?php echo $row['itemid']; ?>">
-                                                                <div class="mb-3">
-                                                                    <label for="product_name" class="form-label">Product Name</label>
-                                                                    <input type="text" class="form-control" name="product_name" value="<?php echo ucwords($row['itemname']); ?>" required>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="price" class="form-label">Price</label>
-                                                                    <input type="text" class="form-control" name="price" value="<?php echo $row['price']; ?>" required>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="image" class="form-label">Product Image</label>
-                                                                    <input type="file" class="form-control" name="image">
-                                                                    <input type="hidden" name="current_image" value="<?php echo $row['coverimage']; ?>">
-                                                                </div>
-                                                                <button type="submit" class="btn btn-primary" name="edit" style="--bs-btn-color:#FFFF;--bs-btn-bg:#897062;--bs-btn-border-color:none; --bs-btn-hover-bg:#4c3f31;">Save changes</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#<?php echo $accordionId; ?>" aria-expanded="false" aria-controls="<?php echo $accordionId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .8rem; --bs-btn-font-size: .75rem;">
+                                                Review
+                                            </button>
+                                            <!-- Review -->
+                                            <?php //rating
+                                            $obj = new GeneralCustomer();
+                                            $obj->setItemId($row['itemid']);
+                                            $rating = $obj->getRating($con);
+                                            if (!empty($rating)) { ?>
+                                                <div class="review mt-4">
+                                                    <?php foreach ($rating as $rate) {
+                                                        $user_id = $rate['user_id'];
+                                                        $obj->setUserid($user_id);
+                                                        $name = $obj->getusername($con);
 
-                                            <!-- Modal delete -->
-                                            <div class="modal fade" id="<?php echo $modalId; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="<?php echo $modalId; ?>Label" aria-hidden="true">
-                                                <div class="modal-dialog  modal-sm">
-                                                    <div class="modal-content" style="background:#AE9D92;color:#ffff;">
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title fs-5" id="<?php echo $modalId; ?>Label">Do you Want to Delete?<strong><?php echo ucwords($row['itemname']); ?></strong></h4>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    ?>
+
+                                                        <div class="collapse mt-2" id="<?php echo $accordionId; ?>" style="width: 100%;">
+                                                            <div class="card card-body" style="background-color: #f7f7f7;">
+                                                                <p><strong><?php echo ucwords($name); ?></strong></p>
+                                                                <p><strong>Rating:</strong> <?php
+                                                                                            $ratingValue = $rate['rating'];
+                                                                                            for ($i = 1; $i <= 5; $i++) {
+                                                                                                if ($i <= $ratingValue) {
+                                                                                                    echo '<i class="fas fa-star filled"></i>';
+                                                                                                } else {
+                                                                                                    echo '<i class="fas fa-star"></i>';
+                                                                                                }
+                                                                                            }
+                                                                                            ?></p>
+                                                                <p><strong>Review:</strong><?php echo $rate['review_text']; ?></p>
+                                                            </div>
                                                         </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                            <form action="../control/deleteitem.php" method="post">
-                                                                <input type="hidden" name="productid" value="<?php echo $row['itemid']; ?>">
-                                                                <button type="submit" class="btn btn-danger" name="delete">Delete</button>
-                                                            </form>
+                                                    <?php } ?>
+                                            <?php } ?>
+
+                                                <!-- Modal edit -->
+                                                <div class="modal fade" id="<?php echo $editModalId; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="<?php echo $editModalId; ?>Label" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content" style="background:#AE9D92;color:#ffff;">
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5" id="<?php echo $editModalId; ?>Label">Edit Product</h1>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form action="../control/edititemcon.php" method="POST" enctype="multipart/form-data">
+                                                                    <input type="hidden" name="productid" value="<?php echo $row['itemid']; ?>">
+                                                                    <div class="mb-3">
+                                                                        <label for="product_name" class="form-label">Product Name</label>
+                                                                        <input type="text" class="form-control" name="product_name" value="<?php echo ucwords($row['itemname']); ?>" required>
+                                                                    </div>
+                                                                    <div class="mb-3">
+                                                                        <label for="price" class="form-label">Price</label>
+                                                                        <input type="text" class="form-control" name="price" value="<?php echo $row['price']; ?>" required>
+                                                                    </div>
+                                                                    <div class="mb-3">
+                                                                        <label for="image" class="form-label">Product Image</label>
+                                                                        <input type="file" class="form-control" name="image">
+                                                                        <input type="hidden" name="current_image" value="<?php echo $row['coverimage']; ?>">
+                                                                    </div>
+                                                                    <button type="submit" class="btn btn-primary" name="edit" style="--bs-btn-color:#FFFF;--bs-btn-bg:#897062;--bs-btn-border-color:none; --bs-btn-hover-bg:#4c3f31;">Save changes</button>
+                                                                </form>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+
+                                                <!-- Modal delete -->
+                                                <div class="modal fade" id="<?php echo $modalId; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="<?php echo $modalId; ?>Label" aria-hidden="true">
+                                                    <div class="modal-dialog  modal-sm">
+                                                        <div class="modal-content" style="background:#AE9D92;color:#ffff;">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title fs-5" id="<?php echo $modalId; ?>Label">Do you Want to Delete?<strong><?php echo ucwords($row['itemname']); ?></strong></h4>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <form action="../control/deleteitem.php" method="post">
+                                                                    <input type="hidden" name="productid" value="<?php echo $row['itemid']; ?>">
+                                                                    <button type="submit" class="btn btn-danger" name="delete">Delete</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                         </td>
                                     </tr>
                                 <?php } ?>
                             </tbody>
                         </table>
+
 
 
                     <?php } else { ?>
@@ -343,8 +381,8 @@ if (isset($_SESSION['userid'])) {
                 </div>
 
                 <div class="col-md-9 py-2 mt-5 table-responsive overflow-auto" id="producttable" style="display:none;max-height: 400px;"><!--my order table-->
-                    <?php if (!empty($_GET['s'])) {
-                        if ($_GET['s'] == 1) { ?>
+                    <?php if (!empty($_GET['w'])) {
+                        if ($_GET['w'] == 1) { ?>
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 <strong>Order Confirm Success</strong>
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -377,7 +415,7 @@ if (isset($_SESSION['userid'])) {
                                         <td>
                                             <!-- Confirm button triggers the modal -->
                                             <?php if ($row['order_status'] == 0) { ?>
-                                                <button type="button" class="btn btn-outline-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;"
+                                                <button type="button" class="btn btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#confirmModal"
                                                     data-orderid="<?php echo $row['order_id']; ?>"
@@ -401,7 +439,7 @@ if (isset($_SESSION['userid'])) {
                     <?php } ?>
                     <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true"><!--model confirm-->
                         <div class="modal-dialog">
-                            <div class="modal-content">
+                            <div class="modal-content" style="background:#AE9D92; color:#fff;">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="confirmModalLabel">Confirm Order</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -461,16 +499,16 @@ if (isset($_SESSION['userid'])) {
                                         <td><?php echo $row['order_id']; ?></td>
                                         <td><?php echo ucwords($row['itemname']); ?></td>
                                         <td><?php echo $row['price']; ?></td>
-                                        <td><?php echo ucfirst($row['firstname'])." ".ucfirst($row['lastname']); ?></td>
+                                        <td><?php echo ucfirst($row['firstname']) . " " . ucfirst($row['lastname']); ?></td>
                                         <td><?php echo $row['order_date']; ?></td>
                                         <td>
                                             <?php if ($row['confirm'] == 0) { ?>
                                                 <!-- Confirm Button -->
-                                                <button type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#<?php echo $confirmModalId; ?>">
+                                                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#<?php echo $confirmModalId; ?>">
                                                     Confirm
                                                 </button>
                                                 <!-- Cancel Button -->
-                                                <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#<?php echo $cancelModalId; ?>">
+                                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#<?php echo $cancelModalId; ?>">
                                                     Cancel
                                                 </button>
 

@@ -191,11 +191,11 @@ input[type=submit]:hover{
     font-size:15px; 
 }
 
-.rating-stars .fa-star {
+ .fa-star {
     color: #d3d3d3; 
 }
 
-.rating-stars .fa-star.filled {
+ .fa-star.filled {
     color: #ffd700; 
 }
 .p-btn{
