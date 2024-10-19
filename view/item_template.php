@@ -185,41 +185,7 @@ if (isset($_SESSION['userid'])) {
                             <?php } ?>
 
                             <h5 class="card-text"><strong>Price:</strong><?php echo 'Rs.' . $row['price']; ?></h5>
-                            <?php //rating
-                            $obj = new GeneralCustomer();
-                            $obj->setItemId($row['itemid']);
-                            $rating = $obj->getRating($con);
-                            if (!empty($rating)) { ?>
-                                <div class="review mt-4">
-                                    <?php foreach ($rating as $rate) {
-                                        $user_id = $rate['user_id'];
-                                        $obj->setUserid($user_id);
-                                        $name = $obj->getusername($con);
-
-                                    ?>
-
-
-                                        <div class="rating-stars">
-                                            <h6><?php echo ucwords($name); ?></h6>
-                                            <h6><strong>Rating:</strong>
-                                                <?php
-                                                $ratingValue = $rate['rating'];
-                                                for ($i = 1; $i <= 5; $i++) {
-                                                    if ($i <= $ratingValue) {
-                                                        echo '<i class="fas fa-star filled"></i>';
-                                                    } else {
-                                                        echo '<i class="fas fa-star"></i>';
-                                                    }
-                                                }
-                                                ?>
-                                            </h6>
-                                            <h6><strong>Review:</strong><?php echo $rate['review_text'] ?></h6>
-
-                                        </div>
-                                    <?php } ?>
-                                </div>
-                            <?php } ?>
-
+                            
                             <!-- Wishlist Form -->
                             <form action="../control/wishlistcon.php" method="post">
                                 <input type="hidden" name="productid" value="<?php echo $row['itemid']; ?>">
@@ -291,9 +257,7 @@ if (isset($_SESSION['userid'])) {
                                                         <img id="mainImage" src="../upload/<?php echo $row['coverimage']; ?>" class="img-fluid product-image" alt="Product Image" style="width: 400px; height: 400px;">
                                                     </div>
                                                     <div class="mt-3 d-flex item">
-                                                        <!--<img src="../upload/<?php echo $row['otherimage']; ?>" class="img-thumbnail thumbnail" alt="Thumbnail 1" onclick="changeImage(this)">
-                                                        <img src="../upload/<?php echo $row['other_image_2']; ?>" class="img-thumbnail thumbnail" alt="Thumbnail 2"
-                                                            onclick="changeImage(this)">-->
+                
                                                         <img src="../upload/<?php echo $row['otherimage']; ?>" class="img-thumbnail thumbnail" alt="Thumbnail 3"
                                                             onclick="changeImage(this)">
 
@@ -310,6 +274,43 @@ if (isset($_SESSION['userid'])) {
                                                     <p><span class="fw-bold">Code:</span> <?php echo $row['itemid']; ?></p>
                                                     <div class="d-flex flex-column">
                                                         <p class="fw-bold"><?php echo $row['color']; ?></p>
+
+                                                    </div>
+                                                    <div class="d-flex flex-column">
+                                                    <?php //rating
+                            $obj = new GeneralCustomer();
+                            $obj->setItemId($row['itemid']);
+                            $rating = $obj->getRating($con);
+                            if (!empty($rating)) { ?>
+                                <div class="review mt-4">
+                                    <?php foreach ($rating as $rate) {
+                                        $user_id = $rate['user_id'];
+                                        $obj->setUserid($user_id);
+                                        $name = $obj->getusername($con);
+
+                                    ?>
+
+
+                                        <div class="rating-stars">
+                                            <h6><?php echo ucwords($name); ?></h6>
+                                            <h6><strong>Rating:</strong>
+                                                <?php
+                                                $ratingValue = $rate['rating'];
+                                                for ($i = 1; $i <= 5; $i++) {
+                                                    if ($i <= $ratingValue) {
+                                                        echo '<i class="fas fa-star filled"></i>';
+                                                    } else {
+                                                        echo '<i class="fas fa-star"></i>';
+                                                    }
+                                                }
+                                                ?>
+                                            </h6>
+                                            <h6><strong>Review:</strong><?php echo $rate['review_text'] ?></h6>
+
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                            <?php } ?>
 
                                                     </div>
 

@@ -105,10 +105,10 @@ if (isset($_SESSION['userid'])) {
                         <img src="../img/profile.png" class="img-fluid rounded-4" alt="Default Profile Picture" style="max-height:300px;">
                     <?php } ?>
 
-                    <button type="button" class="btn  my-2" onclick="showInformation()" id="information">Pesonal information</button>
+                    <button type="button" class="btn  my-2" onclick="showInformation()" id="information">Personal information</button>
                     <button type="button" class="btn  mb-2" onclick="showOrderTable()" id="order">My Orders</button>
                     <button type="button" class="btn  mb-2" onclick="showOrdersTable()" id="orders">Orders</button><!-- other user bought items-->
-                    <button type="button" class="btn  mb-2" onclick="showItemTable()" id="item">My Iteams</button>
+                    <button type="button" class="btn  mb-2" onclick="showItemTable()" id="item">My Items</button>
 
                 </div>
                 <div class="col-md-8 p-4  mx-auto my-5 " id="personalinfo"><!--personal information -->
