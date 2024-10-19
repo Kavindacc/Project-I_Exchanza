@@ -1,7 +1,9 @@
 <?php
 include_once '../model/DbConnector.php';
 include_once '../model/wishlist.php';
-include_once '../model/addtocart.php'; ?>
+include_once '../model/addtocart.php';
+
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -349,49 +351,141 @@ include_once '../model/addtocart.php'; ?>
 
     </div>
 
-    <!--footer-->
-    <div class="container-fluid footer">
-        <div class="container p-3">
-            <div class="row">
-                <div class="col">
-                    <img src="../img/Exchanza.png" width="200px">
-                </div>
-            </div>
-            <div class="row  mt-4" style="border-bottom:1px solid black;">
-                <div class="col">
-                    <p class=""><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;+94 112 555 444</p>
-                    <p class=""><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;exchanza@gmail.com</p>
-                    <p class=""><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;No.56/2,Kotta Rd,Colombo
-                        05,<br>&nbsp;&nbsp;&nbsp;&nbsp;Sri Lanka</p>
-                </div>
-                <div class="col lin">
-                    <h5>Information</h5>
-                    <p><a href="#1">Privacy &amp; Policy</a></p>
-                    <p><a href="#1">About Us</a></p>
-                    <p><a href="#1">Terms &amp; Condition</a></p>
-                </div>
-                <div class="col lin">
-                    <h5>Connect with Us</h5>
-                    <p><a href=""><i class="fa-brands fa-facebook" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><i class="fa-brands fa-instagram" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><i class="fa-brands fa-youtube" style="font-size:50px;"></i></a></p>
-                </div>
-            </div>
-            <div class="row mt-2">
-                <div class="d-flex justify-content-between flex-column flex-md-row">
-                    <div><i class="fa-brands fa-cc-visa" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-mastercard" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-amex" style="font-size:50px;"></i></div>
-                    <div>&copy;Exchanze All Rights are reserved</div>
 
-                </div>
-            </div>
+
+        
+      
+
+    </main>
+
+
+    <div class="container d-flex justify-content-start flex-wrap mt-5 gap-4"><!--get iteam-->
+            <?php
+
+            include_once '../model/item.php';
+
+            $dsn = new DbConnector();
+            $con = $dsn->getConnection();
+
+            if (isset($_SESSION['userid'])) {
+              $userid = $_SESSION['userid']; 
+            }
+
+            $user = new Thrift($userid);
+            $rows = $user->getStoreItemsLogin($con);
+
+            if (!empty($rows)) {
+                foreach ($rows as $row) { ?>
+                    <div class="card mb-3 pt-2" style="width: 17rem;">
+                        <img src="../upload/<?php echo $row['coverimage'] ?>" class="card-img-top" alt="..." style="height:10rem;">
+                        <div class="card-body">
+                            <h3 class="card-title"><?php echo $row['itemname']; ?></h3>
+                            <?php if (isset($row['size'])) { ?>
+                                <h5 class="card-text"><strong>Size: </strong><?php echo $row['size']; ?></h5>
+                            <?php } ?>
+
+                            <h5 class="card-text"><strong>Price:</strong><?php echo 'Rs.' . $row['price']; ?></h5>
+                            <?php //rating
+                            include_once '../model/User.php';
+                            $obj = new GeneralCustomer();
+                            $obj->setItemId($row['id']);
+                            $rating = $obj->getRating($con);
+                            if (!empty($rating)) { ?>
+                                <div class="review mt-4">
+                                    <?php foreach ($rating as $rate) {
+                                        $user_id = $rate['user_id'];
+                                        $obj->setUserid($user_id);
+                                        $name = $obj->getusername($con);
+
+                                    ?>
+
+
+                                        <!-- <div class="rating-stars">
+                                            <h6><?php echo ucwords($name); ?></h6>
+                                            <h6><strong>Rating:</strong>
+                                                <?php
+                                                $ratingValue = $rate['rating'];
+                                                for ($i = 1; $i <= 5; $i++) {
+                                                    if ($i <= $ratingValue) {
+                                                        echo '<i class="fas fa-star filled"></i>';
+                                                    } else {
+                                                        echo '<i class="fas fa-star"></i>';
+                                                    }
+                                                }
+                                                ?>
+                                            </h6>
+                                            <h6><strong>Review:</strong><?php echo $rate['review_text'] ?></h6>
+
+                                        </div> -->
+                                    <?php } ?>
+                                </div>
+                            <?php } ?>
+
+                            <!-- Wishlist Form -->
+                            <form action="../control/wishlistcon.php" method="post">
+                                <input type="hidden" name="productid" value="<?php echo $row['id']; ?>">
+                                <input type="hidden" name="userid" value="<?php echo $userid; ?>">
+                                <input type="hidden" name="cat" value="<?php echo  $category; ?>">
+                                <input type="hidden" name="sub" value="<?php echo $subcategory; ?>">
+                                <!-- <button type="submit" class="btn btn-primary mt-2  equal-width" name="wishlist" style="--bs-btn-color:black;--bs-btn-bg:none;--bs-btn-border-color:black; --bs-btn-hover-bg:#4c3f31;">
+                                    <i class="fa-regular fa-heart"></i>&nbsp;Add to Wishlist
+                                </button> -->
+                            </form>
+
+                            <!-- Write Review Button -->
+                            <!-- <button type="button" class="btn btn-secondary mt-2 equal-width" data-bs-toggle="modal" data-bs-target="#reviewModal<?php echo $row['id']; ?>" style="--bs-btn-color:black;--bs-btn-bg:none;--bs-btn-border-color:black; --bs-btn-hover-bg:#4c3f31;">
+                                Write a Review
+                            </button> -->
+
+                            <!-- Review Modal -->
+                            <div class="modal fade" id="reviewModal<?php echo $row['itemid']; ?>" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="reviewModalLabel">Write a Review for <?php echo $row['itemname']; ?></h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="../control/reviewcon.php" method="post">
+                                                <input type="hidden" name="productid" value="<?php echo $row['itemid']; ?>">
+                                                <input type="hidden" name="userid" value="<?php echo $userid; ?>">
+                                                <input type="hidden" name="cat" value="<?php echo  $category; ?>">
+                                                <input type="hidden" name="sub" value="<?php echo $subcategory; ?>">
+                                                <div class="mb-3">
+                                                    <label for="reviewText" class="form-label">Your Review</label>
+                                                    <textarea class="form-control" id="reviewText" name="review_text" rows="3" required></textarea>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="rating" class="form-label">Rating</label>
+                                                    <select class="form-control" id="rating" name="rating" required>
+                                                        <option value="1">1 - Poor</option>
+                                                        <option value="2">2 - Fair</option>
+                                                        <option value="3">3 - Good</option>
+                                                        <option value="4">4 - Very Good</option>
+                                                        <option value="5">5 - Excellent</option>
+                                                    </select>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary" style="--bs-btn-color:black;--bs-btn-bg:none;--bs-btn-border-color:black; --bs-btn-hover-bg:#4c3f31;">Submit Review</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <?php }
+            } else { ?>
+                <h2>No Iteam</h2>
+            <?php } ?>
+
+
         </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../js/sidepanel.js"></script>
-
-</div>
 
 
-        <hr>   
+    
+
+<hr>   
         <section class="recommendations">
           <h5>Share Your Thoughts with Us</h5>
           <br>
@@ -406,15 +500,7 @@ include_once '../model/addtocart.php'; ?>
           </div>
      
         </section>
-      
 
-    </main>
-
-
-
-    
-
-<!-------footer------->
  <!--footer-->
 
     <div class="container-fluid footer">

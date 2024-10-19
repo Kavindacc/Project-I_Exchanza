@@ -163,6 +163,17 @@ class Item
 class Thrift extends Item
 {
 
+    public $itemname;
+    public $price;
+    public $color;
+    public $description;
+    public $category;
+    public $subcategory;
+    public $size;
+    public $coverimage;
+    public $otherimage;
+    public $userid;
+
     public function __construct($userid = null)
     {
         $this->userid = $userid;
@@ -189,6 +200,30 @@ class Thrift extends Item
             echo "Error: " . $e->getMessage();
         }
     }
+
+    public function getStoreItemsLogin($con)
+    {
+        try {
+            // SQL query to select items from the storeitems table
+            $sql = "SELECT id, itemname, price, color, description, category, subcategory, size, coverimage, otherimage, userid, created_at FROM storeitems";
+    
+            // Prepare the statement
+            $stmt = $con->prepare($sql);
+    
+            // Execute the statement without binding since this is a simple SELECT
+            $stmt->execute();
+    
+            // Fetch all rows into an array and return the array
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $rows;
+    
+        } catch (PDOException $e) {
+            // Display error message if the query fails
+            echo "Error: " . $e->getMessage();
+        }
+
+    }
+
     public function getThriftItems($con)
     {
         try {
