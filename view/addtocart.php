@@ -141,9 +141,10 @@ if (isset($_SESSION['userid'])) {
                             <td>
                                 <form action="../control/removeidcon.php" method="post">
                                     <input type="hidden" name="itemid" value="<?php echo htmlspecialchars($row['itemid']); ?>">
-                                    <button type="submit">
-                                        <i class="fa-solid fa-rectangle-xmark btn-remove" style="font-size: 30px;"></i>
+                                    <button type="submit" class="btn-cart">
+                                    <i class="fa-solid fa-trash-can"></i>
                                     </button>
+
                                 </form>
 
 
