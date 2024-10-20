@@ -4,10 +4,9 @@ include_once '../model/DbConnector.php';
 include_once '../model/wishlist.php';
 include_once '../model/addtocart.php';
 if (isset($_SESSION['userid'])) {
-    $userid = $_SESSION['userid'];?>
-    
-    
-
+    $userid = $_SESSION['userid'];
+    // Closing PHP tag before HTML
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -317,4 +316,8 @@ if (isset($_SESSION['userid'])) {
 </body>
 
 </html>
- <?php } ?>
+<?php
+} else {
+    echo "User is not logged in.";
+}
+?>
