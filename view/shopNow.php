@@ -95,7 +95,7 @@ include_once '../model/user.php';
             </div>
         </div>
     </nav>
-
+    <hr>
 
 
     <?php
