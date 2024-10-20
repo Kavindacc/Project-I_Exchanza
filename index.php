@@ -166,7 +166,7 @@ if (isset($_SESSION['userid'])) {
         <div class="mx-auto px-4 my-5 tread">
             <div class="row p-3">
                 <div class="col">
-                    <h2>Treanding Stores</h2>
+                    <h2>Trending Stores</h2>
                 </div>
             </div>
             <div class="row row-cols-1 row-cols-md-4 g-4 ">
