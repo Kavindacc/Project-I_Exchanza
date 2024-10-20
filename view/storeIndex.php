@@ -51,8 +51,8 @@ include_once '../model/addtocart.php';
             <li class="nav-item mx-2">
               <a class="nav-link" href="../Project-I_Exchanza/view/bidding.php">Bidding</a>
             </li>
-            <li class="nav-item mx-2">
-              <a class="nav-link" href="#">Selling</a>
+            <li class="nav-item mx-2 " >
+              <a class="nav-link active" href="storeIndex.php">Selling</a>
             </li>
           </ul>
 
@@ -377,7 +377,7 @@ include_once '../model/addtocart.php';
               <div class="store-grid">
                 <!-- Example store---->
                 <div class="store-item">
-                  <a href="../view/StoreTem.php">
+                  <a href="StoreTem.php">
                     <div class="image-st">
                       <img src="../img/store-1.jpg" class="store-img" alt="storeprofilepic"><!---- Store profile pic 1k wens wenna oni-->
                     </div>
