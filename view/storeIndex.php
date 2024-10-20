@@ -122,9 +122,11 @@ include_once '../model/addtocart.php';
                 </a>
                 
                 <br>
+                <br>
+                <br>
 
                 <a href="../view/">
-                  <button type="button" class="btn btn-primary animated fadeInUp" style="--bs-btn-padding-y: 0.5rem; --bs-btn-padding-x: 0.75rem; --bs-btn-font-size: 0.8em;
+                  <button type="button" class="btn btn-primary animated fadeInUp" style="--bs-btn-padding-y: 0.5rem; --bs-btn-padding-x: 0.75rem; --bs-btn-font-size: 0.6em;
                                               --bs-btn-border-radius: 5px;--bs-btn-color: #ffffff;--bs-btn-bg: #897062;--bs-btn-border-color:  #897062;--bs-btn-hover-color: #ffffff;  
                                               --bs-btn-hover-bg: #4c3f31;--bs-btn-hover-border-color: #4c3f31 ;--bs-btn-active-color: #ffffff;--bs-btn-active-bg: #4c3f31;
                                               --bs-btn-active-border-color: #4c3f31 ;">
@@ -166,7 +168,7 @@ include_once '../model/addtocart.php';
                     <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
                   </svg>
                 </button>
-
+        
                 <button type="button" class="btn-whishlist">
                   <i class="bi bi-heart"></i>
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
@@ -412,7 +414,7 @@ include_once '../model/addtocart.php';
                 <div class="store-item">
                   <a href="../view/StoreTem.php">
                     <div class="image-st">
-                      <img src="../img/store-1.jpg" class="store-img" alt="storeprofilepic"><!---- Store profile pic 1k wens wenna oni-->
+                      <img src="../img/Cat-Banner.jpg" class="store-img" alt="storeprofilepic"><!---- Store profile pic 1k wens wenna oni-->
                     </div>
                   </a>
                   <div class="store-detail">
