@@ -51,7 +51,7 @@ if (isset($_SESSION['userid'])) {
                                 <a class="nav-link" href="../Project-I_Exchanza/view/bidding.php">Bidding</a>
                             </li>
                             <li class="nav-item mx-2">
-                                <a class="nav-link" href="Store Index.php">Selling</a>
+                                <a class="nav-link" href="storeIndex.php">Selling</a>
                             </li>
                         </ul>
 
