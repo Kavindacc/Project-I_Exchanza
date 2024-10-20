@@ -584,7 +584,7 @@ include_once '../model/addtocart.php';
 
   // Assuming you have a PHP endpoint to fetch suggestions
 function fetchPreviousSuggestions() {
-  fetch('/fetch-suggestions.php')
+   fetch('/fetch-suggestions.php')
     .then(response => response.json())
     .then(suggestions => {
       const suggestionList = document.querySelector('.recommendation-list ul');
