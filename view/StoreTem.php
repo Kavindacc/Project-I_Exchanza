@@ -187,22 +187,291 @@ if (isset($_SESSION['userid'])) {
 
     <br>
 
-    <!-----Recommendation Section   -->
-    <section class="recommendations">
-      <h2>Share Your Thoughts with Us</h2>
-      <br>
+           <!-----Recommendation Section   -->
 
-      <div class="recommendation-form">
-        <textarea class="ms-0" id="recommendation-text" placeholder="Enter Your Suggestions"></textarea>
-        <button id="submit-recommendation">Submit</button>
-      </div>
-      <div class="recommendation-list">
-        <h4>Previous Suggestions</h4>
-        <ul>
-        </ul>
-      </div>
 
-    </section>
+
+<div>
+<div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0"></div>
+                <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0"></div>
+                <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0"></div>
+                <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0"></div>
+            </div>
+
+        </div>
+        <!-- <a href="sidepanel.php" target="_blank" aria-label="Plus Icon">  -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle" id="openPanel">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="16"></line>
+            <line x1="8" y1="12" x2="16" y2="12"></line>
+        </svg>
+        <!-- </a> -->
+    </div>
+    <!-- sidepanel -->
+    <div id="sidePanel" class="side-panel">
+        <button id="closePanel" class="close-btn">&times;</button>
+        
+       
+        <?php if (isset($_SESSION['userid'])) {
+            $userid = $_SESSION['userid']; ?>
+            <button class="add-item-btn" style="width:100%;" onclick="showForm()">Add Item</button>
+        <?php } else { ?>
+            <a href="login_user.php" style="text-decoration: none;">
+                <button class="add-item-btn" style="width:100%;">Add Item</button>
+            </a>
+        <?php } ?>
+
+
+    </div>
+    <!-- Popup overlay and form -->
+    <div id="popupForm" class="popup-overlay">
+        <div class="popup-content">
+            <button id="closePopup" class="close-btn">&times;</button>
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2 class="mb-4">Add Item to My Store</h2>
+                        <form action="../control/storecon.php" method="post" enctype="multipart/form-data" id="resellForm"> <!--form start add to item-->
+                            <input type="hidden" name="userid" value="<?php echo $userid; ?>">
+                            <div class="form-group">
+                                <label for="itemName" class="bold">Item Name</label>
+                                <input type="text" class="form-control" id="itemName" placeholder="Enter item name" name="itemname" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="price" class="bold">Price (Rs.)</label>
+                                <input type="number" class="form-control" id="price" placeholder="Enter price" name="price" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="color" class="bold">Color</label>
+                                <input type="color" class="form-control" id="color" name="colour" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="coverImage" class="bold">Cover Image</label>
+                                <input type="file" class="form-control-file" id="coverImage" name="image" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="otherImages" class="bold">Other Images (Optional)</label>
+                                <input type="file" class="form-control-file" id="otherImages" name="otherimage">
+                            </div>
+                            <div class="form-group">
+                                <label for="description" class="bold">Description</label>
+                                <textarea class="form-control" id="description" rows="3" placeholder="Enter description" name="description" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="category" class="bold">Category</label>
+                                <select class="form-control" id="category" name="category" required>
+                                    <option value="">Select Category</option>
+                                    <option value="men">Men</option>
+                                    <option value="women">Women</option>
+                                    <option value="kids">Kids</option>
+                                </select>
+                            </div>
+                            <div class="form-group hidden" id="subcategoryWrapper">
+                                <label for="subcategory" class="bold">Subcategory</label>
+                                <select class="form-control" id="subcategory" name="subcategory">
+                                    <option value="">Select Subcategory</option>
+                                    <option value="tops">Tops</option>
+                                    <option value="dresses">Dresses</option>
+                                    <option value="pants">Pants</option>
+                                    <option value="accessories">Accessories</option>
+                                    <option value="bags">Bags</option>
+                                    <option value="shoes">Shoes</option>
+                                </select>
+                            </div>
+                            <div class="form-group hidden" id="sizeChartWrapper">
+                                <label class="bold">Size</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizeS" value="S">
+                                    <label class="form-check-label" for="sizeS">S</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizeM" value="M">
+                                    <label class="form-check-label" for="sizeM">M</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizeL" value="L">
+                                    <label class="form-check-label" for="sizeL">L</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizeXL" value="XL">
+                                    <label class="form-check-label" for="sizeXL">XL</label>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary ssubmit" name="submit">Submit</button>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <h2>Preview</h2>
+                        <div class="card card-preview">
+                            <img id="previewImage" src="https://via.placeholder.com/150" alt="Item image">
+                            <div class="card-body">
+                                <h5 class="card-title" id="previewName">Item Name</h5>
+                                <p class="card-text" id="previewDescription">Description</p>
+                                <p class="card-text" id="previewCategory">Category</p>
+                                <p class="card-text" id="previewSubcategory">Subcategory</p>
+                                <p class="card-text" id="previewSize">Size</p>
+                                <p class="card-text" id="previewTimesUsed">Times Used: 0</p>
+                                <h5 class="card-text" id="previewPrice">Rs. 0.00</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+        
+      
+
+    </main>
+
+
+    <div class="container d-flex justify-content-start flex-wrap mt-5 gap-4"><!--get iteam-->
+            <?php
+
+            include_once '../model/item.php';
+
+            $dsn = new DbConnector();
+            $con = $dsn->getConnection();
+
+            if (isset($_SESSION['userid'])) {
+              $userid = $_SESSION['userid']; 
+            }
+
+            $user = new Thrift($userid);
+            $rows = $user->getStoreItemsLogin($con, $userid);
+
+            if (!empty($rows)) {
+                foreach ($rows as $row) { ?>
+                    <div class="card mb-3 pt-2" style="width: 17rem;">
+                        <img src="../upload/<?php echo $row['coverimage'] ?>" class="card-img-top" alt="..." style="height:10rem;">
+                        <div class="card-body">
+                            <h3 class="card-title"><?php echo $row['itemname']; ?></h3>
+                            <?php if (isset($row['size'])) { ?>
+                                <h5 class="card-text"><strong>Size: </strong><?php echo $row['size']; ?></h5>
+                            <?php } ?>
+
+                            <h5 class="card-text"><strong>Price:</strong><?php echo 'Rs.' . $row['price']; ?></h5>
+                            <?php //rating
+                            include_once '../model/User.php';
+                            $obj = new GeneralCustomer();
+                            $obj->setItemId($row['id']);
+                            $rating = $obj->getRating($con);
+                            if (!empty($rating)) { ?>
+                                <div class="review mt-4">
+                                    <?php foreach ($rating as $rate) {
+                                        $user_id = $rate['user_id'];
+                                        $obj->setUserid($user_id);
+                                        $name = $obj->getusername($con);
+
+                                    ?>
+
+
+                                        <!-- <div class="rating-stars">
+                                            <h6><?php echo ucwords($name); ?></h6>
+                                            <h6><strong>Rating:</strong>
+                                                <?php
+                                                $ratingValue = $rate['rating'];
+                                                for ($i = 1; $i <= 5; $i++) {
+                                                    if ($i <= $ratingValue) {
+                                                        echo '<i class="fas fa-star filled"></i>';
+                                                    } else {
+                                                        echo '<i class="fas fa-star"></i>';
+                                                    }
+                                                }
+                                                ?>
+                                            </h6>
+                                            <h6><strong>Review:</strong><?php echo $rate['review_text'] ?></h6>
+
+                                        </div> -->
+                                    <?php } ?>
+                                </div>
+                            <?php } ?>
+
+                            <!-- Wishlist Form -->
+                            <form action="../control/wishlistcon.php" method="post">
+                                <input type="hidden" name="productid" value="<?php echo $row['id']; ?>">
+                                <input type="hidden" name="userid" value="<?php echo $userid; ?>">
+                                <input type="hidden" name="cat" value="<?php echo  $category; ?>">
+                                <input type="hidden" name="sub" value="<?php echo $subcategory; ?>">
+                                <!-- <button type="submit" class="btn btn-primary mt-2  equal-width" name="wishlist" style="--bs-btn-color:black;--bs-btn-bg:none;--bs-btn-border-color:black; --bs-btn-hover-bg:#4c3f31;">
+                                    <i class="fa-regular fa-heart"></i>&nbsp;Add to Wishlist
+                                </button> -->
+                            </form>
+
+                            <!-- Write Review Button -->
+                            <!-- <button type="button" class="btn btn-secondary mt-2 equal-width" data-bs-toggle="modal" data-bs-target="#reviewModal<?php echo $row['id']; ?>" style="--bs-btn-color:black;--bs-btn-bg:none;--bs-btn-border-color:black; --bs-btn-hover-bg:#4c3f31;">
+                                Write a Review
+                            </button> -->
+
+                            <!-- Review Modal -->
+                            <div class="modal fade" id="reviewModal<?php echo $row['itemid']; ?>" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="reviewModalLabel">Write a Review for <?php echo $row['itemname']; ?></h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="../control/reviewcon.php" method="post">
+                                                <input type="hidden" name="productid" value="<?php echo $row['itemid']; ?>">
+                                                <input type="hidden" name="userid" value="<?php echo $userid; ?>">
+                                                <input type="hidden" name="cat" value="<?php echo  $category; ?>">
+                                                <input type="hidden" name="sub" value="<?php echo $subcategory; ?>">
+                                                <div class="mb-3">
+                                                    <label for="reviewText" class="form-label">Your Review</label>
+                                                    <textarea class="form-control" id="reviewText" name="review_text" rows="3" required></textarea>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="rating" class="form-label">Rating</label>
+                                                    <select class="form-control" id="rating" name="rating" required>
+                                                        <option value="1">1 - Poor</option>
+                                                        <option value="2">2 - Fair</option>
+                                                        <option value="3">3 - Good</option>
+                                                        <option value="4">4 - Very Good</option>
+                                                        <option value="5">5 - Excellent</option>
+                                                    </select>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary" style="--bs-btn-color:black;--bs-btn-bg:none;--bs-btn-border-color:black; --bs-btn-hover-bg:#4c3f31;">Submit Review</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <?php }
+            } else { ?>
+                <h2>No Iteam</h2>
+            <?php } ?>
+
+
+        </div>
+
+
+    
+
+<hr>   
+        <section class="recommendations">
+          <h5>Share Your Thoughts with Us</h5>
+          <br>
+     
+          <div class="recommendation-form">
+            <textarea id="recommendation-text" placeholder="Enter Your Suggestions"></textarea>
+            <button id="submit-recommendation">Submit</button>
+          </div>
+          <div class="recommendation-list">
+    <ul>
+      </ul>
+          </div>
+     
+        </section>
 
 
   </main>
