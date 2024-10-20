@@ -99,7 +99,24 @@ th:last-child{
    background-color: #4c3f31;
    color: #CEC0B9;
 }
-
+/* Buttons on cart-concern */
+.btn-cart{
+   /* font-family: Arial, Helvetica, sans-serif;*/
+    padding: 0.4rem 0.8rem;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 50%;
+    color:  #ffffff;
+    background-color: #897062;
+    border-color: #897062;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.btn-cart:hover { 
+color:  #ffffff;
+background-color:  #4c3f31;
+border-color: #4c3f31;  
+}
 
 
 /*------media query for less than 600 screen size----*/

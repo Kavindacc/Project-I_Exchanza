@@ -49,7 +49,7 @@ include_once '../model/addtocart.php'; ?>
                             <a class="nav-link" href="../Project-I_Exchanza/view/bidding.php">Bidding</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="#">Selling</a>
+                            <a class="nav-link" href="../view/storeIndex.php">Selling</a>
                         </li>
                     </ul>
 
@@ -66,8 +66,8 @@ include_once '../model/addtocart.php'; ?>
                             $obj->setUserId($userid);
                             $count = $obj->cartItemCount($con); ?>
                             <a href="addtocart.php" class="nav-link  text-decoration-none mx-1"><i class="fa-solid fa-cart-plus position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp"><?php if (isset($count)) {
-                                                                                                                                                                                                                                                echo $count;
-                                                                                                                                                                                                                                            } ?></span></i></a><!--addtocart-->
+                                                                                                                                                                                                                                        echo $count;
+                                                                                                                                                                                                                                    } ?></span></i></a><!--addtocart-->
                             <?php
 
 
@@ -203,7 +203,8 @@ include_once '../model/addtocart.php'; ?>
                                 <option value="shoes">Shoes</option> -->
                                 </select>
                             </div>
-                            <div class="form-group hidden" id="sizeChartWrapper">
+                            <!-- normal sizes -->
+                            <div class="form-group hidden" id="normalsizeChartWrapper">
                                 <label class="bold">Size</label>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="size" id="sizeS" value="S">
@@ -222,6 +223,7 @@ include_once '../model/addtocart.php'; ?>
                                     <label class="form-check-label" for="sizeXL">XL</label>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label for="timesUsed" class="bold">Condition</label>
                                 <input type="number" class="form-control" id="timesUsed" placeholder="Enter number of times used" name="condition" required>
@@ -296,23 +298,40 @@ include_once '../model/addtocart.php'; ?>
     <!-- review  div-->
     <div class="container ">
         <div class="row des">
-            <div class="col-5 stat">
+            <div id="thriftCarousel" class="carousel slide col-5 stat" data-ride="carousel">
                 <h2>Why Thrift</h2>
-                <div class="row stat1">
-                    <img src="../img/thriftstat.jpg" alt="thrift stat" class="rounded-circle img-fluid ts1">
-                    <h3>QUALITY ASSURED</h3>
-                    <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands. </p>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row stat1">
+                            <img src="../img/thriftstat2.jpg" alt="thrift stat" class="rounded-circle img-fluid ts1">
+                            <h3>QUALITY ASSURED</h3>
+                            <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row stat2">
+                            <img src="../img/thriftstat1.jpg" alt="thrift stat" class="rounded-circle img-fluid ts2">
+                            <h3>QUALITY ASSURED</h3>
+                            <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row stat3">
+                            <img src="../img/thrift stat4.jpg" alt="thrift stat" class="rounded-circle img-fluid ts3">
+                            <h3>QUALITY ASSURED</h3>
+                            <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="row stat2">
-                    <img src="../img/thrift stat2.jpg" alt="thrift stat" class="rounded-circle img-fluid ts2">
-                    <h3>QUALITY ASSURED</h3>
-                    <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands. </p>
-                </div>
-                <div class="row stat3">
-                    <img src="../img/thrift stat4.jpg" alt="thrift stat" class="rounded-circle img-fluid ts3">
-                    <h3>QUALITY ASSURED</h3>
-                    <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands. </p>
-                </div>
+                <!-- Carousel controls -->
+                <a class="carousel-control-prev" href="#thriftCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#thriftCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
             <div class="col-7">
                 <div class="container text-center">
@@ -378,6 +397,9 @@ include_once '../model/addtocart.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../js/sidepanel.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </body>
 

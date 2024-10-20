@@ -168,11 +168,22 @@ input[type=submit]:hover{
 .vertical-center {
     vertical-align: middle;
 }
-#personalinfo{
-    background: #f4f4f4;
+#personalinfo {
+    background: linear-gradient(to right, #f4f4f46b 80%, #eaeaea 100%);
     min-height: 15rem;
     border-radius: .6rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
 }
+#personalinfo form .form-control {
+    padding: 10px; 
+    border-radius: .6rem;
+}
+#personalinfo form .form-label{
+    font-weight: 600;
+    font-size: 18px;
+}
+
 #information,#order,#item,#orders{
     --bs-btn-color:#FFFF;
     --bs-btn-bg:#897062;
@@ -191,16 +202,17 @@ input[type=submit]:hover{
     font-size:15px; 
 }
 
-.rating-stars .fa-star {
+ .fa-star {
     color: #d3d3d3; 
 }
 
-.rating-stars .fa-star.filled {
+ .fa-star.filled {
     color: #ffd700; 
 }
 .p-btn{
     width:200px;
 }
+
 @media screen and (max-width:720px){
     .item .side{
         width:100%;
@@ -217,7 +229,7 @@ input[type=submit]:hover{
     }
     #personalinfo{
         
-        max-height:600px;
+        max-height:670px;
         
     }
     #update,#edit{
