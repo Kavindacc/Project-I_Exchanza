@@ -323,7 +323,7 @@ if ($settingsFromDb) {
 
     <!-- image container -->
     <div class="container thrift" id="thriftwomen">
-        <img src="../img/thrift-women.png" alt="women thrift intro" class="thriftwomen">
+        <img src="../img/thriftwomen.png" alt="women thrift intro" class="thriftwomen">
 
         <div class="text-block">
 

@@ -257,7 +257,7 @@ include_once '../model/addtocart.php'; ?>
 
     <!-- image container -->
     <div class="container thrift" id="thriftwomen">
-        <img src="../img/thrift-kids.png" alt="women thrift intro" class="thriftwomen">
+        <img src="../img/thriftkids.png" alt="women thrift intro" class="thriftwomen">
 
         <div class="text-block">
 

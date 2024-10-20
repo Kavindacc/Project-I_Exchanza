@@ -131,8 +131,10 @@ if (isset($_SESSION['userid'])) {
             </div>
             <div class="text">
                 <h5>Thrifting</h5>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, ab laborum ut accusamus, fugiat earum alias
-                    beatae ipsa harum quos atque culpa architecto similique deleniti impedit, facilis at aliquam deserunt!
+                <p>Our website promotes the joy of thrifting by offering a carefully curated selection of
+                     secondhand items that are stylish, affordable, and eco-friendly. We believe in giving 
+                     quality pre-loved goods a second life, reducing waste, and encouraging sustainable shopping.
+                    Explore our thrift collections and find unique pieces that help you save money while supporting a greener planet!
                 </p>
                 <button><a href="../Project-I_Exchanza/view/thrift.php">Shop Now&nbsp;>></a></button>
             </div>
@@ -143,8 +145,10 @@ if (isset($_SESSION['userid'])) {
             </div>
             <div class="text">
                 <h5>Auction</h5>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, ab laborum ut accusamus, fugiat earum alias
-                    beatae ipsa harum quos atque culpa architecto similique deleniti impedit, facilis at aliquam deserunt!
+                <p>Our platform offers an exciting auction experience, where you can bid on a wide range of unique items. 
+                Bidding allows you to compete with others for the best price, adding a fun and competitive edge to shopping. 
+                With a variety of products available, our auctions give you the chance to score great deals while enjoying 
+                the thrill of winning. Join our bidding community and discover one-of-a-kind finds at unbeatable prices!
                 </p>
                 <button><a href="../Project-I_Exchanza/view/bidding.php">Shop Now&nbsp;>></a></button>
             </div>
@@ -155,8 +159,10 @@ if (isset($_SESSION['userid'])) {
             </div>
             <div class="text">
                 <h5>Stores</h5>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, ab laborum ut accusamus, fugiat earum alias
-                    beatae ipsa harum quos atque culpa architecto similique deleniti impedit, facilis at aliquam deserunt!
+                <p>We proudly promote and support small businesses by offering them a platform to showcase their unique products.
+                     Our goal is to help these entrepreneurs reach a wider audience, grow their brands, and thrive in a competitive
+                      market. By shopping with us, you’re not only finding one-of-a-kind items but also supporting independent creators
+                       and local businesses. Together, we can make a big impact on small businesses!
                 </p>
                 <button><a href="">Shop Now&nbsp;>></a></button>
             </div>
@@ -166,7 +172,7 @@ if (isset($_SESSION['userid'])) {
         <div class="mx-auto px-4 my-5 tread">
             <div class="row p-3">
                 <div class="col">
-                    <h2>Treanding Stores</h2>
+                    <h2>Trending Stores</h2>
                 </div>
             </div>
             <div class="row row-cols-1 row-cols-md-4 g-4 ">
@@ -210,7 +216,7 @@ if (isset($_SESSION['userid'])) {
                 <div class="icon"><i class="fa-solid fa-recycle" style="font-size:50px;"></i>
                 </div><br>
                 <div class="text">
-                    <h4 class="text-center text-md-start">Help End Fashion Waste</h4>
+                    <h4 class="text-center text-md-start">Help to End Fashion Waste</h4>
                     <br>
                     <P>We&apos;re on a mission to end fashion waste. One wardrobe at a time. We want to make giving your
                         clothes a new life as simple as possible.</P>
@@ -225,11 +231,12 @@ if (isset($_SESSION['userid'])) {
                 <div class="text ">
                     <h4 class="text-center text-md-start">Encourage Small Businesses</h4>
                     <br>
-                    <P>We&apos;re on a mission to end fashion waste. One wardrobe at a time. We want to make giving your
-                        clothes a new life as simple as possible.</P>
-                    <P>Currently 49% of people in the world bin no-longer-loved clothes. Think that needs to change? Us too.
-                    </P>
-                    <P>We do all we can to give your clothes a second life by reselling or responsibly recycling them</P>
+                    <p>We&apos;re on a mission to support small businesses.
+                    Our goal is to build a global marketplace for unique products and creators.</p> 
+                    <p>Currently, 49% of people in the world bin no-longer-loved clothes. 
+                    Think that needs to change? Us too.</p>
+                     <p>We do all we can to give your clothes a second life by 
+                        reselling or responsibly recycling them.</p>
                 </div>
             </div>
         </div>

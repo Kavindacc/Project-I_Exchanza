@@ -222,8 +222,8 @@
 
     position: absolute;
     top: 30%;
-    right: 2%;
-    background: rgba(87, 136, 241, 0.285); /* Black background with 0.5 opacity */
+    right: -3%;
+    /* background: rgba(87, 136, 241, 0.285);  */
     width: 60%; 
     /* margin-right: 5%; */
   }

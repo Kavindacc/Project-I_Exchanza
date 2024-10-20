@@ -122,7 +122,7 @@ if (isset($_SESSION['userid'])) {
 
                             </ul>
                         </li>
-                        
+
                         <!-- subcategory ain kra -->
 
                         <li class="dropdown-submenu dropend">
@@ -142,7 +142,7 @@ if (isset($_SESSION['userid'])) {
                 </div>
             </div>
 
-            
+
         </div>
         <div class="container d-flex justify-content-start mt-2"><!--close button-->
             <?php if (isset($_SESSION['msg'])) { ?>
@@ -189,8 +189,8 @@ if (isset($_SESSION['userid'])) {
             $con = $dsn->getConnection();
 
             $user = new Thrift($userid);
-            $user->setCategory( $_SESSION['category']);
-            $user->setSubCategory( $_SESSION['subcategory']);
+            $user->setCategory($_SESSION['category']);
+            $user->setSubCategory($_SESSION['subcategory']);
             //$rows = $user->getThriftItemsLogin($con);
             if (isset($_GET['size'])) {
                 $size = $_GET['size'];
@@ -198,7 +198,7 @@ if (isset($_SESSION['userid'])) {
             } elseif (isset($_GET['price'])) {
                 $price = $_GET['price'];
                 $rows = $user->getThriftItemsBySort($con, $price);
-            }  else {
+            } else {
                 $rows = $user->getThriftItemsLogin($con);
             }
 
@@ -206,7 +206,7 @@ if (isset($_SESSION['userid'])) {
                 foreach ($rows as $row) {
                     $modalId = $row['itemid']; ?>
                     <div class="card mb-3" style="width: 17rem;">
-                        <img src="../upload/<?php echo $row['coverimage'] ?>" class="card-img-top" alt="..." style="height:15rem;width:75%;object-fit: cover; display:block;padding:20px;margin:0 auto;" data-bs-toggle="modal" data-bs-target="#<?php echo $modalId; ?>">
+                        <img src="../upload/<?php echo $row['coverimage'] ?>" class="card-img-top" alt="..." style="height:15rem;width:75%;object-fit: cover; display:block;padding:10px;margin:0 auto;" data-bs-toggle="modal" data-bs-target="#<?php echo $modalId; ?>">
                         <div class="card-body">
                             <h3 class="card-title"><?php echo ucfirst($row['itemname']); ?></h3>
                             <?php if (isset($row['size'])) { ?>
@@ -225,7 +225,13 @@ if (isset($_SESSION['userid'])) {
                                     <i class="fa-regular fa-heart"></i>&nbsp;Add to Wishlist
                                 </button>
                             </form>
+                            <!-- add to cart form -->
+                            <form action="../control/addtocartcon.php" method="post"><!--addtocart-->
 
+                                <input type="hidden" name="userid" value="<?php echo $userid; ?>">
+                                <input type="hidden" name="itemid" value="<?php echo $row['itemid']; ?>">
+                                <button type="submit" class="btn btn-secondary" name="addtocart" style="--bs-btn-color:#FFFF;--bs-btn-bg:#897062;--bs-btn-border-color:none; --bs-btn-hover-bg:#4c3f31; margin-top:2%;">Add to Cart</button>
+                            </form>
                             <!-- Write Review Button 
                             <button type="button" class="btn btn-secondary mt-2 equal-width" data-bs-toggle="modal" data-bs-target="#reviewModal<?php echo $row['itemid']; ?>" style="--bs-btn-color:black;--bs-btn-bg:none;--bs-btn-border-color:black; --bs-btn-hover-bg:#4c3f31;">
                                 Write a Review
@@ -302,7 +308,7 @@ if (isset($_SESSION['userid'])) {
                                                     </h2>
                                                     <p><span class="fw-bold">Code:</span> <?php echo $row['itemid']; ?></p>
                                                     <div class="d-flex flex-column">
-                                                        <p class="fw-bold"><?php echo $row['color']; ?></p>
+                                                        <p class="fw-bold"><?php echo $row['description']; ?></p>
 
                                                     </div>
                                                     <div class="d-flex flex-column">

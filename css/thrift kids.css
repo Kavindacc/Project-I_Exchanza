@@ -222,9 +222,9 @@
 
     position: absolute;
     top: 30%;
-    right: 2%;
+    right: -3%;
     /* background: rgba(87, 136, 241, 0.285); */
-    background: linear-gradient(rgba(209, 143, 176,0.6), rgba(122, 159, 232,0.6));
+    /* background: linear-gradient(rgba(209, 143, 176,0.6), rgba(122, 159, 232,0.6)); */
     width: 60%; 
     /* margin-right: 5%; */
   }
