@@ -2,6 +2,8 @@
 include_once '../model/DbConnector.php';
 include_once '../model/wishlist.php';
 include_once '../model/addtocart.php';
+include_once '../model/item.php';
+include_once '../model/user.php';
 
  ?>
 <!DOCTYPE html>
@@ -94,7 +96,118 @@ include_once '../model/addtocart.php';
 
  
 
-   
+   <?php
+            $dsn = new DbConnector();
+            $con = $dsn->getConnection();
+
+            $user = new Thrift($userid);
+            //$user->setCategory($category);
+            //$user->setSubCategory($subcategory);
+            $rows = $user->getStoreItemsLogin($con, $userid);
+
+            if (!empty($rows)) {
+                foreach ($rows as $row) { ?>
+                    <div class="card mb-3 pt-2" style="width: 17rem;">
+                        <img src="../upload/<?php echo $row['coverimage'] ?>" class="card-img-top" alt="..." style="height:10rem;">
+                        <div class="card-body">
+                            <h3 class="card-title"><?php echo $row['itemname']; ?></h3>
+                            <?php if (isset($row['size'])) { ?>
+                                <h5 class="card-text"><strong>Size: </strong><?php echo $row['size']; ?></h5>
+                            <?php } ?>
+
+                            <h5 class="card-text"><strong>Price:</strong><?php echo 'Rs.' . $row['price']; ?></h5>
+                            <?php //rating
+                            $obj = new GeneralCustomer();
+                            $obj->setItemId($row['itemid']);
+                            $rating = $obj->getRating($con);
+                            if (!empty($rating)) { ?>
+                                <div class="review mt-4">
+                                    <?php foreach ($rating as $rate) {
+                                        $user_id = $rate['user_id'];
+                                        $obj->setUserid($user_id);
+                                        $name = $obj->getusername($con);
+
+                                    ?>
+
+
+                                        <div class="rating-stars">
+                                            <h6><?php echo ucwords($name); ?></h6>
+                                            <h6><strong>Rating:</strong>
+                                                <?php
+                                                $ratingValue = $rate['rating'];
+                                                for ($i = 1; $i <= 5; $i++) {
+                                                    if ($i <= $ratingValue) {
+                                                        echo '<i class="fas fa-star filled"></i>';
+                                                    } else {
+                                                        echo '<i class="fas fa-star"></i>';
+                                                    }
+                                                }
+                                                ?>
+                                            </h6>
+                                            <h6><strong>Review:</strong><?php echo $rate['review_text'] ?></h6>
+
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                            <?php } ?>
+
+                            <!-- Wishlist Form -->
+                            <form action="../control/wishlistcon.php" method="post">
+                                <input type="hidden" name="productid" value="<?php echo $row['itemid']; ?>">
+                                <input type="hidden" name="userid" value="<?php echo $userid; ?>">
+                                <input type="hidden" name="cat" value="<?php echo  $category; ?>">
+                                <input type="hidden" name="sub" value="<?php echo $subcategory; ?>">
+                                <button type="submit" class="btn btn-primary mt-2  equal-width" name="wishlist" style="--bs-btn-color:black;--bs-btn-bg:none;--bs-btn-border-color:black; --bs-btn-hover-bg:#4c3f31;">
+                                    <i class="fa-regular fa-heart"></i>&nbsp;Add to Wishlist
+                                </button>
+                            </form>
+
+                            <!-- Write Review Button -->
+                            <button type="button" class="btn btn-secondary mt-2 equal-width" data-bs-toggle="modal" data-bs-target="#reviewModal<?php echo $row['itemid']; ?>" style="--bs-btn-color:black;--bs-btn-bg:none;--bs-btn-border-color:black; --bs-btn-hover-bg:#4c3f31;">
+                                Write a Review
+                            </button>
+
+                            <!-- Review Modal -->
+                            <div class="modal fade" id="reviewModal<?php echo $row['itemid']; ?>" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="reviewModalLabel">Write a Review for <?php echo $row['itemname']; ?></h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="../control/reviewcon.php" method="post">
+                                                <input type="hidden" name="productid" value="<?php echo $row['itemid']; ?>">
+                                                <input type="hidden" name="userid" value="<?php echo $userid; ?>">
+                                                <input type="hidden" name="cat" value="<?php echo  $category; ?>">
+                                                <input type="hidden" name="sub" value="<?php echo $subcategory; ?>">
+                                                <div class="mb-3">
+                                                    <label for="reviewText" class="form-label">Your Review</label>
+                                                    <textarea class="form-control" id="reviewText" name="review_text" rows="3" required></textarea>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="rating" class="form-label">Rating</label>
+                                                    <select class="form-control" id="rating" name="rating" required>
+                                                        <option value="1">1 - Poor</option>
+                                                        <option value="2">2 - Fair</option>
+                                                        <option value="3">3 - Good</option>
+                                                        <option value="4">4 - Very Good</option>
+                                                        <option value="5">5 - Excellent</option>
+                                                    </select>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary" style="--bs-btn-color:black;--bs-btn-bg:none;--bs-btn-border-color:black; --bs-btn-hover-bg:#4c3f31;">Submit Review</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <?php }
+            } else { ?>
+                <h2>No Iteam</h2>
+            <?php } ?>
         
 
 

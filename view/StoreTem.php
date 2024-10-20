@@ -372,7 +372,7 @@ include_once '../model/addtocart.php';
             }
 
             $user = new Thrift($userid);
-            $rows = $user->getStoreItemsLogin($con);
+            $rows = $user->getStoreItemsLogin($con, $userid);
 
             if (!empty($rows)) {
                 foreach ($rows as $row) { ?>

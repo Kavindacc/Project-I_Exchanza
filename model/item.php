@@ -201,11 +201,11 @@ class Thrift extends Item
         }
     }
 
-    public function getStoreItemsLogin($con)
+    public function getStoreItemsLogin($con, $userid)
     {
         try {
             // SQL query to select items from the storeitems table
-            $sql = "SELECT id, itemname, price, color, description, category, subcategory, size, coverimage, otherimage, userid, created_at FROM storeitems";
+            $sql = "SELECT id, itemname, price, color, description, category, subcategory, size, coverimage, otherimage, userid, created_at FROM storeitems WHERE userid=$userid";
     
             // Prepare the statement
             $stmt = $con->prepare($sql);
