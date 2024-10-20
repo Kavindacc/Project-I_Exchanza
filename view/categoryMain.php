@@ -1,8 +1,9 @@
 <?php
-session_start();
 include_once '../model/DbConnector.php';
 include_once '../model/wishlist.php';
 include_once '../model/addtocart.php';
+include_once '../model/item.php';
+include_once '../model/user.php';
 
 ?>
 <!DOCTYPE html>
@@ -137,563 +138,114 @@ include_once '../model/addtocart.php';
     </nav>
 
     <br>
-    <div class="tab-content" id="nav-tabContent">
-      <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab" tabindex="0">
-        <br>
+    
 
-        <!-- Products Section -->
-        <section id="newproducts" class="product-store">
-          <div class="product-grid">
-            <!--methn adala product type 1k ewa witri enna oni--->
-            <!-- Example product item -->
-            <div class="product-item">
-              <div class="image-holder">
-                <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
-                <div class="cart-concern">
 
-                  <button type="button" class="btn-cart">
-                    <i class="bi bi-cart-plus"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
-                      <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z" />
-                      <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-                    </svg>
-                  </button>
+<?php
+    $dsn = new DbConnector();
+    $con = $dsn->getConnection();
 
-                  <button type="button" class="btn-whishlist">
-                    <i class="bi bi-heart"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                      <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                    </svg>
-                  </button>
+    $user = new Thrift($userid);
+    $rows = $user->getStoreItemsAll($con, $userid);
+    ?>
 
+    <?php if (!empty($rows)) { ?>
+        <div class="d-flex flex-wrap justify-content-start">
+            <?php foreach ($rows as $row) { ?>
+                <div class="card mb-3 pt-2 me-2" style="width: 17rem;">
+                    <img src="../upload/<?php echo $row['coverimage']; ?>" class="card-img-top" alt="..." style="height:10rem;">
+                    <div class="card-body">
+                        <h3 class="card-title"><?php echo $row['itemname']; ?></h3>
+                        <?php if (isset($row['size'])) { ?>
+                            <h5 class="card-text"><strong>Size: </strong><?php echo $row['size']; ?></h5>
+                        <?php } ?>
+
+                        <h5 class="card-text"><strong>Price:</strong><?php echo 'Rs.' . $row['price']; ?></h5>
+
+                        <!-- Ratings Section -->
+                        <?php
+                        $obj = new GeneralCustomer();
+                        $rating = $obj->getRating($con);
+                        if (!empty($rating)) { ?>
+                            <div class="review mt-4">
+                                <?php foreach ($rating as $rate) {
+                                    $user_id = $rate['user_id'];
+                                    $obj->setUserid($user_id);
+                                    $name = $obj->getusername($con);
+                                ?>
+                                    <div class="rating-stars">
+                                        <h6><?php echo ucwords($name); ?></h6>
+                                        <h6><strong>Rating:</strong>
+                                            <?php
+                                            $ratingValue = $rate['rating'];
+                                            for ($i = 1; $i <= 5; $i++) {
+                                                echo ($i <= $ratingValue) ? '<i class="fas fa-star filled"></i>' : '<i class="fas fa-star"></i>';
+                                            }
+                                            ?>
+                                        </h6>
+                                        <h6><strong>Review:</strong><?php echo $rate['review_text']; ?></h6>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                        <?php } ?>
+
+                        <!-- Wishlist Form -->
+                        <form action="../control/wishlistcon.php" method="post">
+                            <input type="hidden" name="itemid" value="<?php echo $itemid; ?>">
+                            <input type="hidden" name="userid" value="<?php echo $userid; ?>">
+                            <input type="hidden" name="cat" value="<?php echo $category; ?>">
+                            <input type="hidden" name="sub" value="<?php echo $subcategory; ?>">
+                            <button type="submit" class="btn btn-primary mt-2 equal-width" name="wishlist" style="--bs-btn-color:black;--bs-btn-bg:none;--bs-btn-border-color:black; --bs-btn-hover-bg:#4c3f31;">
+                                <i class="fa-regular fa-heart"></i>&nbsp;Add to Wishlist
+                            </button>
+                        </form>
+
+                        <!-- Write Review Button -->
+                        <button type="button" class="btn btn-secondary mt-2 equal-width" data-bs-toggle="modal">
+                            Write a Review
+                        </button>
+
+                        <!-- Review Modal -->
+                        <div class="modal fade" id="reviewModal<?php echo $row['itemid']; ?>" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="reviewModalLabel">Write a Review for <?php echo $row['itemname']; ?></h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="../control/reviewcon.php" method="post">
+                                            <input type="hidden" name="itemid" value="<?php echo $row['itemid']; ?>">
+                                            <input type="hidden" name="userid" value="<?php echo $userid; ?>">
+                                            <input type="hidden" name="cat" value="<?php echo $category; ?>">
+                                            <input type="hidden" name="sub" value="<?php echo $subcategory; ?>">
+                                            <div class="mb-3">
+                                                <label for="reviewText" class="form-label">Your Review</label>
+                                                <textarea class="form-control" id="reviewText" name="review_text" rows="3" required></textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="rating" class="form-label">Rating</label>
+                                                <select class="form-control" id="rating" name="rating" required>
+                                                    <option value="1">1 - Poor</option>
+                                                    <option value="2">2 - Fair</option>
+                                                    <option value="3">3 - Good</option>
+                                                    <option value="4">4 - Very Good</option>
+                                                    <option value="5">5 - Excellent</option>
+                                                </select>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary" style="--bs-btn-color:black;--bs-btn-bg:none;--bs-btn-border-color:black; --bs-btn-hover-bg:#4c3f31;">Submit Review</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div class="product-detail">
-                <h3 class="product-name">Product Name 1</h3><!-----product name enna oni methnt-->
-                <p class="category-type">Category Type</p><!-----men/women/kids enna oni methnt - -->
-                <p class="product-price">$49.99</p><!-----product price enna oni methnt-->
-              </div>
-            </div>
-
-          </div>
-        </section>
-      </div>
-
-      <div class="tab-pane fade" id="nav-dresses" role="tabpanel" aria-labelledby="nav-dresses-tab" tabindex="0">
-        <br>
-
-        <!-- Products Section -->
-        <section id="newproducts" class="product-store">
-          <div class="product-grid">
-            <!--methn adala product type 1k ewa witri enna oni--->
-            <!-- Example product item -->
-            <div class="product-item">
-              <div class="image-holder">
-                <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
-                <div class="cart-concern">
-
-                  <button type="button" class="btn-cart">
-                    <i class="bi bi-cart-plus"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
-                      <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z" />
-                      <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-                    </svg>
-                  </button>
-
-                  <button type="button" class="btn-whishlist">
-                    <i class="bi bi-heart"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                      <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                    </svg>
-                  </button>
-
-                </div>
-              </div>
-              <div class="product-detail">
-                <h3 class="product-name">Product Name 1</h3><!-----product name enna oni methnt-->
-                <p class="category-type">Category Type</p><!-----men/women/kids enna oni methnt - -->
-                <p class="product-price">$49.99</p><!-----product price enna oni methnt-->
-              </div>
-            </div>
-
-
-          </div>
-        </section>
-      </div>
-
-      <div class="tab-pane fade" id="nav-blouse" role="tabpanel" aria-labelledby="nav-blouse-tab" tabindex="0">
-        <br>
-
-        <!-- Products Section -->
-        <section id="newproducts" class="product-store">
-          <div class="product-grid">
-            <!--methn adala product type 1k ewa witri enna oni--->
-            <!-- Example product item -->
-            <div class="product-item">
-              <div class="image-holder">
-                <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
-                <div class="cart-concern">
-
-                  <button type="button" class="btn-cart">
-                    <i class="bi bi-cart-plus"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
-                      <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z" />
-                      <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-                    </svg>
-                  </button>
-
-                  <button type="button" class="btn-whishlist">
-                    <i class="bi bi-heart"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                      <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                    </svg>
-                  </button>
-
-                </div>
-              </div>
-              <div class="product-detail">
-                <h3 class="product-name">Product Name 1</h3><!-----product name enna oni methnt-->
-                <p class="category-type">Category Type</p><!-----men/women/kids enna oni methnt - -->
-                <p class="product-price">$49.99</p><!-----product price enna oni methnt-->
-              </div>
-            </div>
-
-
-          </div>
-        </section>
-      </div>
-
-      <div class="tab-pane fade" id="nav-tshirt" role="tabpanel" aria-labelledby="nav-tshirt-tab" tabindex="0"><br>
-
-        <!-- Products Section -->
-        <section id="newproducts" class="product-store">
-          <div class="product-grid">
-            <!--methn adala product type 1k ewa witri enna oni--->
-            <!-- Example product item -->
-            <div class="product-item">
-              <div class="image-holder">
-                <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
-                <div class="cart-concern">
-
-                  <button type="button" class="btn-cart">
-                    <i class="bi bi-cart-plus"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
-                      <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z" />
-                      <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-                    </svg>
-                  </button>
-
-                  <button type="button" class="btn-whishlist">
-                    <i class="bi bi-heart"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                      <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                    </svg>
-                  </button>
-
-                </div>
-              </div>
-              <div class="product-detail">
-                <h3 class="product-name">Product Name 1</h3><!-----product name enna oni methnt-->
-                <p class="category-type">Category Type</p><!-----men/women/kids enna oni methnt - -->
-                <p class="product-price">$49.99</p><!-----product price enna oni methnt-->
-              </div>
-            </div>
-
-
-          </div>
-        </section>
-      </div>
-      <div class="tab-pane fade" id="nav-shirt" role="tabpanel" aria-labelledby="nav-shirt-tab" tabindex="0">
-        <br>
-
-        <!-- Products Section -->
-        <section id="newproducts" class="product-store">
-          <div class="product-grid">
-            <!--methn adala product type 1k ewa witri enna oni--->
-            <!-- Example product item -->
-            <div class="product-item">
-              <div class="image-holder">
-                <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
-                <div class="cart-concern">
-
-                  <button type="button" class="btn-cart">
-                    <i class="bi bi-cart-plus"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
-                      <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z" />
-                      <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-                    </svg>
-                  </button>
-
-                  <button type="button" class="btn-whishlist">
-                    <i class="bi bi-heart"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                      <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                    </svg>
-                  </button>
-
-                </div>
-              </div>
-              <div class="product-detail">
-                <h3 class="product-name">Product Name 1</h3><!-----product name enna oni methnt-->
-                <p class="category-type">Category Type</p><!-----men/women/kids enna oni methnt - -->
-                <p class="product-price">$49.99</p><!-----product price enna oni methnt-->
-              </div>
-            </div>
-
-
-          </div>
-        </section>
-      </div>
-      <div class="tab-pane fade" id="nav-croptop" role="tabpanel" aria-labelledby="nav-croptop-tab" tabindex="0">
-        <br>
-
-        <!-- Products Section -->
-        <section id="newproducts" class="product-store">
-          <div class="product-grid">
-            <!--methn adala product type 1k ewa witri enna oni--->
-            <!-- Example product item -->
-            <div class="product-item">
-              <div class="image-holder">
-                <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
-                <div class="cart-concern">
-
-                  <button type="button" class="btn-cart">
-                    <i class="bi bi-cart-plus"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
-                      <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z" />
-                      <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-                    </svg>
-                  </button>
-
-                  <button type="button" class="btn-whishlist">
-                    <i class="bi bi-heart"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                      <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                    </svg>
-                  </button>
-
-                </div>
-              </div>
-              <div class="product-detail">
-                <h3 class="product-name">Product Name 1</h3><!-----product name enna oni methnt-->
-                <p class="category-type">Category Type</p><!-----men/women/kids enna oni methnt - -->
-                <p class="product-price">$49.99</p><!-----product price enna oni methnt-->
-              </div>
-            </div>
-
-
-          </div>
-        </section>
-      </div>
-      <div class="tab-pane fade" id="nav-skirt" role="tabpanel" aria-labelledby="nav-skirt-tab" tabindex="0">
-        <br>
-
-        <!-- Products Section -->
-        <section id="newproducts" class="product-store">
-          <div class="product-grid">
-            <!--methn adala product type 1k ewa witri enna oni--->
-            <!-- Example product item -->
-            <div class="product-item">
-              <div class="image-holder">
-                <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
-                <div class="cart-concern">
-
-                  <button type="button" class="btn-cart">
-                    <i class="bi bi-cart-plus"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
-                      <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z" />
-                      <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-                    </svg>
-                  </button>
-
-                  <button type="button" class="btn-whishlist">
-                    <i class="bi bi-heart"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                      <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                    </svg>
-                  </button>
-
-                </div>
-              </div>
-              <div class="product-detail">
-                <h3 class="product-name">Product Name 1</h3><!-----product name enna oni methnt-->
-                <p class="category-type">Category Type</p><!-----men/women/kids enna oni methnt - -->
-                <p class="product-price">$49.99</p><!-----product price enna oni methnt-->
-              </div>
-            </div>
-
-
-          </div>
-        </section>
-      </div>
-      <div class="tab-pane fade" id="nav-pant" role="tabpanel" aria-labelledby="nav-pant-tab" tabindex="0">
-        <br>
-
-        <!-- Products Section -->
-        <section id="newproducts" class="product-store">
-          <div class="product-grid">
-            <!--methn adala product type 1k ewa witri enna oni--->
-            <!-- Example product item -->
-            <div class="product-item">
-              <div class="image-holder">
-                <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
-                <div class="cart-concern">
-
-                  <button type="button" class="btn-cart">
-                    <i class="bi bi-cart-plus"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
-                      <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z" />
-                      <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-                    </svg>
-                  </button>
-
-                  <button type="button" class="btn-whishlist">
-                    <i class="bi bi-heart"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                      <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                    </svg>
-                  </button>
-
-                </div>
-              </div>
-              <div class="product-detail">
-                <h3 class="product-name">Product Name 1</h3><!-----product name enna oni methnt-->
-                <p class="category-type">Category Type</p><!-----men/women/kids enna oni methnt - -->
-                <p class="product-price">$49.99</p><!-----product price enna oni methnt-->
-              </div>
-            </div>
-
-
-          </div>
-        </section>
-      </div>
-      <div class="tab-pane fade" id="nav-short" role="tabpanel" aria-labelledby="nav-short-tab" tabindex="0">
-        <br>
-
-        <!-- Products Section -->
-        <section id="newproducts" class="product-store">
-          <div class="product-grid">
-            <!--methn adala product type 1k ewa witri enna oni--->
-            <!-- Example product item -->
-            <div class="product-item">
-              <div class="image-holder">
-                <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
-                <div class="cart-concern">
-
-                  <button type="button" class="btn-cart">
-                    <i class="bi bi-cart-plus"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
-                      <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z" />
-                      <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-                    </svg>
-                  </button>
-
-                  <button type="button" class="btn-whishlist">
-                    <i class="bi bi-heart"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                      <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                    </svg>
-                  </button>
-
-                </div>
-              </div>
-              <div class="product-detail">
-                <h3 class="product-name">Product Name 1</h3><!-----product name enna oni methnt-->
-                <p class="category-type">Category Type</p><!-----men/women/kids enna oni methnt - -->
-                <p class="product-price">$49.99</p><!-----product price enna oni methnt-->
-              </div>
-            </div>
-
-
-          </div>
-        </section>
-      </div>
-      <div class="tab-pane fade" id="nav-jean" role="tabpanel" aria-labelledby="nav-jean-tab" tabindex="0">
-        <br>
-
-        <!-- Products Section -->
-        <section id="newproducts" class="product-store">
-          <div class="product-grid">
-            <!--methn adala product type 1k ewa witri enna oni--->
-            <!-- Example product item -->
-            <div class="product-item">
-              <div class="image-holder">
-                <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
-                <div class="cart-concern">
-
-                  <button type="button" class="btn-cart">
-                    <i class="bi bi-cart-plus"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
-                      <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z" />
-                      <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-                    </svg>
-                  </button>
-
-                  <button type="button" class="btn-whishlist">
-                    <i class="bi bi-heart"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                      <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                    </svg>
-                  </button>
-
-                </div>
-              </div>
-              <div class="product-detail">
-                <h3 class="product-name">Product Name 1</h3><!-----product name enna oni methnt-->
-                <p class="category-type">Category Type</p><!-----men/women/kids enna oni methnt - -->
-                <p class="product-price">$49.99</p><!-----product price enna oni methnt-->
-              </div>
-            </div>
-
-
-          </div>
-        </section>
-      </div>
-      <div class="tab-pane fade" id="nav-sandal" role="tabpanel" aria-labelledby="nav-sandal-tab" tabindex="0">
-        <br>
-
-        <!-- Products Section -->
-        <section id="newproducts" class="product-store">
-          <div class="product-grid">
-            <!--methn adala product type 1k ewa witri enna oni--->
-            <!-- Example product item -->
-            <div class="product-item">
-              <div class="image-holder">
-                <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
-                <div class="cart-concern">
-
-                  <button type="button" class="btn-cart">
-                    <i class="bi bi-cart-plus"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
-                      <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z" />
-                      <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-                    </svg>
-                  </button>
-
-                  <button type="button" class="btn-whishlist">
-                    <i class="bi bi-heart"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                      <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                    </svg>
-                  </button>
-
-                </div>
-              </div>
-              <div class="product-detail">
-                <h3 class="product-name">Product Name 1</h3><!-----product name enna oni methnt-->
-                <p class="category-type">Category Type</p><!-----men/women/kids enna oni methnt - -->
-                <p class="product-price">$49.99</p><!-----product price enna oni methnt-->
-              </div>
-            </div>
-
-
-          </div>
-        </section>
-      </div>
-      <div class="tab-pane fade" id="nav-bag" role="tabpanel" aria-labelledby="nav-bag-tab" tabindex="0">
-        <br>
-
-        <!-- Products Section -->
-        <section id="newproducts" class="product-store">
-          <div class="product-grid">
-            <!--methn adala product type 1k ewa witri enna oni--->
-            <!-- Example product item -->
-            <div class="product-item">
-              <div class="image-holder">
-                <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
-                <div class="cart-concern">
-
-                  <button type="button" class="btn-cart">
-                    <i class="bi bi-cart-plus"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
-                      <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z" />
-                      <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-                    </svg>
-                  </button>
-
-                  <button type="button" class="btn-whishlist">
-                    <i class="bi bi-heart"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                      <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                    </svg>
-                  </button>
-
-                </div>
-              </div>
-              <div class="product-detail">
-                <h3 class="product-name">Product Name 1</h3><!-----product name enna oni methnt-->
-                <p class="category-type">Category Type</p><!-----men/women/kids enna oni methnt - -->
-                <p class="product-price">$49.99</p><!-----product price enna oni methnt-->
-              </div>
-            </div>
-
-
-
-          </div>
-        </section>
-      </div>
-      <div class="tab-pane fade" id="nav-j&a" role="tabpanel" aria-labelledby="nav-j&a-tab" tabindex="0">
-        <br>
-
-        <!-- Products Section -->
-        <section id="newproducts" class="product-store">
-          <div class="product-grid">
-            <!--methn adala product type 1k ewa witri enna oni--->
-            <!-- Example product item -->
-            <div class="product-item">
-              <div class="image-holder">
-                <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
-                <div class="cart-concern">
-
-                  <button type="button" class="btn-cart">
-                    <i class="bi bi-cart-plus"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
-                      <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z" />
-                      <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-                    </svg>
-                  </button>
-
-                  <button type="button" class="btn-whishlist">
-                    <i class="bi bi-heart"></i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                      <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                    </svg>
-                  </button>
-
-                </div>
-              </div>
-              <div class="product-detail">
-                <h3 class="product-name">Product Name 1</h3><!-----product name enna oni methnt-->
-                <p class="category-type">Category Type</p><!-----men/women/kids enna oni methnt - -->
-                <p class="product-price">$49.99</p><!-----product price enna oni methnt-->
-              </div>
-            </div>
-
-
-
-          </div>
-        </section>
-      </div>
-
-
-    </div>
-
-
-  </main>
-
+            <?php } ?>
+        </div>
+    <?php } else { ?>
+        <h2>No Items</h2>
+    <?php } ?>
 
 
   <!-------footer------->

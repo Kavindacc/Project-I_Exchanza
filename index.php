@@ -68,7 +68,7 @@ if (isset($_SESSION['userid'])) {
                             </li>
                             <li class="nav-item mx-2">
 
-                                <a class="nav-link" href="view/storeIndex.php">Selling</a>
+                                <a class="nav-link" href="view/categoryMain.php">Selling</a>
                             </li>
                         </ul>
 
