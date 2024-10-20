@@ -401,7 +401,7 @@ if (isset($_SESSION['userid'])) {
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, ab laborum ut accusamus, fugiat earum alias
                     beatae ipsa harum quos atque culpa architecto similique deleniti impedit, facilis at aliquam deserunt!
                 </p>
-                <button><a href="./view/Store Index.php">Shop Now&nbsp;>></a></button>
+                <button><a href="./view/storeIndex.php">Shop Now&nbsp;>></a></button>
             </div>
         </div>
 

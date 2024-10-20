@@ -4,7 +4,6 @@ include("includes/header.php");
 require '../model/DbConnector.php';
 require 'classes/Admin.php';
 
-// Instantiate the DbConnector class
 $dbConnector = new DbConnector();
 $admin = new Admin($dbConnector->getConnection());
 ?>
@@ -12,13 +11,13 @@ $admin = new Admin($dbConnector->getConnection());
 <div class="row">
     <div class="col-md-12">
 
-    <?php if (isset($_SESSION['message'])) : ?>
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <?= $_SESSION['message']; ?>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <?php unset($_SESSION['message']); ?>
-<?php endif; ?>
+        <?php if (isset($_SESSION['message'])) : ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <?= $_SESSION['message']; ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <?php unset($_SESSION['message']); ?>
+        <?php endif; ?>
 
 
         <div class="card">
@@ -44,7 +43,7 @@ $admin = new Admin($dbConnector->getConnection());
                         <?php
                         $query = "SELECT * FROM user";
 
-                        // Use the instance of DbConnector
+                        
                         $statement = $dbConnector->getConnection()->prepare($query);
                         $statement->execute();
 
