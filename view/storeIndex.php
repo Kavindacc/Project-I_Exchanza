@@ -141,6 +141,7 @@ include_once '../model/addtocart.php';
                               </a>
                               <br>
                               <br>
+                              <hr>
                 
                 <br>
 
