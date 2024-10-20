@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (filter_var($_POST['orderid'], FILTER_VALIDATE_INT)) {
             $orderid = filter_var($_POST['orderid'], FILTER_SANITIZE_NUMBER_INT);
         }
+        $itemid=$_POST['itemid'];
 
         $dsn = new DbConnector();
         $con = $dsn->getConnection();
@@ -14,8 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $obj = new MyOrders();
         $obj->setOrderId($orderid);
         if($obj->confirmReceived($con)){
-            header("Location:../view/userpage.php?w=1");
-            exit();
+                header("Location:../view/userpage.php?w=1");
+                exit();   
         }
     }
 }

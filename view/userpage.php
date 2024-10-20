@@ -475,6 +475,7 @@ if (isset($_SESSION['userid'])) {
                                     <div class="modal-body">
                                         Are you sure you want to confirm the order for <strong id="modalItemName"><?php echo $row['itemname']; ?></strong>?
                                         <input type="hidden" name="orderid" id="modalOrderId" value=<?php echo $row['order_id']; ?>>
+                                        <input type="hidden" name="itemid" id="modalOrderId" value=<?php echo $row['itemid']; ?>>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

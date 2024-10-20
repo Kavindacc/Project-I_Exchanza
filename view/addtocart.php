@@ -111,6 +111,7 @@ if (isset($_SESSION['userid'])) {
             <br>
             <?php if (!empty($rows)) { ?>
                 <!----Cart table----->
+
                 <table id="cart-table" class="table" style="cursor: context-menu;">
                     <thead class="table-primary">
                         <tr>
@@ -119,121 +120,123 @@ if (isset($_SESSION['userid'])) {
                             <th>Price</th>
                             <th>Quantity</th>
                             <th>Subtotal</th>
-                            <th>Action</th> <!-- New column for the Remove button -->
+                            <th>Action</th>
                         </tr>
                     </thead>
-                    <?php
-                    foreach ($rows as $row) { ?>
-                        <tr class="vertical-center">
-                            <td>
-                                <div class="cart-info">
-                                    <img src="<?php echo $row['coverimage']; ?>">
-                                </div>
-                            </td>
-                            <td><strong><?php echo $row['itemname']; ?></strong></td>
-                            <td class="price"><strong><?php echo $row['price']; ?></strong></td>
-                            <td>
-                                <form action="payment_gateway.php" method="POST">
-                                    <input type="number" name="quantity" min="1" max="1" class="quantity" value="1">
-                                </form>
-                            </td>
-                            <td class="subtotal"><?php echo $row['price']; ?></td>
-                            <td>
-                                <form action="../control/removeidcon.php" method="post">
-                                    <input type="hidden" name="itemid" value="<?php echo htmlspecialchars($row['itemid']); ?>">
-                                    <button type="submit" class="btn-cart">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                    </button>
-
-                                </form>
-
-
-                            </td>
-                        </tr>
-                    <?php }
-                    ?>
+                    <tbody>
+                        <?php
+                        $total = 0;
+                        foreach ($rows as $row) {
+                            $subtotal = $row['price'] * 1;
+                            $total += $subtotal;
+                        ?>
+                            <tr class="vertical-center">
+                                <td>
+                                    <div class="cart-info">
+                                        <img src="<?php echo $row['coverimage']; ?>">
+                                    </div>
+                                </td>
+                                <td><strong><?php echo $row['itemname']; ?></strong></td>
+                                <td class="price"><strong><?php echo $row['price']; ?></strong></td>
+                                <td>
+                                    <input type="number" name="quantity[]" min="1" max="1" class="quantity" value="1" readonly>
+                                </td>
+                                <td class="subtotal"><?php echo $row['price']; ?></td>
+                                <td>
+                                    <form action="../control/removeidcon.php" method="post">
+                                        <input type="hidden" name="itemid" value="<?php echo htmlspecialchars($row['itemid']); ?>">
+                                        <button type="submit" class="btn-cart">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
                 </table>
 
                 <div class="total-price">
-
                     <table>
                         <tr>
                             <td>Subtotal</td>
-                            <td id="cart-subtotal"></td>
+                            <td id="cart-subtotal"><?php echo $total; ?></td>
                         </tr>
                         <tr>
                             <td>Total</td>
-                            <td id="cart-total"></td>
+                            <td id="cart-total"><?php echo $total; ?></td>
                         </tr>
                         <br>
                         <tr>
                             <td>Shipping</td>
                             <td><small><b>Shipping costs are calculated during checkout</b></small></td>
                         </tr>
-                        <tr>
-                            <td colspan="2">
-                                <div>
-                                    <a href="payment_gateway.php"><button class="checkout">Checkout</button></a>
-                                </div>
-                            </td>
-                        </tr>
                     </table>
                     <br>
-
+                   
                 </div>
+                <form action="../control/payment.php" method="POST">
+                        <!-- Pass total amount and user ID to the payment gateway -->
+                        <input type="hidden" name="total_amount" value="<?php echo $total; ?>">
+                        <input type="hidden" name="userid" value="<?php echo $userid; ?>">
 
+                        <div style="float: right;">
+                            <button type="submit" class="checkout"style="width:25rem;">Checkout</button>
+                        </div>
+                    </form>
+
+
+            <?php } else { ?>
+                <h3>No Item Add to Cart</h3>
+            <?php } ?>
         </div>
-    <?php } else { ?>
-        <h3>No Item Add to Cart</h3>
-
-    <?php } ?>
 
 
-    <script src="https://unpkg.com/scrollreveal"></script>
-    <script src="view/main.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const cartTable = document.getElementById('cart-table');
-            const quantityInputs = cartTable.querySelectorAll('.quantity');
-            const removeButtons = cartTable.querySelectorAll('.btn-remove');
-            const cartSubtotal = document.getElementById('cart-subtotal');
-            const cartTotal = document.getElementById('cart-total');
 
-            function updateSubtotal(row) {
-                const price = parseFloat(row.querySelector('.price').textContent);
-                const quantity = parseInt(row.querySelector('.quantity').value);
-                const subtotal = price * quantity;
-                row.querySelector('.subtotal').textContent = subtotal.toFixed(2);
-            }
+        <script src="https://unpkg.com/scrollreveal"></script>
+        <script src="view/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const cartTable = document.getElementById('cart-table');
+                const quantityInputs = cartTable.querySelectorAll('.quantity');
+                const removeButtons = cartTable.querySelectorAll('.btn-remove');
+                const cartSubtotal = document.getElementById('cart-subtotal');
+                const cartTotal = document.getElementById('cart-total');
 
-            function updateCartTotal() {
-                let total = 0;
-                cartTable.querySelectorAll('.subtotal').forEach(subtotal => {
-                    total += parseFloat(subtotal.textContent);
+                function updateSubtotal(row) {
+                    const price = parseFloat(row.querySelector('.price').textContent);
+                    const quantity = parseInt(row.querySelector('.quantity').value);
+                    const subtotal = price * quantity;
+                    row.querySelector('.subtotal').textContent = subtotal.toFixed(2);
+                }
+
+                function updateCartTotal() {
+                    let total = 0;
+                    cartTable.querySelectorAll('.subtotal').forEach(subtotal => {
+                        total += parseFloat(subtotal.textContent);
+                    });
+                    cartSubtotal.textContent = `Rs.${total.toFixed(2)}`;
+                    cartTotal.textContent = `Rs.${total.toFixed(2)}`;
+                }
+
+                quantityInputs.forEach(input => {
+                    input.addEventListener('change', function() {
+                        updateSubtotal(this.closest('tr'));
+                        updateCartTotal();
+                    });
                 });
-                cartSubtotal.textContent = `Rs.${total.toFixed(2)}`;
-                cartTotal.textContent = `Rs.${total.toFixed(2)}`;
-            }
 
-            quantityInputs.forEach(input => {
-                input.addEventListener('change', function() {
-                    updateSubtotal(this.closest('tr'));
-                    updateCartTotal();
+                removeButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        this.closest('tr').remove();
+                        updateCartTotal();
+                    });
                 });
+
+                // Initial update
+                updateCartTotal();
             });
-
-            removeButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    this.closest('tr').remove();
-                    updateCartTotal();
-                });
-            });
-
-            // Initial update
-            updateCartTotal();
-        });
-    </script>
+        </script>
 
 
 
