@@ -34,6 +34,18 @@ class User
     {
         $this->email = $email;
     }
+    public function setFirstname($first_name)
+    {
+        $this->first_name = $first_name;
+    }
+    public function setLastname($last_name)
+    {
+        $this->last_name = $last_name;
+    }
+    public function setPhonenum($phone_num)
+    {
+        $this->phone_num = $phone_num;
+    }
 
     public function setPassword($password)
     {
@@ -169,6 +181,28 @@ class RegisteredCustomer extends User
             $pstmt->execute();
             $row = $pstmt->fetch(PDO::FETCH_ASSOC);
             return $row;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+    function updateinfomation($con)
+    {
+        try {
+            $sql = "UPDATE user SET firstname = ?, lastname =?,email =?, phonenum =? WHERE userid=?";
+            $pstmt = $con->prepare($sql);
+            $pstmt->bindValue(1, $this->first_name);
+            $pstmt->bindValue(2, $this->last_name);
+            $pstmt->bindValue(3, $this->email);
+            $pstmt->bindValue(4, $this->phone_num);
+            $pstmt->bindValue(5, $this->userid);
+            $pstmt->execute();
+            if($pstmt->rowCount()>0){
+                return true;
+            }
+            else{
+                return false;
+            }
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }

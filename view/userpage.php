@@ -112,12 +112,19 @@ if (isset($_SESSION['userid'])) {
 
                 </div>
                 <div class="col-md-8 p-4  mx-auto my-5 " id="personalinfo"><!--personal information -->
-                    <?php if (isset($_SESSION['success'])) { ?><!--change personal information-->
+                    <?php if (isset($_SESSION['success'])) { ?>
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <strong><?php echo $_SESSION['success']; ?></strong>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     <?php unset($_SESSION['success']);
+                    } ?>
+                    <?php if (isset($_SESSION['u'])) { ?><!--change personal information-->
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong><?php echo $_SESSION['u']; ?></strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php unset($_SESSION['u']);
                     } ?>
                     <?php if (isset($_SESSION['error'])) { ?>
                         <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -142,34 +149,53 @@ if (isset($_SESSION['userid'])) {
                     <?php unset($_SESSION['perror']);
                     } ?>
 
-                    <form style="margin:25px auto;"><!--from-->
+                    <form action="../control/updateinfo.php" method="POST" style="margin:20px auto;"><!--from-->
+                        <input type="hidden" name="userid" value="<?php echo $userid; ?>">
                         <div class="row mb-3">
                             <div class="col-md-6 mb-3">
                                 <label for="" class="form-label">First Name</label>
-                                <input type="text" class="form-control" placeholder="<?php echo ucfirst($row['firstname']); ?>" name="fname" id="name" disabled>
+                                <input type="text" class="form-control" placeholder="<?php echo ucfirst($row['firstname']); ?>" name="fname" id="name" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="" class="form-label">Last Name</label>
-                                <input type="text" class="form-control" placeholder="<?php echo ucfirst($row['lastname']); ?>" name="lname" id="name" disabled>
+                                <input type="text" class="form-control" placeholder="<?php echo ucfirst($row['lastname']); ?>" name="lname" id="name" required>
                             </div>
 
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6 mb-3">
                                 <label for="" class="form-label">Email</label>
-                                <input type="email" class="form-control" placeholder="<?php echo $row['email']; ?>" id="email" name="email" disabled>
+                                <span style="color:#FF9D3D;font-weight: 600;">&nbsp;<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;This email should use when login</span>
+                                <input type="email" class="form-control" placeholder="<?php echo $row['email']; ?>" id="email" name="email" required>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="" class="form-label">Phone Number</label>
-                                <input type="tel" class="form-control" placeholder="<?php echo $row['phonenum']; ?>" name="phoneno" id="phoneno" disabled>
+                                <input type="tel" class="form-control" placeholder="<?php echo $row['phonenum']; ?>" name="phoneno" id="phoneno" required>
                             </div>
 
                         </div>
+                        <!--information save-->
+                        <div class="modal fade" id="saveModal" tabindex="-1" aria-labelledby="saveModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                            <div class="modal-dialog ">
+                                <div class="modal-content" style="background:#AE9D92;color:#ffff;">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="saveModalLabel">Save Personal Information</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                       Do you want to save  Information
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary" name="changeimg" style="--bs-btn-color:#FFFF;--bs-btn-bg:#897062;--bs-btn-border-color:none; --bs-btn-hover-bg:#4c3f31;">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                     </form><!--form end-->
-
-                    <div class="float-sm-end"><button type="button" class="btn btn-outline-warning p-btn m-3" data-bs-toggle="modal" data-bs-target="#changeimgModal" style="--bs-btn-color:#FFFF;--bs-btn-bg:#897062;--bs-btn-border-color:none; --bs-btn-hover-bg:#FFA500;">Change Profile picture</button></div>
-                    <div class="modal fade" id="changeimgModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+                    <div class="float-sm-end"><button type="button" class="btn btn-outline-warning p-btn m-3" data-bs-toggle="modal" data-bs-target="#saveModal" style="--bs-btn-color:#FFFF;--bs-btn-bg:#897062;--bs-btn-border-color:none; --bs-btn-hover-bg:#FFA500;font-weight:600">Save</button></div>
+                    <div class="float-sm-end"><button type="button" class="btn btn-outline-warning p-btn m-3" data-bs-toggle="modal" data-bs-target="#changeimgModal" style="--bs-btn-color:#FFFF;--bs-btn-bg:#897062;--bs-btn-border-color:none; --bs-btn-hover-bg:#FFA500;font-weight:600">Change Profile picture</button></div>
+                    <div class="modal fade" id="changeimgModal" tabindex="-1" aria-labelledby="changeimgModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                         <div class="modal-dialog">
                             <div class="modal-content" style="background:#AE9D92;color:#ffff;">
                                 <div class="modal-header">
@@ -185,7 +211,7 @@ if (isset($_SESSION['userid'])) {
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
                                         <button type="submit" class="btn btn-primary" name="changeimg" style="--bs-btn-color:#FFFF;--bs-btn-bg:#897062;--bs-btn-border-color:none; --bs-btn-hover-bg:#4c3f31;">Change Profile Img</button>
                                     </div>
                                 </form>
@@ -194,10 +220,10 @@ if (isset($_SESSION['userid'])) {
                     </div>
 
                     <!-- Change Password Button -->
-                    <div class="float-sm-end"><button type="button" class="btn btn-outline-warning p-btn m-3" data-bs-toggle="modal" data-bs-target="#changePasswordModal" style="--bs-btn-color:#FFFF;--bs-btn-bg:#897062;--bs-btn-border-color:none; --bs-btn-hover-bg:#FFA500;">Change Password</button></div>
+                    <div class="float-sm-end"><button type="button" class="btn btn-outline-warning p-btn m-3" data-bs-toggle="modal" data-bs-target="#changePasswordModal" style="--bs-btn-color:#FFFF;--bs-btn-bg:#897062;--bs-btn-border-color:none; --bs-btn-hover-bg:#FFA500;font-weight:600">Change Password</button></div>
 
                     <!-- Change Password Modal -->
-                    <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                         <div class="modal-dialog">
                             <div class="modal-content" style="background:#AE9D92;color:#ffff;">
                                 <div class="modal-header">
@@ -221,7 +247,7 @@ if (isset($_SESSION['userid'])) {
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
                                         <button type="submit" class="btn btn-primary" name="changepassword" style="--bs-btn-color:#FFFF;--bs-btn-bg:#897062;--bs-btn-border-color:none; --bs-btn-hover-bg:#4c3f31;">Change Password</button>
                                     </div>
                                 </form>
@@ -316,7 +342,7 @@ if (isset($_SESSION['userid'])) {
                                                             </div>
                                                         </div>
                                                     <?php } ?>
-                                            <?php } ?>
+                                                <?php } ?>
 
                                                 <!-- Modal edit -->
                                                 <div class="modal fade" id="<?php echo $editModalId; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="<?php echo $editModalId; ?>Label" aria-hidden="true">

@@ -168,10 +168,20 @@ input[type=submit]:hover{
 .vertical-center {
     vertical-align: middle;
 }
-#personalinfo{
-    background: #f4f4f4;
+#personalinfo {
+    background: linear-gradient(to right, #f4f4f46b 80%, #eaeaea 100%);
     min-height: 15rem;
     border-radius: .6rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+}
+.form-control {
+    padding: 10px; 
+    border-radius: .6rem;
+}
+.form-label {
+    font-weight: 600;
+    font-size: 18px;
 }
 #information,#order,#item,#orders{
     --bs-btn-color:#FFFF;
@@ -217,7 +227,7 @@ input[type=submit]:hover{
     }
     #personalinfo{
         
-        max-height:600px;
+        max-height:670px;
         
     }
     #update,#edit{
