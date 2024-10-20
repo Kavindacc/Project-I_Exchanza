@@ -11,6 +11,7 @@ session_start();
 class PaymentGateway {
     
     private $userid;
+    public $country = null;
 
     public function __construct() {
         if (isset($_SESSION['userid'])) {
@@ -138,17 +139,17 @@ class PaymentGateway {
 
                                 <div class="row lower">
                                     <div class="col text-left">Subtotal</div>
-                                    <div class="col text-right"><span id="cart-subtotal"></span></div>
+                                    <div class="col text-right"><span id="cart-subtotal"><?php $this->displayTotal(); ?></span></div>
                                 </div>
 
                                 <div class="row lower">
                                     <div class="col text-left">Delivery</div>
-                                    <div class="col text-right"><span id="delivery">Free</span></div>
+                                    <div class="col text-right"><span id="delivery"><?php echo $this->displayDeleveryfee(); ?></span></div>
                                 </div>
 
                                 <div id="totalpay" class="row lower">
                                     <div class="col text-left"><b>Total to pay</b></div>
-                                    <div class="col text-right"><b><span id="cart-total"></span></b></div>
+                                    <div class="col text-right"><b><span id="cart-total"><?php $this->displaySubTotal(); ?></span></b></div>
                                 </div>
 
                                 <hr>
@@ -228,7 +229,7 @@ class PaymentGateway {
         $obj2 = new DbConnector();
         $con = $obj2->getConnection();
         $rows = $obj->cartItemDetails($con);
-
+        
 
         if (!empty($rows)) {
             $i = 0;
@@ -249,6 +250,72 @@ class PaymentGateway {
                 
             }
         }
+    }
+
+    private function displayTotal() {
+
+        $obj = new Cart();
+        $obj->setUserId($this->userid);
+        $obj2 = new DbConnector();
+        $con = $obj2->getConnection();
+        $rows = $obj->cartItemDetails($con);
+        $total = 0;
+
+        if (!empty($rows)) {
+            $i = 0;
+            foreach ($rows as $row) {
+                $total += $row['price'];
+            }
+        }
+        echo $total;
+    }
+
+    private function displaySubTotal() {
+
+        $obj = new Cart();
+        $obj->setUserId($this->userid);
+        $obj2 = new DbConnector();
+        $con = $obj2->getConnection();
+        $rows = $obj->cartItemDetails($con);
+        $total = 0;
+        $deleveryfee = $this->displayDeleveryfee();
+
+        if (!empty($rows)) {
+            $i = 0;
+            foreach ($rows as $row) {
+                $total += $row['price'];
+            }
+        }
+        $subtotal = $total + $deleveryfee;
+        echo $subtotal;
+    }
+
+    private function displayDeleveryfee() {
+
+        $obj = new Cart();
+        $obj->setUserId($this->userid);
+        $obj2 = new DbConnector();
+        $con = $obj2->getConnection();
+        $rows = $obj->cartItemDetails($con);
+        $deleveryfee = 0;
+        if (isset($_POST['country'])) {
+            $country = $_POST['country'];
+        }
+        else{
+            $country = 'srilanka';
+        }
+        
+        
+        if($country == 'srilanka'){
+            $deleveryfee = 350;
+        }
+        else if($country == 'india'){
+            $deleveryfee = 1000;
+        }
+        else{
+            $deleveryfee = 0;
+        }
+        return $deleveryfee;
     }
 
 
