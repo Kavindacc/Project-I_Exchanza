@@ -1,6 +1,5 @@
 <?php
-
-require '../model/DbConnector.php'; // Make sure this path is correct
+//require '../model/DbConnector.php'; // Make sure this path is correct
 
 class Save {
     
@@ -16,9 +15,10 @@ class Save {
             $save = $_POST['save'] ?? '';
 
             // Check if the save button was clicked and if card is set
-            if ($save === "save" && $card === "card") {
+            if ($save === "save") {
                 try {
                     // Get the database connection
+                    //require '../control/save.php';
                     $db = new DbConnector();
                     $conn = $db->getConnection();
                     
@@ -61,6 +61,7 @@ class Save {
     public function place_orderdb() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Retrieve form data with null coalescing operator to handle unset keys
+            $userid = $_SESSION['userid'] ?? '';
             $fullname = $_POST['name'] ?? '';
             $addres = $_POST['addres'] ?? '';
             $city = $_POST['city'] ?? '';
@@ -75,11 +76,12 @@ class Save {
                 $conn = $db->getConnection();
                 
                 // Prepare the SQL statement with placeholders
-                $stmt = $conn->prepare("INSERT INTO place_order (FullName, Address, City, Zip, District, Province, Country) VALUES (:fullname, :addres, :city, :zip, :district, :province, :country)");
+                $stmt = $conn->prepare("INSERT INTO orders (user_id, fullname, address, city, zip, district, province, country) VALUES (:userid, :fullname, :addres, :city, :zip, :district, :province, :country)");
 
                 // Check if preparation was successful
                 if ($stmt) {
                     // Bind the parameters with appropriate types using bindParam
+                    $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
                     $stmt->bindParam(':fullname', $fullname, PDO::PARAM_STR);
                     $stmt->bindParam(':addres', $addres, PDO::PARAM_STR);
                     $stmt->bindParam(':city', $city, PDO::PARAM_STR);
