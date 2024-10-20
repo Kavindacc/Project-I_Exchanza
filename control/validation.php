@@ -35,7 +35,7 @@ require '../control/save.php';
         }        
     }
         
-    $card = $_POST['card'] ?? '';
+    $card = "card";
 
     if ($card == "card") {
 

@@ -171,25 +171,22 @@ class PaymentGateway {
                 require '../control/validation.php';
 
                 $val = new validateCardDetails();
-                $valcall = $val->validation();
+                $validationResult = $val->validation();
 
             ?>
 
             <script>
 
-            updateCartTotal();
+            // updateCartTotal();
 
-            var myLink = document.querySelector('a[href="#"]');
-            myLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            });
+            // var myLink = document.querySelector('a[href="#"]');
+            // myLink.addEventListener('click', function(e) {
+            // e.preventDefault();
+            // });
 
             function errormsg(){
 
-                var card = "card";
-                var card = "<?php echo $card ?>";
-
-                if((card == "card") && ("<?php echo $validationResult; ?>" != 1)){
+                if(("<?php echo $validationResult; ?>" != 1)){
 
                     document.getElementById("error_msg").innerHTML="<?php echo $validationResult; ?>";              
                     
