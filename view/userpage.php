@@ -183,7 +183,7 @@ if (isset($_SESSION['userid'])) {
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                       Do you want to save  Information
+                                        Do you want to save Information
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary" name="changeimg" style="--bs-btn-color:#FFFF;--bs-btn-bg:#897062;--bs-btn-border-color:none; --bs-btn-hover-bg:#4c3f31;">Save</button>
@@ -302,12 +302,21 @@ if (isset($_SESSION['userid'])) {
                                         <td><?php echo ucfirst($row['category']); ?></td>
                                         <td><?php echo ucfirst($row['subcategory']); ?></td>
                                         <td>
-                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#<?php echo $editModalId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;">
-                                                Edit
-                                            </button>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#<?php echo $modalId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .6rem; --bs-btn-font-size: .75rem;">
-                                                Delete
-                                            </button>
+                                            <?php if ($row['status'] == 0) { ?>
+                                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#<?php echo $editModalId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;">
+                                                    Edit
+                                                </button>
+                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#<?php echo $modalId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .6rem; --bs-btn-font-size: .75rem;">
+                                                    Delete
+                                                </button>
+                                            <?php } else { ?>
+                                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#<?php echo $editModalId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .9rem; --bs-btn-font-size: .75rem;" disabled>
+                                                    Edit
+                                                </button>
+                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#<?php echo $modalId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .6rem; --bs-btn-font-size: .75rem;" disabled>
+                                                    Delete
+                                                </button>
+                                            <?php } ?>
                                             <!--<button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#<?php echo $accordionId; ?>" aria-expanded="false" aria-controls="<?php echo $accordionId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .8rem; --bs-btn-font-size: .75rem;">
                                                 Review
                                             </button>
@@ -342,57 +351,57 @@ if (isset($_SESSION['userid'])) {
                                                             </div>
                                                         </div>
                                                     <?php } ?>
-                                                <?php } */?>
+                                                <?php } */ ?>
 
                                                 <!-- Modal edit -->
-                                                <div class="modal fade" id="<?php echo $editModalId; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="<?php echo $editModalId; ?>Label" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content" style="background:#AE9D92;color:#ffff;">
-                                                            <div class="modal-header">
-                                                                <h1 class="modal-title fs-5" id="<?php echo $editModalId; ?>Label">Edit Product</h1>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <form action="../control/edititemcon.php" method="POST" enctype="multipart/form-data">
-                                                                    <input type="hidden" name="productid" value="<?php echo $row['itemid']; ?>">
-                                                                    <div class="mb-3">
-                                                                        <label for="product_name" class="form-label">Product Name</label>
-                                                                        <input type="text" class="form-control" name="product_name" value="<?php echo ucwords($row['itemname']); ?>" required>
-                                                                    </div>
-                                                                    <div class="mb-3">
-                                                                        <label for="price" class="form-label">Price</label>
-                                                                        <input type="text" class="form-control" name="price" value="<?php echo $row['price']; ?>" required>
-                                                                    </div>
-                                                                    <div class="mb-3">
-                                                                        <label for="image" class="form-label">Product Image</label>
-                                                                        <input type="file" class="form-control" name="image">
-                                                                        <input type="hidden" name="current_image" value="<?php echo $row['coverimage']; ?>">
-                                                                    </div>
-                                                                    <button type="submit" class="btn btn-primary" name="edit" style="--bs-btn-color:#FFFF;--bs-btn-bg:#897062;--bs-btn-border-color:none; --bs-btn-hover-bg:#4c3f31;">Save changes</button>
-                                                                </form>
-                                                            </div>
+                                            <div class="modal fade" id="<?php echo $editModalId; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="<?php echo $editModalId; ?>Label" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content" style="background:#AE9D92;color:#ffff;">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="<?php echo $editModalId; ?>Label">Edit Product</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="../control/edititemcon.php" method="POST" enctype="multipart/form-data">
+                                                                <input type="hidden" name="productid" value="<?php echo $row['itemid']; ?>">
+                                                                <div class="mb-3">
+                                                                    <label for="product_name" class="form-label">Product Name</label>
+                                                                    <input type="text" class="form-control" name="product_name" value="<?php echo ucwords($row['itemname']); ?>" required>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="price" class="form-label">Price</label>
+                                                                    <input type="text" class="form-control" name="price" value="<?php echo $row['price']; ?>" required>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="image" class="form-label">Product Image</label>
+                                                                    <input type="file" class="form-control" name="image">
+                                                                    <input type="hidden" name="current_image" value="<?php echo $row['coverimage']; ?>">
+                                                                </div>
+                                                                <button type="submit" class="btn btn-primary" name="edit" style="--bs-btn-color:#FFFF;--bs-btn-bg:#897062;--bs-btn-border-color:none; --bs-btn-hover-bg:#4c3f31;">Save changes</button>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
 
-                                                <!-- Modal delete -->
-                                                <div class="modal fade" id="<?php echo $modalId; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="<?php echo $modalId; ?>Label" aria-hidden="true">
-                                                    <div class="modal-dialog  modal-sm">
-                                                        <div class="modal-content" style="background:#AE9D92;color:#ffff;">
-                                                            <div class="modal-header">
-                                                                <h4 class="modal-title fs-5" id="<?php echo $modalId; ?>Label">Do you Want to Delete?<strong><?php echo ucwords($row['itemname']); ?></strong></h4>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <form action="../control/deleteitem.php" method="post">
-                                                                    <input type="hidden" name="productid" value="<?php echo $row['itemid']; ?>">
-                                                                    <button type="submit" class="btn btn-danger" name="delete">Delete</button>
-                                                                </form>
-                                                            </div>
+                                            <!-- Modal delete -->
+                                            <div class="modal fade" id="<?php echo $modalId; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="<?php echo $modalId; ?>Label" aria-hidden="true">
+                                                <div class="modal-dialog  modal-sm">
+                                                    <div class="modal-content" style="background:#AE9D92;color:#ffff;">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title fs-5" id="<?php echo $modalId; ?>Label">Do you Want to Delete?<strong><?php echo ucwords($row['itemname']); ?></strong></h4>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <form action="../control/deleteitem.php" method="post">
+                                                                <input type="hidden" name="productid" value="<?php echo $row['itemid']; ?>">
+                                                                <button type="submit" class="btn btn-danger" name="delete">Delete</button>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 <?php } ?>
