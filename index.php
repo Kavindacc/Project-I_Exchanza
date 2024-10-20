@@ -13,17 +13,17 @@ $settings = [
     'youtube_link' => ''
 ];
 $dbConnector = new DbConnector();
-    $admin = new Admin($dbConnector->getConnection());
+$admin = new Admin($dbConnector->getConnection());
 
-    $settingsFromDb = $admin->getSettings();
+$settingsFromDb = $admin->getSettings();
 
-    if ($settingsFromDb) {
-        $settings = $settingsFromDb; // Overwrite default values with the actual settings
-    }
+if ($settingsFromDb) {
+    $settings = $settingsFromDb; // Overwrite default values with the actual settings
+}
 if (isset($_SESSION['userid'])) {
     $userid = $_SESSION['userid'];
-    
-    
+
+
 ?>
 
     <!DOCTYPE html>
@@ -67,7 +67,7 @@ if (isset($_SESSION['userid'])) {
                                 <a class="nav-link" href="../Project-I_Exchanza/view/bidding.php">Bidding</a>
                             </li>
                             <li class="nav-item mx-2">
-                                <a class="nav-link" href="view/Store Index.php">Selling</a>
+
                                 <a class="nav-link" href="view/storeIndex.php">Selling</a>
                             </li>
                         </ul>
@@ -83,9 +83,10 @@ if (isset($_SESSION['userid'])) {
                             $obj->setUserId($userid);
                             $count = $obj->cartItemCount($con); ?>
                             <a href="../Project-I_Exchanza/view/addtocart.php" class="nav-link  text-decoration-none mx-1"><i class="fa-solid fa-cart-plus position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp"><?php if (isset($count)) {
-                                                                                                                                                                                                                                        echo $count;}?></span></i></a><!--addtocart-->
-                            <?php 
-                           
+                                                                                                                                                                                                                                                                    echo $count;
+                                                                                                                                                                                                                                                                } ?></span></i></a><!--addtocart-->
+                            <?php
+
 
                             $obj = new wishlist();
                             $obj->setUserId($userid);
@@ -245,7 +246,7 @@ if (isset($_SESSION['userid'])) {
                 </div>
                 <div class="row  mt-4" style="border-bottom:1px solid black;">
                     <div class="col-sm-6 col-md-4 text-center text-md-start ">
-                        
+
                         <p><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['phone']) ?></p>
                         <p><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['email']) ?></p>
                         <p><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['address']) ?></p>
@@ -260,9 +261,9 @@ if (isset($_SESSION['userid'])) {
                     <div class="col-md-4 text-center text-md-start lin">
                         <h5>Connect with Us</h5>
                         <p>
-                            <a href="<?= htmlspecialchars($settings['facebook_link']) ?>"target="_blank"><i class="fa-brands fa-facebook" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="<?= htmlspecialchars($settings['instagram_link']) ?>"target="_blank"><i class="fa-brands fa-instagram" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="<?= htmlspecialchars($settings['youtube_link']) ?>"target="_blank"><i class="fa-brands fa-youtube" style="font-size:50px;"></i></a>
+                            <a href="<?= htmlspecialchars($settings['facebook_link']) ?>" target="_blank"><i class="fa-brands fa-facebook" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="<?= htmlspecialchars($settings['instagram_link']) ?>" target="_blank"><i class="fa-brands fa-instagram" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="<?= htmlspecialchars($settings['youtube_link']) ?>" target="_blank"><i class="fa-brands fa-youtube" style="font-size:50px;"></i></a>
                         </p>
                     </div>
                 </div>
@@ -488,7 +489,7 @@ if (isset($_SESSION['userid'])) {
                 </div>
                 <div class="row  mt-4" style="border-bottom:1px solid black;">
                     <div class="col-sm-6 col-md-4 text-center text-md-start ">
-                        
+
                         <p><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['phone']) ?></p>
                         <p><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['email']) ?></p>
                         <p><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['address']) ?></p>
@@ -503,9 +504,9 @@ if (isset($_SESSION['userid'])) {
                     <div class="col-md-4 text-center text-md-start lin">
                         <h5>Connect with Us</h5>
                         <p>
-                            <a href="<?= htmlspecialchars($settings['facebook_link']) ?>"target="_blank"><i class="fa-brands fa-facebook" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="<?= htmlspecialchars($settings['instagram_link']) ?>"target="_blank"><i class="fa-brands fa-instagram" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="<?= htmlspecialchars($settings['youtube_link']) ?>"target="_blank"><i class="fa-brands fa-youtube" style="font-size:50px;"></i></a>
+                            <a href="<?= htmlspecialchars($settings['facebook_link']) ?>" target="_blank"><i class="fa-brands fa-facebook" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="<?= htmlspecialchars($settings['instagram_link']) ?>" target="_blank"><i class="fa-brands fa-instagram" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="<?= htmlspecialchars($settings['youtube_link']) ?>" target="_blank"><i class="fa-brands fa-youtube" style="font-size:50px;"></i></a>
                         </p>
                     </div>
                 </div>

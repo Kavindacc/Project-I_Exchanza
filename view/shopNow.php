@@ -66,7 +66,7 @@ include_once '../model/user.php';
                     <div class="d-flex flex-column float-start flex-lg-row justify-content-center  align-items-center mt-3 mt-lg-0 gap-3">
 
                         <?php
-                        session_start();
+
                         $userid = $_SESSION['userid'];
                         include_once '../model/DbConnector.php';
                         include_once '../model/addtocart.php';
@@ -157,7 +157,7 @@ include_once '../model/user.php';
                         </form>
 
                         <!-- Write Review Button -->
-                        <button type="button" class="btn btn-secondary mt-2 equal-width" data-bs-toggle="modal" >
+                        <button type="button" class="btn btn-secondary mt-2 equal-width" data-bs-toggle="modal">
                             Write a Review
                         </button>
 
