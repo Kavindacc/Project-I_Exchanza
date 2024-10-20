@@ -56,11 +56,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <td>
                                     <form method="post" style="display:inline-block;">
                                         <input type="hidden" name="enquiry_id" value="<?php echo $enquiry['id']; ?>">
-                                        <button type="submit" name="view_enquiry" class="btn btn-primary">View</button>
+                                        <button type="submit" name="view_enquiry" class="btn btn-sm" style="background-color:#897062; color:white;">View</button>
                                     </form>
                                     <form method="post" style="display:inline-block;">
                                         <input type="hidden" name="enquiry_id" value="<?php echo $enquiry['id']; ?>">
-                                        <button type="submit" name="delete_enquiry" class="btn btn-danger">Delete</button>
+                                        <button type="submit" name="delete_enquiry" class="btn btn-sm btn-danger">Delete</button>
                                     </form>
                                 </td>
                             </tr>
