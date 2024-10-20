@@ -1,5 +1,5 @@
 <?php
-//session_start();
+session_start();
 class User
 {
 
@@ -215,10 +215,9 @@ class RegisteredCustomer extends User
             $pstmt->bindValue(4, $this->phone_num);
             $pstmt->bindValue(5, $this->userid);
             $pstmt->execute();
-            if($pstmt->rowCount()>0){
+            if ($pstmt->rowCount() > 0) {
                 return true;
-            }
-            else{
+            } else {
                 return false;
             }
         } catch (PDOException $e) {
@@ -328,10 +327,9 @@ class RegisteredCustomer extends User
             $pstmt = $con->prepare($sql);
             $pstmt->bindValue(1, $this->itemid);
             $pstmt->execute();
-            if($pstmt->rowCount()>0){
+            if ($pstmt->rowCount() > 0) {
                 return true;
-            }
-            else{
+            } else {
                 return false;
             }
         } catch (PDOException $e) {
