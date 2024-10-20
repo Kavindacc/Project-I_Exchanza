@@ -377,7 +377,7 @@ include_once '../model/addtocart.php';
               <div class="store-grid">
                 <!-- Example store---->
                 <div class="store-item">
-                  <a href="../view/StoreTem.php">
+                  <a href="StoreTem.php">
                     <div class="image-st">
                       <img src="../img/store-1.jpg" class="store-img" alt="storeprofilepic"><!---- Store profile pic 1k wens wenna oni-->
                     </div>
