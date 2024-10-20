@@ -49,7 +49,7 @@ include_once '../model/addtocart.php'; ?>
                             <a class="nav-link" href="../Project-I_Exchanza/view/bidding.php">Bidding</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="Store Index.php">Selling</a>
+                            <a class="nav-link" href="../view/storeIndex.php">Selling</a>
                         </li>
                     </ul>
 
@@ -203,7 +203,8 @@ include_once '../model/addtocart.php'; ?>
                                 <option value="shoes">Shoes</option> -->
                                 </select>
                             </div>
-                            <div class="form-group hidden" id="sizeChartWrapper">
+                            <!-- normal sizes -->
+                            <div class="form-group hidden" id="normalsizeChartWrapper">
                                 <label class="bold">Size</label>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="size" id="sizeS" value="S">
@@ -222,6 +223,7 @@ include_once '../model/addtocart.php'; ?>
                                     <label class="form-check-label" for="sizeXL">XL</label>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label for="timesUsed" class="bold">Condition</label>
                                 <input type="number" class="form-control" id="timesUsed" placeholder="Enter number of times used" name="condition" required>

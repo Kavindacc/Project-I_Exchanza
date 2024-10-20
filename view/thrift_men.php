@@ -50,7 +50,7 @@ include_once '../model/addtocart.php'; ?>
                             <a class="nav-link" href="../Project-I_Exchanza/view/bidding.php">Bidding</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="Store Index.php">Selling</a>
+                            <a class="nav-link" href="../view/storeIndex.php">Selling</a>
                         </li>
                     </ul>
 
@@ -207,7 +207,8 @@ include_once '../model/addtocart.php'; ?>
                                     <option value="shoes">Shoes</option>
                                 </select>
                             </div>
-                            <div class="form-group hidden" id="sizeChartWrapper">
+                            <!-- normal sizes -->
+                            <div class="form-group hidden" id="normalsizeChartWrapper">
                                 <label class="bold">Size</label>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="size" id="sizeS" value="S">
@@ -224,6 +225,55 @@ include_once '../model/addtocart.php'; ?>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="size" id="sizeXL" value="XL">
                                     <label class="form-check-label" for="sizeXL">XL</label>
+                                </div>
+                            </div>
+
+                            <!-- pants -->
+                            <div class="form-group hidden" id="pantssizeChartWrapper">
+                                <label class="bold">Size</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizepantsS" value="28-30">
+                                    <label class="form-check-label" for="sizepantsS">28-30</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizepantsM" value="30-32">
+                                    <label class="form-check-label" for="sizepantsM">30-32</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizepantsL" value="32-34">
+                                    <label class="form-check-label" for="sizepantsL">32-34</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizepantsXL" value="34-36">
+                                    <label class="form-check-label" for="sizepantsXL">34-36</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizepantsXL" value="36-40">
+                                    <label class="form-check-label" for="sizepantsXL">36-40</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizepantsO" value="#">
+                                    <label class="form-check-label" for="sizepantsO">Other</label>
+                                </div>
+                            </div>
+                            <!-- shoes -->
+                            <div class="form-group hidden" id="shoessizeChartWrapper">
+                                <label class="bold">Size</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizeShoesS" value="5">
+                                    <label class="form-check-label" for="sizeShoesS">5</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizeShoesM" value="6">
+                                    <label class="form-check-label" for="sizeShoesM">6</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizeShoesL" value="7">
+                                    <label class="form-check-label" for="sizeShoesL">7</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizeShoesXL" value="#">
+                                    <label class="form-check-label" for="sizeShoesXL">Other</label>
                                 </div>
                             </div>
                             <div class="form-group">
