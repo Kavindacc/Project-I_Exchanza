@@ -175,14 +175,15 @@ input[type=submit]:hover{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     
 }
-.form-control {
+#personalinfo form .form-control {
     padding: 10px; 
     border-radius: .6rem;
 }
-.form-label {
+#personalinfo form .form-label{
     font-weight: 600;
     font-size: 18px;
 }
+
 #information,#order,#item,#orders{
     --bs-btn-color:#FFFF;
     --bs-btn-bg:#897062;
