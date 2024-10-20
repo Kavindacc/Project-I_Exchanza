@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include_once '../model/DbConnector.php';
 include_once '../model/wishlist.php';
 include_once '../model/addtocart.php';
@@ -64,7 +65,7 @@ if (isset($_SESSION['userid'])) {
             <?php if (isset($_SESSION['userid'])) {
               $userid = $_SESSION['userid'];
 
-                            <?php
+                            
                             $dsn = new DbConnector();
                             $con = $dsn->getConnection();
 
@@ -73,7 +74,7 @@ if (isset($_SESSION['userid'])) {
                             $count = $obj->cartItemCount($con); ?>
                             <a href="view/addtocart.php" class="nav-link  text-decoration-none mx-1"><i class="fa-solid fa-cart-plus position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp"><?php if (isset($count)) {
                                                                                                                                                                                                                                                 echo $count;
-                                                                                                                                                                                                                                            } ?></span></i></a><!--addtocart-->
+                                                                                                                                                                                                                                          } ?></span></i></a><!--addtocart-->
                             <?php
 
 
@@ -316,4 +317,4 @@ if (isset($_SESSION['userid'])) {
 </body>
 
 </html>
-<?php } ?>
+ <?php } ?>
