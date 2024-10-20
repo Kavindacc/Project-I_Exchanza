@@ -113,7 +113,7 @@ if (isset($_POST['view_enquiry'])) {
 
 
 <script>
-    // Confirm before deleting
+    
     function confirmDelete() {
         return confirm("Are you sure you want to delete this enquiry?");
     }

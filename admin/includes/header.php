@@ -20,7 +20,7 @@
     <!-- CSS Files -->
     <link id="pagestyle" href="assets/css/styles.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" />
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
