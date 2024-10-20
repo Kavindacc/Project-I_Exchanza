@@ -1,28 +1,28 @@
 <?php
 session_start();
-ob_start(); // Start output buffering to prevent header issues
+ob_start(); 
 include("includes/header.php");
 require '../model/DbConnector.php';
 require 'classes/Admin.php';
 
 $dbConnector = new DbConnector();
 $admin = new Admin($dbConnector->getConnection());
-$enquiries = $admin->getEnquiries(); // Fetch all enquiries
+$enquiries = $admin->getEnquiries(); 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['delete_enquiry'])) {
-        // Handle delete enquiry
+        
         $enquiry_id = $_POST['enquiry_id'];
         $admin->deleteEnquiry($enquiry_id);
         header("Location: messages.php");
-        exit(); // Ensure no further code is executed after header redirection
+        exit(); 
     } elseif (isset($_POST['update_status'])) {
-        // Handle update enquiry status
+        
         $enquiry_id = $_POST['enquiry_id'];
         $status = $_POST['status'];
         $admin->updateEnquiryStatus($enquiry_id, $status);
         header("Location: messages.php");
-        exit(); // Ensure no further code is executed after header redirection
+        exit(); 
     }
 }
 ?>
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <tbody>
                         <?php foreach ($enquiries as $enquiry) : ?>
                             <tr>
-                                <td><?php echo $enquiry['id']; ?></td> <!-- Use 'id' instead of 'enquiry_id' -->
+                                <td><?php echo $enquiry['id']; ?></td> 
                                 <td><?php echo $enquiry['name']; ?></td>
                                 <td><?php echo $enquiry['email']; ?></td>
                                 <td><?php echo $enquiry['subject']; ?></td>
@@ -56,11 +56,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <td>
                                     <form method="post" style="display:inline-block;">
                                         <input type="hidden" name="enquiry_id" value="<?php echo $enquiry['id']; ?>">
-                                        <button type="submit" name="view_enquiry" class="btn btn-primary">View</button>
+                                        <button type="submit" name="view_enquiry" class="btn btn-sm" style="background-color:#897062; color:white;">View</button>
                                     </form>
                                     <form method="post" style="display:inline-block;">
                                         <input type="hidden" name="enquiry_id" value="<?php echo $enquiry['id']; ?>">
-                                        <button type="submit" name="delete_enquiry" class="btn btn-danger">Delete</button>
+                                        <button type="submit" name="delete_enquiry" class="btn btn-sm btn-danger">Delete</button>
                                     </form>
                                 </td>
                             </tr>
@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <?php
 if (isset($_POST['view_enquiry'])) {
     $enquiry_id = $_POST['enquiry_id'];
-    $enquiry = $admin->getEnquiryById($enquiry_id); // Fetch the specific enquiry by ID
+    $enquiry = $admin->getEnquiryById($enquiry_id); 
 ?>
     <div class="modal fade" id="viewEnquiryModal" tabindex="-1" aria-labelledby="viewEnquiryModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -91,7 +91,7 @@ if (isset($_POST['view_enquiry'])) {
                     <p><strong>Message:</strong> <?php echo $enquiry['message']; ?></p>
                     
                     <form method="post">
-                        <input type="hidden" name="enquiry_id" value="<?php echo $enquiry['id']; ?>"> <!-- Corrected to 'id' -->
+                        <input type="hidden" name="enquiry_id" value="<?php echo $enquiry['id']; ?>"> 
                         <div class="form-group">
                             <label for="status">Status</label>
                             <select name="status" class="form-control">
@@ -111,7 +111,7 @@ if (isset($_POST['view_enquiry'])) {
 
 <?php include("includes/footer.php"); ?>
 
-<!-- Script to trigger the modal if the view button was clicked -->
+
 <script>
     <?php if (isset($_POST['view_enquiry'])): ?>
         var myModal = new bootstrap.Modal(document.getElementById('viewEnquiryModal'), {});

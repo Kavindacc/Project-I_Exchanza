@@ -23,14 +23,7 @@
   <script src="assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-  <!--
-  <script>
-  swal({
-  title: "Good job!",
-  text: "You clicked the button!",
-  icon: "success",
-  button: "Aww yiss!",
-  })-->
+ 
 </script>
 
 </html>
