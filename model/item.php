@@ -294,4 +294,7 @@ class Thrift extends Item
             echo "Error: " . $e->getMessage();
         }
     }
+
+    
+    
 }

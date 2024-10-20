@@ -5,9 +5,13 @@ include_once '../model/addtocart.php';
 session_start();
 date_default_timezone_set('Asia/Colombo');  
 
+if (isset($_SESSION['userid'])) {
+    $userid = $_SESSION['userid'];
+}
 if (isset($_GET['itemid'])) {
     $itemid = $_GET['itemid'];
 }
+
 
 $dsn = new DbConnector();
 $con = $dsn->getConnection();
@@ -35,6 +39,7 @@ $highestBidRow = $stmtBid->fetch(PDO::FETCH_ASSOC);
 $highest_bid = $highestBidRow['highest_bid'] ?? $auction['start_price'];
 ?>
 <?php if(!empty($_SESSION['userid'])){?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -92,7 +97,8 @@ $highest_bid = $highestBidRow['highest_bid'] ?? $auction['start_price'];
                     }
                 }
             };
-            xhr.send("auction_id=<?php echo $auction['auction_id']; ?>&bid_price=" + newBid);
+            // xhr.send("auction_id=<?php echo $auction['auction_id']; ?>&bid_price=" + newBid);
+            xhr.send("auction_id=<?php echo $auction['auction_id']; ?>&bid_price=" + newBid + "&userid=<?php echo $userid; ?>");
         }
 
         function placBidValue() {
@@ -120,7 +126,11 @@ $highest_bid = $highestBidRow['highest_bid'] ?? $auction['start_price'];
                     }
                 }
             };
-            xhr.send("auction_id=<?php echo $auction['auction_id']; ?>&bid_price=" + newBid);
+            // xhr.send("auction_id=<?php echo $auction['auction_id']; ?>&bid_price=" + newBid);
+            xhr.send("auction_id=<?php echo $auction['auction_id']; ?>&bid_price=" + newBid + "&userid=<?php echo $userid; ?>");
+            
+            
+
         }
     </script>
 </head>
