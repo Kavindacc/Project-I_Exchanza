@@ -1,13 +1,15 @@
 <?php
 //require '../model/DbConnector.php'; // Make sure this path is correct
 
-class Save {
-    
+class save
+{
+
     // Function to save card details into the database
-    public function card_detailsdb() {
+    public function card_detailsdb()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Retrieve form data with null coalescing operator to handle unset keys
-            $card = $_POST['card'] ?? '';       
+            $card = $_POST['card'] ?? '';
             $name = $_POST['name'] ?? '';
             $cardNumber = $_POST['cardNumber'] ?? '';
             $expDate = $_POST['expDate'] ?? '';
@@ -21,7 +23,7 @@ class Save {
                     //require '../control/save.php';
                     $db = new DbConnector();
                     $conn = $db->getConnection();
-                    
+
                     // Prepare the SQL statement with placeholders
                     $stmt = $conn->prepare("INSERT INTO card_details (CardHolderName, CardNumber, ExpDate, cvv) VALUES (:name, :cardNumber, :expDate, :cvv)");
 
@@ -45,10 +47,9 @@ class Save {
                     } else {
                         //echo "Failed to prepare the SQL statement.";
                     }
-                    
+
                     // Close the database connection
                     $conn = null;
-
                 } catch (PDOException $e) {
                     //echo "Error: " . $e->getMessage();
                 }
@@ -58,7 +59,8 @@ class Save {
     }
 
     // Function to save place order details into the database
-    public function place_orderdb() {
+    public function place_orderdb()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Retrieve form data with null coalescing operator to handle unset keys
             $userid = $_SESSION['userid'] ?? '';
@@ -67,14 +69,14 @@ class Save {
             $city = $_POST['city'] ?? '';
             $zip = $_POST['zip'] ?? '';
             $district = $_POST['distric'] ?? '';
-            $province = $_POST['province'] ?? ''; 
+            $province = $_POST['province'] ?? '';
             $country = $_POST['country'] ?? '';
 
             try {
                 // Get the database connection
                 $db = new DbConnector();
                 $conn = $db->getConnection();
-                
+
                 // Prepare the SQL statement with placeholders
                 $stmt = $conn->prepare("INSERT INTO orders (user_id, fullname, address, city, zip, district, province, country) VALUES (:userid, :fullname, :addres, :city, :zip, :district, :province, :country)");
 
@@ -102,10 +104,9 @@ class Save {
                 } else {
                     //echo "Failed to prepare the SQL statement.";
                 }
-                
+
                 // Close the database connection
                 $conn = null;
-
             } catch (PDOException $e) {
                 //echo "Error: " . $e->getMessage();
             }
@@ -113,3 +114,5 @@ class Save {
         return null;
     }
 }
+
+

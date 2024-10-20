@@ -35,21 +35,10 @@ require '../control/save.php';
         }        
     }
         
-    $card = "card";
+    
 
-    if ($card == "card") {
+        
 
-        $cardDetails = new validateCardDetails(); 
-        // Call the validation method
-        $validationResult = $cardDetails->validation();
-
-        // Check the validation result and output it
-        if ($validationResult === true) {
-            $po = new Save();
-            $spo = $po->place_orderdb();
-            $scd = $po->card_detailsdb();
-        } 
-
-    }
+    
 
 ?>
