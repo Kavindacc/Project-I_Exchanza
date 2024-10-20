@@ -308,11 +308,11 @@ if (isset($_SESSION['userid'])) {
                                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#<?php echo $modalId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .6rem; --bs-btn-font-size: .75rem;">
                                                 Delete
                                             </button>
-                                            <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#<?php echo $accordionId; ?>" aria-expanded="false" aria-controls="<?php echo $accordionId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .8rem; --bs-btn-font-size: .75rem;">
+                                            <!--<button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#<?php echo $accordionId; ?>" aria-expanded="false" aria-controls="<?php echo $accordionId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .8rem; --bs-btn-font-size: .75rem;">
                                                 Review
                                             </button>
-                                            <!-- Review -->
-                                            <?php //rating
+                                            <!-- Review 
+                                            <?php /* //rating
                                             $obj = new GeneralCustomer();
                                             $obj->setItemId($row['itemid']);
                                             $rating = $obj->getRating($con);
@@ -342,7 +342,7 @@ if (isset($_SESSION['userid'])) {
                                                             </div>
                                                         </div>
                                                     <?php } ?>
-                                                <?php } ?>
+                                                <?php } */?>
 
                                                 <!-- Modal edit -->
                                                 <div class="modal fade" id="<?php echo $editModalId; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="<?php echo $editModalId; ?>Label" aria-hidden="true">
