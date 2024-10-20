@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <h4>User Enquiries</h4>
             </div>
             <div class="card-body">
-                <table class="table table-bordered table-striped">
+                <table id="myTable" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>ID</th>
