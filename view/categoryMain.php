@@ -121,7 +121,8 @@ include_once '../model/addtocart.php';
     <!---Navigation Bar - Sub-->
     <nav class="nav justify-content-center">
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <button class="nav-link active" id="nav-dresses-tab" data-bs-toggle="tab" data-bs-target="#nav-dresses" type="button" role="tab" aria-controls="nav-dresses" aria-selected="true">Dresses</button>
+        <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-all" type="button" role="tab" aria-controls="nav-all" aria-selected="true">All</button>
+        <button class="nav-link" id="nav-dresses-tab" data-bs-toggle="tab" data-bs-target="#nav-dresses" type="button" role="tab" aria-controls="nav-dresses" aria-selected="false">Dresses</button>
         <button class="nav-link" id="nav-blouse-tab" data-bs-toggle="tab" data-bs-target="#nav-blouse" type="button" role="tab" aria-controls="nav-blouse" aria-selected="false">Blouses</button>
         <button class="nav-link" id="nav-tshirt-tab" data-bs-toggle="tab" data-bs-target="#nav-tshirt" type="button" role="tab" aria-controls="nav-tshirt" aria-selected="false">T-Shirts</button>
         <button class="nav-link" id="nav-shirt-tab" data-bs-toggle="tab" data-bs-target="#nav-shirt" type="button" role="tab" aria-controls="nav-shirt" aria-selected="false">Shirts</button>
@@ -137,8 +138,49 @@ include_once '../model/addtocart.php';
 
     <br>
     <div class="tab-content" id="nav-tabContent">
-      <div class="tab-pane fade show active" id="nav-dresses" role="tabpanel" aria-labelledby="nav-dresses-tab" tabindex="0">
+      <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab" tabindex="0">
+        <br>
 
+        <!-- Products Section -->
+        <section id="newproducts" class="product-store">
+          <div class="product-grid">
+            <!--methn adala product type 1k ewa witri enna oni--->
+            <!-- Example product item -->
+            <div class="product-item">
+              <div class="image-holder">
+                <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
+                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
+                <div class="cart-concern">
+
+                  <button type="button" class="btn-cart">
+                    <i class="bi bi-cart-plus"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
+                      <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z" />
+                      <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+                    </svg>
+                  </button>
+
+                  <button type="button" class="btn-whishlist">
+                    <i class="bi bi-heart"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                      <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                    </svg>
+                  </button>
+
+                </div>
+              </div>
+              <div class="product-detail">
+                <h3 class="product-name">Product Name 1</h3><!-----product name enna oni methnt-->
+                <p class="category-type">Category Type</p><!-----men/women/kids enna oni methnt - -->
+                <p class="product-price">$49.99</p><!-----product price enna oni methnt-->
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </div>
+
+      <div class="tab-pane fade" id="nav-dresses" role="tabpanel" aria-labelledby="nav-dresses-tab" tabindex="0">
         <br>
 
         <!-- Products Section -->
@@ -177,10 +219,8 @@ include_once '../model/addtocart.php';
             </div>
 
 
-
           </div>
         </section>
-
       </div>
 
       <div class="tab-pane fade" id="nav-blouse" role="tabpanel" aria-labelledby="nav-blouse-tab" tabindex="0">
@@ -194,7 +234,7 @@ include_once '../model/addtocart.php';
             <div class="product-item">
               <div class="image-holder">
                 <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
+                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
                 <div class="cart-concern">
 
                   <button type="button" class="btn-cart">
@@ -225,6 +265,7 @@ include_once '../model/addtocart.php';
           </div>
         </section>
       </div>
+
       <div class="tab-pane fade" id="nav-tshirt" role="tabpanel" aria-labelledby="nav-tshirt-tab" tabindex="0"><br>
 
         <!-- Products Section -->
@@ -235,7 +276,7 @@ include_once '../model/addtocart.php';
             <div class="product-item">
               <div class="image-holder">
                 <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
+                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
                 <div class="cart-concern">
 
                   <button type="button" class="btn-cart">
@@ -277,7 +318,7 @@ include_once '../model/addtocart.php';
             <div class="product-item">
               <div class="image-holder">
                 <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
+                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
                 <div class="cart-concern">
 
                   <button type="button" class="btn-cart">
@@ -319,7 +360,7 @@ include_once '../model/addtocart.php';
             <div class="product-item">
               <div class="image-holder">
                 <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
+                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
                 <div class="cart-concern">
 
                   <button type="button" class="btn-cart">
@@ -361,7 +402,7 @@ include_once '../model/addtocart.php';
             <div class="product-item">
               <div class="image-holder">
                 <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
+                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
                 <div class="cart-concern">
 
                   <button type="button" class="btn-cart">
@@ -403,7 +444,7 @@ include_once '../model/addtocart.php';
             <div class="product-item">
               <div class="image-holder">
                 <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
+                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
                 <div class="cart-concern">
 
                   <button type="button" class="btn-cart">
@@ -445,7 +486,7 @@ include_once '../model/addtocart.php';
             <div class="product-item">
               <div class="image-holder">
                 <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
+                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
                 <div class="cart-concern">
 
                   <button type="button" class="btn-cart">
@@ -487,7 +528,7 @@ include_once '../model/addtocart.php';
             <div class="product-item">
               <div class="image-holder">
                 <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
+                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
                 <div class="cart-concern">
 
                   <button type="button" class="btn-cart">
@@ -529,7 +570,7 @@ include_once '../model/addtocart.php';
             <div class="product-item">
               <div class="image-holder">
                 <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
+                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
                 <div class="cart-concern">
 
                   <button type="button" class="btn-cart">
@@ -571,7 +612,7 @@ include_once '../model/addtocart.php';
             <div class="product-item">
               <div class="image-holder">
                 <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
+                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
                 <div class="cart-concern">
 
                   <button type="button" class="btn-cart">
@@ -614,7 +655,7 @@ include_once '../model/addtocart.php';
             <div class="product-item">
               <div class="image-holder">
                 <span class="new-label">New</span> <!----New product nm "new" label 1k enna oni methnt-->
-                <img src="item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
+                <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--methn images tynn oni adala product type 1k ewa witri--->
                 <div class="cart-concern">
 
                   <button type="button" class="btn-cart">

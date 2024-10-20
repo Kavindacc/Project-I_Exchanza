@@ -209,15 +209,15 @@
           font-size: 1em;
           width: 50%;
           color:  #ffffff;
-          background-color: #8DA78C;
-          border-color: #8DA78C;
+          background-color: #897062;
+          border-color: #897062;
           cursor: pointer;
           transition: 0.3s;
     }
     .btn-cart:hover { 
       color:  #ffffff;
-      background-color:  #3A4750;
-      border-color: #3A4750;  
+      background-color:  #4c3f31;
+      border-color: #4c3f31;  
     }
     .btn-whishlist{
       /*font-family: Arial, Helvetica, sans-serif;*/
@@ -226,15 +226,15 @@
       font-size: 1em;
       width: 50%;
       color:  #ffffff;
-      background-color: #8DA78C;
-      border-color: #8DA78C;
+      background-color: #897062;
+      border-color: #897062;
       cursor: pointer;
       transition: 0.3s;
     }
     .btn-whishlist:hover { 
       color:  #ffffff;
-      background-color:  #3A4750;
-      border-color: #3A4750;  
+      background-color:  #4c3f31;
+      border-color: #4c3f31;  
     }
     /* Hover effect for the product card */
     .product-item:hover {
@@ -656,7 +656,7 @@
 }
 
 #submit-recommendation {
-  background-color:  #746557;
+  background-color: #897062;
   padding: 12px 24px;
   color: #fff;
   border: none;
