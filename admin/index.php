@@ -24,7 +24,7 @@ $totalEarnings = $admin->getTotalEarnings();
                     <p class="card-text">Engaged Users</p>
                 </div>
                 <div class="card-footer" style="background: #A17C6C; border-radius: 0 0 15px 15px;">
-                    <img src="path/to/user-icon.png" alt="User Icon" style="width: 50px;">
+                    <img src="../img/user1.png" alt="User Icon" style="width: 50px;">
                 </div>
             </div>
         </div>
@@ -37,7 +37,7 @@ $totalEarnings = $admin->getTotalEarnings();
                     <p class="card-text">User Enquireies Received</p>
                 </div>
                 <div class="card-footer" style="background: #C99B88; border-radius: 0 0 15px 15px;">
-                    <img src="path/to/feedback-icon.png" alt="Feedback Icon" style="width: 50px;">
+                    <img src="../img/enquiry.png" alt="Feedback Icon" style="width: 50px;">
                 </div>
             </div>
         </div>
