@@ -202,11 +202,6 @@ class PaymentGateway
                 }
 
                 function doPayment() {
-                    var randomNumber = Math.floor(Math.random() * 101);
-                    if ((parseInt(randomNumber)) % 2 == 0) {
-                        var message = "Can't do the payment.";
-                        alert(message);
-                    } else {
                         var message = "Payment Successful.";
                         alert(message);
                         <?php
@@ -221,9 +216,9 @@ class PaymentGateway
                             $po->card_detailsdb();
                         }
                         ?>
-                        //window.location.href = "http://localhost/Exchanza/index.php";
+                        window.location.href = "http://localhost/Exchanza/index.php";
                     }
-                }
+                
             </script>
 
         </body>
