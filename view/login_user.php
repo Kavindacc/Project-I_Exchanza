@@ -74,7 +74,7 @@
                                                                 echo $_GET['redirect'];
                                                             } ?>">
                 <input type="hidden" name="usertype" value="user">
-                <div class="row justify-content-center">
+                <div class="row justify-content-center mb-2">
                     <div class="col-md-8 col-lg-5">
                         <label class="form-label">Email Address</label>
                         <input type="email" class="form-control" placeholder="example@gmail.com" name="email" required="">

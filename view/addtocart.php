@@ -97,6 +97,17 @@ if (isset($_SESSION['userid'])) {
             <div class="title">
                 <h2><b>Shopping Bag</b></h2>
             </div>
+            <?php
+            if (!empty($_GET['s'])) {
+                if ($_GET['s'] == '1') {
+                    $msg = "Item Remove Successfully";
+                } ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong><?php echo $msg; ?></strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php }
+            ?>
             <br>
             <?php if (!empty($rows)) { ?>
                 <!----Cart table----->
@@ -128,7 +139,14 @@ if (isset($_SESSION['userid'])) {
                             </td>
                             <td class="subtotal"><?php echo $row['price']; ?></td>
                             <td>
-                                <i class="fa-solid fa-rectangle-xmark btn-remove" style="font-size: 30px;"></i>
+                                <form action="../control/removeidcon.php" method="post">
+                                    <input type="hidden" name="itemid" value="<?php echo htmlspecialchars($row['itemid']); ?>">
+                                    <button type="submit">
+                                        <i class="fa-solid fa-rectangle-xmark btn-remove" style="font-size: 30px;"></i>
+                                    </button>
+                                </form>
+
+
                             </td>
                         </tr>
                     <?php }

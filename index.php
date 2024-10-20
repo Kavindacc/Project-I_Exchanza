@@ -390,7 +390,7 @@ if (isset($_SESSION['userid'])) {
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, ab laborum ut accusamus, fugiat earum alias
                     beatae ipsa harum quos atque culpa architecto similique deleniti impedit, facilis at aliquam deserunt!
                 </p>
-                <button><a href="../Project-I_Exchanza/view/bidding.php">Shop Now&nbsp;>></a></button>
+                <button><a href="./view/bidding.php">Shop Now&nbsp;>></a></button>
             </div>
         </div>
         <div class="thirf d-flex flex-row thirf-left thirf-three">
@@ -402,7 +402,7 @@ if (isset($_SESSION['userid'])) {
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, ab laborum ut accusamus, fugiat earum alias
                     beatae ipsa harum quos atque culpa architecto similique deleniti impedit, facilis at aliquam deserunt!
                 </p>
-                <button><a href="">Shop Now&nbsp;>></a></button>
+                <button><a href="./view/Store Index.php">Shop Now&nbsp;>></a></button>
             </div>
         </div>
 
