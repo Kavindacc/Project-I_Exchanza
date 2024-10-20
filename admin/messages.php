@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         <input type="hidden" name="enquiry_id" value="<?php echo $enquiry['id']; ?>">
                                         <button type="submit" name="view_enquiry" class="btn btn-sm" style="background-color:#897062; color:white;">View</button>
                                     </form>
-                                    <form method="post" style="display:inline-block;">
+                                    <form method="post" style="display:inline-block;" onsubmit="return confirmDelete();">
                                         <input type="hidden" name="enquiry_id" value="<?php echo $enquiry['id']; ?>">
                                         <button type="submit" name="delete_enquiry" class="btn btn-sm btn-danger">Delete</button>
                                     </form>
@@ -113,6 +113,11 @@ if (isset($_POST['view_enquiry'])) {
 
 
 <script>
+    // Confirm before deleting
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this enquiry?");
+    }
+
     <?php if (isset($_POST['view_enquiry'])): ?>
         var myModal = new bootstrap.Modal(document.getElementById('viewEnquiryModal'), {});
         myModal.show();
