@@ -202,7 +202,7 @@ class Thrift extends Item
     public function getThriftItemsLogin($con)
     {
         try {
-            $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE t.user_id != ? AND i.category=? AND i.subcategory=?"; //change it
+            $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE t.user_id = ? AND i.category=? AND i.subcategory=?"; //change it
             $pstmt = $con->prepare($sql);
             $pstmt->bindValue(1, $this->userid);
             $pstmt->bindValue(2, $this->category);
@@ -212,6 +212,70 @@ class Thrift extends Item
             return $rows;
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
+        }
+    }
+
+    public function getThriftItemsBySize($con, $size)
+    {
+        try {
+            $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE i.category=? AND i.subcategory=? AND i.size = ?"; // Adjust query to include size
+            $pstmt = $con->prepare($sql);
+            $pstmt->bindValue(1, $this->category);
+            $pstmt->bindValue(2, $this->subcategory);
+            $pstmt->bindValue(3, $size); // Bind the size parameter
+            $pstmt->execute();
+            $rows = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            return $rows;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+    public function getThriftItemsBySort($con, $price)
+    {
+        if ($price == "LH") {
+            try {
+                // $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid ORDER BY price ASC"; 
+                $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE i.category=? AND i.subcategory=? ORDER BY price ASC";
+
+                $pstmt = $con->prepare($sql);
+                $pstmt->bindValue(1, $this->category);
+                $pstmt->bindValue(2, $this->subcategory);
+                $pstmt->execute();
+                $rows = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+                return $rows;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        } elseif ($price == "HL") {
+            try {
+                // $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid ORDER BY price DESC"; 
+                $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE i.category=? AND i.subcategory=? ORDER BY price DESC";
+
+                $pstmt = $con->prepare($sql);
+                $pstmt->bindValue(1, $this->category);
+                $pstmt->bindValue(2, $this->subcategory);
+               
+                $pstmt->execute();
+                $rows = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+                return $rows;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        } else {
+            try {
+                // $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid ORDER BY itemID DESC"; 
+                $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE i.category=? AND i.subcategory=? ORDER BY itemID DESC";
+                $pstmt = $con->prepare($sql);
+                $pstmt->bindValue(1, $this->category);
+                $pstmt->bindValue(2, $this->subcategory);
+            
+                $pstmt->execute();
+                $rows = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+                return $rows;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
         }
     }
     public function getThriftItems($con)
