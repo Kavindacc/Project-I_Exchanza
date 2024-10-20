@@ -113,10 +113,23 @@ include_once '../model/addtocart.php';
 
                 <a href="../view/categoryMain.php">
                   <button type="button" class="btn btn-primary animated fadeInUp" style="--bs-btn-padding-y: 0.5rem; --bs-btn-padding-x: 0.75rem; --bs-btn-font-size: 1em;
-                                              --bs-btn-border-radius: 5px;--bs-btn-color: #ffffff;--bs-btn-bg: #746557;--bs-btn-border-color:  #746557;--bs-btn-hover-color: #ffffff;  
-                                              --bs-btn-hover-bg: #4c3f31;--bs-btn-hover-border-color: #4c3f31 ;--bs-btn-active-color: #ffffff;--bs-btn-active-bg: #4c3f31;
+                                              --bs-btn-border-radius: 5px;--bs-btn-color: #ffffff;--bs-btn-bg: #897062;--bs-btn-border-color:  #897062;--bs-btn-hover-color: #ffffff;  
+                                              --bs-btn-hover-bg:#4c3f31;--bs-btn-hover-border-color: #4c3f31 ;--bs-btn-active-color: #ffffff;--bs-btn-active-bg: #4c3f31;
                                               --bs-btn-active-border-color: #4c3f31 ;">
                     <span class="text-uppercase">Shop Now</span>
+                    
+                  </button>
+                </a>
+                
+                <br>
+
+                <a href="../view/">
+                  <button type="button" class="btn btn-primary animated fadeInUp" style="--bs-btn-padding-y: 0.5rem; --bs-btn-padding-x: 0.75rem; --bs-btn-font-size: 0.8em;
+                                              --bs-btn-border-radius: 5px;--bs-btn-color: #ffffff;--bs-btn-bg: #897062;--bs-btn-border-color:  #897062;--bs-btn-hover-color: #ffffff;  
+                                              --bs-btn-hover-bg: #4c3f31;--bs-btn-hover-border-color: #4c3f31 ;--bs-btn-active-color: #ffffff;--bs-btn-active-bg: #4c3f31;
+                                              --bs-btn-active-border-color: #4c3f31 ;">
+                    <span class="text-uppercase">Create Your Own Store</span>
+                    
                   </button>
                 </a>
 
