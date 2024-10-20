@@ -1,10 +1,13 @@
-<?php
+<?php 
 session_start();
 include_once '../model/DbConnector.php';
 include_once '../model/wishlist.php';
 include_once '../model/addtocart.php';
+if (isset($_SESSION['userid'])) {
+    $userid = $_SESSION['userid'];?>
+    
+    
 
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,76 +27,71 @@ include_once '../model/addtocart.php';
 
 <body class="clr">
 
-  <!----Navigation bar----->
-  <!--nav bar-->
-  <nav class="navbar navbar-expand-lg sticky-top nav">
-    <div class="container-fluid logo"><!--logo-->
-      <a class="navbar-brand" href="#"><img src="../img/Exchanza.png" width="100px"></a>
-      <!--toggle button-->
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <!--sidebar-->
-      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-        <!--sidebarheader-->
-        <div class="offcanvas-header border-bottom">
-          <h5 class="offcanvas-title " id="offcanvasNavbarLabel">Exchanze</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <!--sider body-->
-        <div class="offcanvas-body">
-          <ul class="navbar-nav justify-content-center  flex-grow-1 pe-3">
-            <li class="nav-item mx-2">
-              <a class="nav-link" aria-current="page" href="../index.php">Home</a>
-            </li>
-            <li class="nav-item mx-2">
-              <a class="nav-link" href="thrift.php">Thrift</a>
-            </li>
-            <li class="nav-item mx-2">
-              <a class="nav-link" href="../Project-I_Exchanza/view/bidding.php">Bidding</a>
-            </li>
-            <li class="nav-item mx-2">
-              <a class="nav-link" href="../view/storeIndex.php">Selling</a>
-            </li>
-          </ul>
+    <!----Navigation bar----->
+         <!--nav bar-->
+         <nav class="navbar navbar-expand-lg sticky-top nav">
+            <div class="container-fluid logo"><!--logo-->
+                <a class="navbar-brand" href="#"><img src="img/Exchanza.png" width="100px"></a>
+                <!--toggle button-->
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!--sidebar-->
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                    <!--sidebarheader-->
+                    <div class="offcanvas-header border-bottom">
+                        <h5 class="offcanvas-title " id="offcanvasNavbarLabel">Exchanze</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <!--sider body-->
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-center  flex-grow-1 pe-3">
+                            <li class="nav-item mx-2">
+                                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            </li>
+                            <li class="nav-item mx-2">
+                                <a class="nav-link" href="view/thrift.php">Thrift</a>
+                            </li>
+                            <li class="nav-item mx-2">
+                                <a class="nav-link" href="../Project-I_Exchanza/view/bidding.php">Bidding</a>
+                            </li>
+                            <li class="nav-item mx-2">
+                                <a class="nav-link" href="#">Selling</a>
+                            </li>
+                        </ul>
 
           <!--login nav-link-a-color-->
           <div class="d-flex flex-column float-start flex-lg-row justify-content-center  align-items-center mt-3 mt-lg-0 gap-3">
             <?php if (isset($_SESSION['userid'])) {
               $userid = $_SESSION['userid'];
 
-              $dsn = new DbConnector();
-              $con = $dsn->getConnection();
+                            
+                            $dsn = new DbConnector();
+                            $con = $dsn->getConnection();
 
-              $obj = new Cart();
-              $obj->setUserId($userid);
-              $count = $obj->cartItemCount($con); ?>
-              <a href="addtocart.php" class="nav-link  text-decoration-none mx-1"><i class="fa-solid fa-cart-plus position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp"><?php if (isset($count)) {
-                                                                                                                                                                                                                        echo $count;
-                                                                                                                                                                                                                      } ?></span></i></a><!--addtocart-->
-              <?php
-
-              $obj = new wishlist();
-              $obj->setUserId($userid);
-              $count = $obj->itemCount($con); ?>
-              <a href="wishlist.php" class="nav-link  text-decoration-none mx-1"><i class="fa-regular fa-heart position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-dark sp"><?php if (isset($count)) {
-                                                                                                                                                                                                                    echo $count;
-                                                                                                                                                                                                                  } ?></span></i></a><!--addto wishlist-->
+                            $obj = new Cart();
+                            $obj->setUserId($userid);
+                            $count = $obj->cartItemCount($con); ?>
+                            <a href="view/addtocart.php" class="nav-link  text-decoration-none mx-1"><i class="fa-solid fa-cart-plus position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp"><?php if (isset($count)) {
+                                                                                                                                                                                                                                                echo $count;
+                                                                                                                                                                                                                                          } ?></span></i></a><!--addtocart-->
+                            <?php
 
 
+                            $obj = new wishlist();
+                            $obj->setUserId($userid);
+                            $count = $obj->itemCount($con); ?>
+                            <a href="view/wishlist.php" class="nav-link  text-decoration-none mx-1"><i class="fa-regular fa-heart position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-dark sp"><?php if (isset($count)) {
+                                                                                                                                                                                                                                        echo $count;
+                                                                                                                                                                                                                                    } ?></span></i></a><!--addto wishlist-->
 
-              <a href="userpage.php" class=" text-decoration-none"><i class="fa-regular fa-circle-user" style="font-size:1.5rem;"></i></a>
-              <?php echo "Hi," . ucwords($_SESSION['name']); ?>
-            <?php } else { ?>
-              <a href="addtocart.php" class="nav-link  text-decoration-none mx-1"><i class="fa-solid fa-cart-plus position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp">0</span></i></a><!--addtocart-->
-              <a href="wishlist.php" class="nav-link  text-decoration-none mx-1"><i class="fa-regular fa-heart position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp">0</span></i></a>
-              <a href="login_user.php" class=" text-decoration-none"><button class="lo-button btn-sm ms-2 px-3" style="color:#ffff;">login</button></a>
-            <?php } ?>
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
+                            <a href="view/userpage.php" class=" text-decoration-none"><i class="fa-regular fa-circle-user" style="font-size:1.5rem;"></i></a>
+                            <?php echo "Hi," . ucwords($_SESSION['name']); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
 
 
 
@@ -319,3 +317,4 @@ include_once '../model/addtocart.php';
 </body>
 
 </html>
+ <?php } ?>

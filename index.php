@@ -2,8 +2,29 @@
 include_once './model/DbConnector.php';
 include_once './model/wishlist.php';
 include_once './model/addtocart.php';
-if (isset($_SESSION['userid'])) { 
-    $userid=$_SESSION['userid'];?>
+include_once './admin/classes/Admin.php';
+
+$settings = [
+    'email' => '',
+    'phone' => '',
+    'address' => '',
+    'facebook_link' => '',
+    'instagram_link' => '',
+    'youtube_link' => ''
+];
+$dbConnector = new DbConnector();
+    $admin = new Admin($dbConnector->getConnection());
+
+    $settingsFromDb = $admin->getSettings();
+
+    if ($settingsFromDb) {
+        $settings = $settingsFromDb; // Overwrite default values with the actual settings
+    }
+if (isset($_SESSION['userid'])) {
+    $userid = $_SESSION['userid'];
+    
+    
+?>
 
     <!DOCTYPE html>
     <html lang="en">
@@ -53,9 +74,9 @@ if (isset($_SESSION['userid'])) {
                         <!--login nav-link-a-color-->
                         <div class="d-flex flex-column float-start flex-lg-row justify-content-center  align-items-center mt-3 mt-lg-0 gap-3">
 
-                            <?php 
-                              $dsn=new DbConnector();
-                              $con=$dsn->getConnection();
+                            <?php
+                            $dsn = new DbConnector();
+                            $con = $dsn->getConnection();
 
                             $obj = new Cart();
                             $obj->setUserId($userid);
@@ -69,8 +90,8 @@ if (isset($_SESSION['userid'])) {
                             $obj->setUserId($userid);
                             $count = $obj->itemCount($con); ?>
                             <a href="view/wishlist.php" class="nav-link  text-decoration-none mx-1"><i class="fa-regular fa-heart position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-dark sp"><?php if (isset($count)) {
-                                                                                                                                                                                                                                                                echo $count;
-                                                                                                                                                                                                                                                            } ?></span></i></a><!--addto wishlist-->
+                                                                                                                                                                                                                                        echo $count;
+                                                                                                                                                                                                                                    } ?></span></i></a><!--addto wishlist-->
 
                             <a href="view/userpage.php" class=" text-decoration-none"><i class="fa-regular fa-circle-user" style="font-size:1.5rem;"></i></a>
                             <?php echo "Hi," . ucwords($_SESSION['name']); ?>
@@ -183,7 +204,7 @@ if (isset($_SESSION['userid'])) {
                 </div>
             </div>
         </div>
-        <!--iteam-->
+        <!--item-->
         <div class="item d-flex justify-content-around flex-column flex-md-row">
             <div class="d-flex flex-column  p-4 side side-left">
                 <div class="icon"><i class="fa-solid fa-recycle" style="font-size:50px;"></i>
@@ -213,7 +234,7 @@ if (isset($_SESSION['userid'])) {
             </div>
         </div>
 
-        <!--footer-->
+        <!-- new footer-->
         <div class="container-fluid footer">
             <div class="container p-3">
                 <div class="row">
@@ -223,27 +244,31 @@ if (isset($_SESSION['userid'])) {
                 </div>
                 <div class="row  mt-4" style="border-bottom:1px solid black;">
                     <div class="col-sm-6 col-md-4 text-center text-md-start ">
-                        <p class=""><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;+94 112 555 444</p>
-                        <p class=""><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;exchanza@gmail.com</p>
-                        <p class=""><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;No.56/2,Kotta Rd,Colombo
-                            05,<br>&nbsp;&nbsp;&nbsp;&nbsp;Sri Lanka</p>
+                        
+                        <p><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['phone']) ?></p>
+                        <p><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['email']) ?></p>
+                        <p><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['address']) ?></p>
                     </div>
                     <div class="col-sm-6 col-md-4 text-center text-md-start lin">
                         <h5>Information</h5>
                         <p><a href="#1">Privacy &amp; Policy</a></p>
                         <p><a href="#1">About Us</a></p>
                         <p><a href="#1">Terms &amp; Condition</a></p>
+                        <p><a href="view/enquiry.php">Enquire Now </a></p>
                     </div>
-                    <div class=" col-md-4 text-center text-md-start  lin">
+                    <div class="col-md-4 text-center text-md-start lin">
                         <h5>Connect with Us</h5>
-                        <p><a href=""><i class="fa-brands fa-facebook" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><i class="fa-brands fa-instagram" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><i class="fa-brands fa-youtube" style="font-size:50px;"></i></a></p>
+                        <p>
+                            <a href="<?= htmlspecialchars($settings['facebook_link']) ?>"target="_blank"><i class="fa-brands fa-facebook" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="<?= htmlspecialchars($settings['instagram_link']) ?>"target="_blank"><i class="fa-brands fa-instagram" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="<?= htmlspecialchars($settings['youtube_link']) ?>"target="_blank"><i class="fa-brands fa-youtube" style="font-size:50px;"></i></a>
+                        </p>
                     </div>
                 </div>
                 <div class="row mt-2 text-center text-md-none">
                     <div class="d-flex justify-content-between flex-column flex-md-row">
                         <div><i class="fa-brands fa-cc-visa" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-mastercard" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-amex" style="font-size:50px;"></i></div>
                         <div>&copy;Exchanze All Rights are reserved</div>
-
                     </div>
                 </div>
             </div>
@@ -309,7 +334,7 @@ if (isset($_SESSION['userid'])) {
                         <!--login nav-link-a-color-->
                         <div class="d-flex flex-column float-start flex-lg-row justify-content-center  align-items-center mt-3 mt-lg-0 gap-3">
 
-                            <a href="view/cart.php" class="nav-link  text-decoration-none mx-1"><i class="fa-solid fa-cart-plus position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp">0</span></i></a><!--addtocart-->
+                            <a href="view/addtocart.php" class="nav-link  text-decoration-none mx-1"><i class="fa-solid fa-cart-plus position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp">0</span></i></a><!--addtocart-->
                             <a href="view/wishlist.php" class="nav-link  text-decoration-none mx-1"><i class="fa-regular fa-heart position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp">0</span></i></a>
                             <a href="view/userpage.php" class=" text-decoration-none"><button class="lo-button btn-sm ms-2 px-3" style="color:#ffff;">login</button></a>
 
@@ -342,7 +367,7 @@ if (isset($_SESSION['userid'])) {
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
-        <!--trift,bit container-->
+        <!--trift,bid container-->
         <div class="thirf d-flex flex-row thirf-left thirf-one">
             <div class="pic">
                 <img src="img/pexels-kseniachernaya-3965545.jpg" width="100%">
@@ -352,7 +377,7 @@ if (isset($_SESSION['userid'])) {
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, ab laborum ut accusamus, fugiat earum alias
                     beatae ipsa harum quos atque culpa architecto similique deleniti impedit, facilis at aliquam deserunt!
                 </p>
-                <button><a href="../Project-I_Exchanza/view/thrift.php">Shop Now&nbsp;>></a></button>
+                <button><a href="./view/thrift.php">Shop Now&nbsp;>></a></button>
             </div>
         </div>
         <div class="thirf d-flex flex-row thirf-right thirf-two">
@@ -364,7 +389,7 @@ if (isset($_SESSION['userid'])) {
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, ab laborum ut accusamus, fugiat earum alias
                     beatae ipsa harum quos atque culpa architecto similique deleniti impedit, facilis at aliquam deserunt!
                 </p>
-                <button><a href="../Project-I_Exchanza/view/bidding.php">Shop Now&nbsp;>></a></button>
+                <button><a href="./view/bidding.php">Shop Now&nbsp;>></a></button>
             </div>
         </div>
         <div class="thirf d-flex flex-row thirf-left thirf-three">
@@ -376,11 +401,11 @@ if (isset($_SESSION['userid'])) {
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, ab laborum ut accusamus, fugiat earum alias
                     beatae ipsa harum quos atque culpa architecto similique deleniti impedit, facilis at aliquam deserunt!
                 </p>
-                <button><a href="">Shop Now&nbsp;>></a></button>
+                <button><a href="./view/storeIndex.php">Shop Now&nbsp;>></a></button>
             </div>
         </div>
 
-        <!--treanding-->
+        <!--trending-->
         <div class="mx-auto px-4 my-5 tread">
             <div class="row p-3">
                 <div class="col">
@@ -462,31 +487,36 @@ if (isset($_SESSION['userid'])) {
                 </div>
                 <div class="row  mt-4" style="border-bottom:1px solid black;">
                     <div class="col-sm-6 col-md-4 text-center text-md-start ">
-                        <p class=""><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;+94 112 555 444</p>
-                        <p class=""><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;exchanza@gmail.com</p>
-                        <p class=""><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;No.56/2,Kotta Rd,Colombo
-                            05,<br>&nbsp;&nbsp;&nbsp;&nbsp;Sri Lanka</p>
+                        
+                        <p><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['phone']) ?></p>
+                        <p><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['email']) ?></p>
+                        <p><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['address']) ?></p>
                     </div>
                     <div class="col-sm-6 col-md-4 text-center text-md-start lin">
                         <h5>Information</h5>
                         <p><a href="#1">Privacy &amp; Policy</a></p>
                         <p><a href="#1">About Us</a></p>
                         <p><a href="#1">Terms &amp; Condition</a></p>
+                        <p><a href="view/enquiry.php">Enquire Now </a></p>
                     </div>
-                    <div class=" col-md-4 text-center text-md-start  lin">
+                    <div class="col-md-4 text-center text-md-start lin">
                         <h5>Connect with Us</h5>
-                        <p><a href=""><i class="fa-brands fa-facebook" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><i class="fa-brands fa-instagram" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><i class="fa-brands fa-youtube" style="font-size:50px;"></i></a></p>
+                        <p>
+                            <a href="<?= htmlspecialchars($settings['facebook_link']) ?>"target="_blank"><i class="fa-brands fa-facebook" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="<?= htmlspecialchars($settings['instagram_link']) ?>"target="_blank"><i class="fa-brands fa-instagram" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="<?= htmlspecialchars($settings['youtube_link']) ?>"target="_blank"><i class="fa-brands fa-youtube" style="font-size:50px;"></i></a>
+                        </p>
                     </div>
                 </div>
                 <div class="row mt-2 text-center text-md-none">
                     <div class="d-flex justify-content-between flex-column flex-md-row">
                         <div><i class="fa-brands fa-cc-visa" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-mastercard" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-amex" style="font-size:50px;"></i></div>
                         <div>&copy;Exchanze All Rights are reserved</div>
-
                     </div>
                 </div>
             </div>
         </div>
+
         <script src="https://unpkg.com/scrollreveal"></script>
         <script src="view/main.js?v=<?php echo time(); ?>"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>

@@ -1,7 +1,27 @@
 <?php session_start();
 include_once '../model/DbConnector.php';
 include_once '../model/wishlist.php';
-include_once '../model/addtocart.php'; ?>
+include_once '../model/addtocart.php';
+include_once '../admin/classes/Admin.php';
+
+$settings = [
+    'email' => '',
+    'phone' => '',
+    'address' => '',
+    'facebook_link' => '',
+    'instagram_link' => '',
+    'youtube_link' => ''
+];
+$dbConnector = new DbConnector();
+$admin = new Admin($dbConnector->getConnection());
+
+$settingsFromDb = $admin->getSettings();
+
+if ($settingsFromDb) {
+    $settings = $settingsFromDb; // Overwrite default values with the actual settings
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +36,7 @@ include_once '../model/addtocart.php'; ?>
     <title>Thrift</title>
 </head>
 
-<body style="background: none;">
+<body>
     <!--nav bar-->
     <nav class="navbar navbar-expand-lg sticky-top nav">
         <div class="container-fluid logo"><!--logo-->
@@ -61,8 +81,8 @@ include_once '../model/addtocart.php'; ?>
                             $obj->setUserId($userid);
                             $count = $obj->cartItemCount($con); ?>
                             <a href="addtocart.php" class="nav-link  text-decoration-none mx-1"><i class="fa-solid fa-cart-plus position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp"><?php if (isset($count)) {
-                                                                                                                                                                                                                                                echo $count;
-                                                                                                                                                                                                                                            } ?></span></i></a><!--addtocart-->
+                                                                                                                                                                                                                                        echo $count;
+                                                                                                                                                                                                                                    } ?></span></i></a><!--addtocart-->
                             <?php
 
                             $obj = new wishlist();
@@ -201,7 +221,8 @@ include_once '../model/addtocart.php'; ?>
                                     <option value="shoes">Shoes</option>
                                 </select>
                             </div>
-                            <div class="form-group hidden" id="sizeChartWrapper">
+                            <!-- normal sizes -->
+                            <div class="form-group hidden" id="normalsizeChartWrapper">
                                 <label class="bold">Size</label>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="size" id="sizeS" value="S">
@@ -218,6 +239,55 @@ include_once '../model/addtocart.php'; ?>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="size" id="sizeXL" value="XL">
                                     <label class="form-check-label" for="sizeXL">XL</label>
+                                </div>
+                            </div>
+
+                            <!-- pants -->
+                            <div class="form-group hidden" id="pantssizeChartWrapper">
+                                <label class="bold">Size</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizepantsS" value="28-30">
+                                    <label class="form-check-label" for="sizepantsS">28-30</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizepantsM" value="30-32">
+                                    <label class="form-check-label" for="sizepantsM">30-32</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizepantsL" value="32-34">
+                                    <label class="form-check-label" for="sizepantsL">32-34</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizepantsXL" value="34-36">
+                                    <label class="form-check-label" for="sizepantsXL">34-36</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizepantsXL" value="36-40">
+                                    <label class="form-check-label" for="sizepantsXL">36-40</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizepantsO" value="#">
+                                    <label class="form-check-label" for="sizepantsO">Other</label>
+                                </div>
+                            </div>
+                            <!-- shoes -->
+                            <div class="form-group hidden" id="shoessizeChartWrapper">
+                                <label class="bold">Size</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizeShoesS" value="5">
+                                    <label class="form-check-label" for="sizeShoesS">5</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizeShoesM" value="6">
+                                    <label class="form-check-label" for="sizeShoesM">6</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizeShoesL" value="7">
+                                    <label class="form-check-label" for="sizeShoesL">7</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="size" id="sizeShoesXL" value="#">
+                                    <label class="form-check-label" for="sizeShoesXL">Other</label>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -327,23 +397,41 @@ include_once '../model/addtocart.php'; ?>
     <!-- review  div-->
     <div class="container ">
         <div class="row des">
-            <div class="col-5 stat">
+            <!--side show-->
+            <div id="thriftCarousel" class="carousel slide col-5 stat" data-ride="carousel">
                 <h2>Why Thrift</h2>
-                <div class="row stat1">
-                    <img src="../img/thriftstat.jpg" alt="thrift stat" class="rounded-circle img-fluid ts1">
-                    <h3>QUALITY ASSURED</h3>
-                    <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands. </p>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row stat1">
+                            <img src="../img/thriftstat2.jpg" alt="thrift stat" class="rounded-circle img-fluid ts1">
+                            <h3>QUALITY ASSURED</h3>
+                            <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row stat2">
+                            <img src="../img/thriftstat1.jpg" alt="thrift stat" class="rounded-circle img-fluid ts2">
+                            <h3>QUALITY ASSURED</h3>
+                            <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row stat3">
+                            <img src="../img/thrift stat4.jpg" alt="thrift stat" class="rounded-circle img-fluid ts3">
+                            <h3>QUALITY ASSURED</h3>
+                            <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="row stat2">
-                    <img src="../img/thrift stat2.jpg" alt="thrift stat" class="rounded-circle img-fluid ts2">
-                    <h3>QUALITY ASSURED</h3>
-                    <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands. </p>
-                </div>
-                <div class="row stat3">
-                    <img src="../img/thrift stat4.jpg" alt="thrift stat" class="rounded-circle img-fluid ts3">
-                    <h3>QUALITY ASSURED</h3>
-                    <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands. </p>
-                </div>
+                <!-- Carousel controls -->
+                <a class="carousel-control-prev" href="#thriftCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#thriftCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
             <div class="col-7">
                 <div class="container text-center">
@@ -375,39 +463,46 @@ include_once '../model/addtocart.php'; ?>
     <div class="container-fluid footer">
         <div class="container p-3">
             <div class="row">
-                <div class="col">
+                <div class="col text-center text-md-start">
                     <img src="../img/Exchanza.png" width="200px">
                 </div>
             </div>
             <div class="row  mt-4" style="border-bottom:1px solid black;">
-                <div class="col">
-                    <p class=""><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;+94 112 555 444</p>
-                    <p class=""><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;exchanza@gmail.com</p>
-                    <p class=""><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;No.56/2,Kotta Rd,Colombo
-                        05,<br>&nbsp;&nbsp;&nbsp;&nbsp;Sri Lanka</p>
+                <div class="col-sm-6 col-md-4 text-center text-md-start ">
+
+                    <p><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['phone']) ?></p>
+                    <p><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['email']) ?></p>
+                    <p><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['address']) ?></p>
                 </div>
-                <div class="col lin">
+                <div class="col-sm-6 col-md-4 text-center text-md-start lin">
                     <h5>Information</h5>
                     <p><a href="#1">Privacy &amp; Policy</a></p>
                     <p><a href="#1">About Us</a></p>
                     <p><a href="#1">Terms &amp; Condition</a></p>
+                    <p><a href="enquiry.php">Enquire Now </a></p>
                 </div>
-                <div class="col lin">
+                <div class="col-md-4 text-center text-md-start lin">
                     <h5>Connect with Us</h5>
-                    <p><a href=""><i class="fa-brands fa-facebook" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><i class="fa-brands fa-instagram" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><i class="fa-brands fa-youtube" style="font-size:50px;"></i></a></p>
+                    <p>
+                        <a href="<?= htmlspecialchars($settings['facebook_link']) ?>" target="_blank"><i class="fa-brands fa-facebook" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="<?= htmlspecialchars($settings['instagram_link']) ?>" target="_blank"><i class="fa-brands fa-instagram" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="<?= htmlspecialchars($settings['youtube_link']) ?>" target="_blank"><i class="fa-brands fa-youtube" style="font-size:50px;"></i></a>
+                    </p>
                 </div>
             </div>
-            <div class="row mt-2">
+            <div class="row mt-2 text-center text-md-none">
                 <div class="d-flex justify-content-between flex-column flex-md-row">
                     <div><i class="fa-brands fa-cc-visa" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-mastercard" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-amex" style="font-size:50px;"></i></div>
                     <div>&copy;Exchanze All Rights are reserved</div>
-
                 </div>
             </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="../js/sidepanel.js"></script>
 
 </body>
