@@ -205,10 +205,11 @@ if (isset($_SESSION['userid'])) {
             if (!empty($rows)) {
                 foreach ($rows as $row) {
                     $modalId = $row['itemid']; ?>
-                    <div class="card mb-3" style="width: 17rem;">
-                        <img src="../upload/<?php echo $row['coverimage'] ?>" class="card-img-top" alt="..." style="height:15rem;width:75%;object-fit: cover; display:block;padding:20px;margin:0 auto;" data-bs-toggle="modal" data-bs-target="#<?php echo $modalId; ?>">
+                    <div class="card mb-3" style="width:20rem;">
+                        <img src="../upload/<?php echo $row['coverimage'] ?>" class="card-img-top" alt="..." style=width:100%;object-fit: cover; display:block;padding:20px;margin:0 auto;" data-bs-toggle="modal" data-bs-target="#<?php echo $modalId; ?>">
                         <div class="card-body">
                             <h3 class="card-title"><?php echo ucfirst($row['itemname']); ?></h3>
+                            <p class="card-title"><?php echo ucfirst($row['description']); ?></p>
                             <?php if (isset($row['size'])) { ?>
                                 <h5 class="card-text"><strong>Size: </strong><?php echo $row['size']; ?></h5>
                             <?php } ?>
