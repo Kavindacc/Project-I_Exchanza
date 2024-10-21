@@ -18,7 +18,7 @@ $sellers = $admin->getSellers();
         <div class="card">
             <div class="card-header">
 
-                <h4>Manage Stores</h4>
+                <h4>Stores Details</h4>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-striped">
