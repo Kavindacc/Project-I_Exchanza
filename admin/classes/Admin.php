@@ -16,8 +16,8 @@ class Admin
 
     public function getTotalSales()
     {
-        // Implement logic
-        return 10; // Placeholder
+        $stmt = $this->pdo->query("SELECT COUNT(*) as total FROM order_item");
+        return $stmt->fetch()['total'];
     }
 
     public function getTotalEnquiries()
@@ -26,9 +26,9 @@ class Admin
         return $stmt->fetch()['total'];
     }
 
-    public function getTotalEarnings()
+    public function getTotalStores()
     {
-        $stmt = $this->pdo->query("SELECT SUM(amount) as total FROM payments");
+        $stmt = $this->pdo->query("SELECT COUNT(*) as total FROM stores");
         return $stmt->fetch()['total'];
     }
 
@@ -45,7 +45,7 @@ class Admin
         return $stmt->execute(['userId' => $userId]);
     }
 
-    
+
 
     public function getUsers()
     {
@@ -61,9 +61,9 @@ class Admin
 
     public function getSellers()
     {
-        $stmt = $this->pdo->query("SELECT sellers.id, usern.name AS username, usern.email, sellers.variant 
-                                   FROM usern 
-                                   JOIN sellers ON usern.userid = sellers.user_id");
+        $stmt = $this->pdo->query("SELECT store_id, user_id, store_name, created_at
+                                   FROM stores
+                                   ");
         return $stmt->fetchAll();
     }
 
@@ -105,38 +105,49 @@ class Admin
         ]);
     }
 
-    public function getEnquiries() {
+    public function getOrders()
+    {
+        $sql = "SELECT order_id, user_id, order_status, order_date, trackingnum, fullname, confirm FROM orders";
+        $stmt = $this->pdo->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getEnquiries()
+    {
         $sql = "SELECT * FROM enquiries";
         $stmt = $this->pdo->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
-    public function getEnquiryById($id) {
+
+    public function getEnquiryById($id)
+    {
         $sql = "SELECT * FROM enquiries WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    
-    
-    public function deleteEnquiry($id) {
+
+
+    public function deleteEnquiry($id)
+    {
         $sql = "DELETE FROM enquiries WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
     }
-    
-    
-    public function updateEnquiryStatus($id, $status) {
+
+
+    public function updateEnquiryStatus($id, $status)
+    {
         $sql = "UPDATE enquiries SET status = :status WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':status', $status);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
     }
-    
-    
+
+
 
 
     public function getPayments()
@@ -181,6 +192,4 @@ class Admin
         session_unset();
         session_destroy();
     }
-
-
 }
