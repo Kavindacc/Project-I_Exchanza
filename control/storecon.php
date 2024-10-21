@@ -11,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $subcategory = $_POST['subcategory'];
     $size = isset($_POST['size']) ? $_POST['size'] : null;
     $userid = $_POST['userid'];
-
     $errors = [];
 
     if (!empty($itemname) && !empty($price) && !empty($color) && !empty($description) && !empty($category) && !empty($subcategory) && !empty($userid)) {
