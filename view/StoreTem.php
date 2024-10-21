@@ -326,7 +326,7 @@ include_once '../model/addtocart.php';
                                     <label class="form-check-label" for="sizeXL">XL</label>
                                 </div>
                             </div>
-                            <br>
+                            
                             <button type="submit" class="btn btn-primary ssubmit" name="submit">Submit</button>
                         </form>
                     </div>
@@ -340,6 +340,7 @@ include_once '../model/addtocart.php';
                                 <p class="card-text" id="previewCategory">Category</p>
                                 <p class="card-text" id="previewSubcategory">Subcategory</p>
                                 <p class="card-text" id="previewSize">Size</p>
+                                <p class="card-text" id="previewTimesUsed">Times Used: 0</p>
                                 <h5 class="card-text" id="previewPrice">Rs. 0.00</h5>
                             </div>
                         </div>
@@ -583,7 +584,7 @@ include_once '../model/addtocart.php';
 
   // Assuming you have a PHP endpoint to fetch suggestions
 function fetchPreviousSuggestions() {
-   fetch('/fetch-suggestions.php')
+  fetch('/fetch-suggestions.php')
     .then(response => response.json())
     .then(suggestions => {
       const suggestionList = document.querySelector('.recommendation-list ul');
