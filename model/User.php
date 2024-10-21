@@ -215,10 +215,9 @@ class RegisteredCustomer extends User
             $pstmt->bindValue(4, $this->phone_num);
             $pstmt->bindValue(5, $this->userid);
             $pstmt->execute();
-            if($pstmt->rowCount()>0){
+            if ($pstmt->rowCount() > 0) {
                 return true;
-            }
-            else{
+            } else {
                 return false;
             }
         } catch (PDOException $e) {
@@ -287,7 +286,9 @@ class RegisteredCustomer extends User
     public function browserProducts($con)
     {
         try {
-            $sql = "SELECT * FROM item WHERE userid=?";
+            $sql = "SELECT item.* FROM item
+                    INNER JOIN thrift ON item.itemid = thrift.item_id
+                    WHERE item.userid = ?";
             $pstmt = $con->prepare($sql);
             $pstmt->bindValue(1, $this->userid);
             $pstmt->execute();
@@ -299,6 +300,23 @@ class RegisteredCustomer extends User
         }
     }
 
+    public function getAuctionItems($con)
+    {
+        try {
+            $sql = "SELECT item.*, auction.start_time, auction.end_time 
+            FROM item
+            INNER JOIN auction ON item.itemid = auction.itemid
+            WHERE item.userid = ?";
+            $pstmt = $con->prepare($sql);
+            $pstmt->bindValue(1, $this->userid);
+            $pstmt->execute();
+            if ($pstmt->rowCount() > 0) {
+                return $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
     public function addToCart($con)
     {
         try {
@@ -328,10 +346,9 @@ class RegisteredCustomer extends User
             $pstmt = $con->prepare($sql);
             $pstmt->bindValue(1, $this->itemid);
             $pstmt->execute();
-            if($pstmt->rowCount()>0){
+            if ($pstmt->rowCount() > 0) {
                 return true;
-            }
-            else{
+            } else {
                 return false;
             }
         } catch (PDOException $e) {

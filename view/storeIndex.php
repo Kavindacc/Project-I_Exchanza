@@ -49,7 +49,7 @@ include_once '../model/addtocart.php';
               <a class="nav-link" href="thrift.php">Thrift</a>
             </li>
             <li class="nav-item mx-2">
-              <a class="nav-link" href="../Project-I_Exchanza/view/bidding.php">Bidding</a>
+              <a class="nav-link" href="bidding.php">Bidding</a>
             </li>
             <li class="nav-item mx-2 " >
               <a class="nav-link active" href="storeIndex.php">Selling</a>

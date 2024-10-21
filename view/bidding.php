@@ -261,13 +261,13 @@ $finishedBids = $auction->getFinishedAuctions();
                             <a class="nav-link " aria-current="page" href="../index.php">Home</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" href="#">Thrift</a>
+                            <a class="nav-link " href="thrift.php">Thrift</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="../Project-I_Exchanza/view/bidding.php">Bidding</a>
+                            <a class="nav-link active" href="#">Bidding</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="#">Selling</a>
+                            <a class="nav-link" href="storeIndex.php">Selling</a>
                         </li>
                     </ul>
 
