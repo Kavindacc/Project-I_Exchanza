@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- Enquiry Form -->
     <div class="container mt-5">
-        <h2 class="text-center mb-4">Enquiry Form</h2>
+        <h2 class="text-center mb-4">Enquiries and Feedbacks</h2>
 
         <!-- Display success/error message -->
         <?php if (!empty($message)) : ?>
@@ -114,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <textarea class="form-control" id="message" name="message" rows="5" placeholder="Write your message" required></textarea>
             </div>
             <div class="text-center">
-                <button type="submit" class="btn btn-primary">Submit Enquiry</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
     </div>

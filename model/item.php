@@ -336,7 +336,7 @@ class Thrift extends Item
     public function getThriftItemsBySize($con, $size)
     {
         try {
-            $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE i.category=? AND i.subcategory=? AND i.size = ?"; // Adjust query to include size
+            $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE i.category=? AND i.subcategory=? AND i.size = ? AND i.status=0"; // Adjust query to include size
             $pstmt = $con->prepare($sql);
             $pstmt->bindValue(1, $this->category);
             $pstmt->bindValue(2, $this->subcategory);
@@ -354,7 +354,7 @@ class Thrift extends Item
         if ($price == "LH") {
             try {
                 // $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid ORDER BY price ASC"; 
-                $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE i.category=? AND i.subcategory=? ORDER BY price ASC";
+                $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE i.category=? AND i.subcategory=? AND i.status=0 ORDER BY price ASC";
 
                 $pstmt = $con->prepare($sql);
                 $pstmt->bindValue(1, $this->category);
@@ -368,7 +368,7 @@ class Thrift extends Item
         } elseif ($price == "HL") {
             try {
                 // $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid ORDER BY price DESC"; 
-                $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE i.category=? AND i.subcategory=? ORDER BY price DESC";
+                $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE i.category=? AND i.subcategory=? AND i.status=0 ORDER BY price DESC";
 
                 $pstmt = $con->prepare($sql);
                 $pstmt->bindValue(1, $this->category);
@@ -383,7 +383,7 @@ class Thrift extends Item
         } else {
             try {
                 // $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid ORDER BY itemID DESC"; 
-                $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE i.category=? AND i.subcategory=? ORDER BY itemID DESC";
+                $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE i.category=? AND i.subcategory=? AND i.status=0 ORDER BY itemID DESC";
                 $pstmt = $con->prepare($sql);
                 $pstmt->bindValue(1, $this->category);
                 $pstmt->bindValue(2, $this->subcategory);
