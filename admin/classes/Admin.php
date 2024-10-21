@@ -107,7 +107,7 @@ class Admin
 
     public function getOrders()
     {
-        $sql = "SELECT order_id, user_id, order_status, order_date, trackingnum, fullname, confirm FROM orders";
+        $sql = "SELECT order_id, user_id, order_status, order_date, trackingnum, confirm FROM orders";
         $stmt = $this->pdo->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

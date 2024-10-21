@@ -31,7 +31,7 @@ $orders = $admin->getOrders(); // Changed the variable name for clarity
                                 <th>Status</th>
                                 <th>Order Date</th>
                                 <th>Tracking Number</th>
-                                <th>Customer Name</th>
+                                
                                 <th>Confirm Status</th>
                             </tr>
                         </thead>
@@ -43,7 +43,7 @@ $orders = $admin->getOrders(); // Changed the variable name for clarity
                                     <td><?php echo $order['order_status'] == 1 ? 'Received' : 'Pending'; ?></td>
                                     <td><?php echo $order['order_date']; ?></td>
                                     <td><?php echo $order['trackingnum']; ?></td>
-                                    <td><?php echo $order['fullname']; ?></td>
+                                    
                                     <td><?php echo $order['confirm'] == 1 ? 'Confirmed' : 'Not Confirmed'; ?></td>
                                 </tr>
                             <?php endforeach; ?>
