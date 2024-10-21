@@ -98,7 +98,7 @@
                              Our collection brings together quality and style for everyone,
                               offering timeless essentials and statement pieces to elevate any wardrobe.</p>                      
                           
-                              <a href="../view/shopNow.php">
+                              <a href="../view/categoryMain.php">
                                 <button type="button" class="btn btn-primary animated fadeInUp" style="--bs-btn-padding-y: 0.5rem; --bs-btn-padding-x: 0.75rem; --bs-btn-font-size: 1em;
                                               --bs-btn-border-radius: 5px;--bs-btn-color: #ffffff;--bs-btn-bg: #746557;--bs-btn-border-color:  #746557;--bs-btn-hover-color: #ffffff;  
                                               --bs-btn-hover-bg: #4c3f31;--bs-btn-hover-border-color: #4c3f31 ;--bs-btn-active-color: #ffffff;--bs-btn-active-bg: #4c3f31;

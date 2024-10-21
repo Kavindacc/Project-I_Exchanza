@@ -142,6 +142,12 @@ include_once '../model/user.php';
 
 
 <?php
+
+if (isset($_SESSION['userid'])) {
+  $userid = $_SESSION['userid'];
+}
+
+
     $dsn = new DbConnector();
     $con = $dsn->getConnection();
 
