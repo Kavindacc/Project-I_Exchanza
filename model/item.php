@@ -89,6 +89,43 @@ class Item
         }
     }
 
+    public function addItemForStore($con, $userid)
+    {
+        try {
+            $sql = "INSERT INTO storeitems(itemname, price, color, description, category, subcategory, size, coverimage, otherimage, userid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, $userid)";
+            $pstmt = $con->prepare($sql);
+            $pstmt->bindValue(1, $this->itemname);
+            $pstmt->bindValue(2, $this->price);
+            $pstmt->bindValue(3, $this->color);
+            $pstmt->bindValue(4, $this->description);
+            $pstmt->bindValue(5, $this->category);
+            $pstmt->bindValue(6, $this->subcategory);
+            $pstmt->bindValue(7, $this->size);
+            $pstmt->bindValue(8, $this->coverimage);
+            $pstmt->bindValue(9, $this->otherimage);
+            //$pstmt->bindValue(10, $this->userid);
+            $pstmt->execute();
+
+            if ($pstmt->rowCount() > 0) {
+                $item_id = $con->lastInsertId();
+                $sql = "INSERT INTO thrift (item_id, user_id)  VALUES (?,?)";
+                $pstmt = $con->prepare($sql);
+                $pstmt->bindValue(1, $item_id);
+                $pstmt->bindValue(2, $this->userid);
+                $pstmt->execute();
+                if ($pstmt->rowCount() > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
     public function delete($con) //item delete function
     {
         try {
@@ -188,6 +225,17 @@ class Item
 class Thrift extends Item
 {
 
+    public $itemname;
+    public $price;
+    public $color;
+    public $description;
+    public $category;
+    public $subcategory;
+    public $size;
+    public $coverimage;
+    public $otherimage;
+    public $userid;
+
     public function __construct($userid = null)
     {
         $this->userid = $userid;
@@ -202,12 +250,11 @@ class Thrift extends Item
     public function getThriftItemsLogin($con)
     {
         try {
-            $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE t.user_id != ? AND i.category=? AND i.subcategory=? AND i.status=?"; //change it
+            $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE t.user_id = ? AND i.category=? AND i.subcategory=?"; //change it
             $pstmt = $con->prepare($sql);
             $pstmt->bindValue(1, $this->userid);
             $pstmt->bindValue(2, $this->category);
             $pstmt->bindValue(3, $this->subcategory);
-            $pstmt->bindValue(4,0);
             $pstmt->execute();
             $rows = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             return $rows;
@@ -215,6 +262,76 @@ class Thrift extends Item
             echo "Error: " . $e->getMessage();
         }
     }
+
+    public function getStoreItemsLogin($con, $userid)
+    {
+        try {
+            // SQL query to select items from the storeitems table
+            $sql = "SELECT id, itemname, price, color, description, category, subcategory, size, coverimage, otherimage, userid, created_at FROM storeitems WHERE userid=$userid";
+    
+            // Prepare the statement
+            $stmt = $con->prepare($sql);
+    
+            // Execute the statement without binding since this is a simple SELECT
+            $stmt->execute();
+    
+            // Fetch all rows into an array and return the array
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $rows;
+    
+        } catch (PDOException $e) {
+            // Display error message if the query fails
+            echo "Error: " . $e->getMessage();
+        }
+
+    }
+
+    public function getStoreItemsAll($con, $userid)
+    {
+        try {
+            // SQL query to select items from the storeitems table
+            $sql = "SELECT id, itemname, price, color, description, category, subcategory, size, coverimage, otherimage, userid, created_at FROM storeitems ";
+    
+            // Prepare the statement
+            $stmt = $con->prepare($sql);
+    
+            // Execute the statement without binding since this is a simple SELECT
+            $stmt->execute();
+    
+            // Fetch all rows into an array and return the array
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $rows;
+    
+        } catch (PDOException $e) {
+            // Display error message if the query fails
+            echo "Error: " . $e->getMessage();
+        }
+
+    }
+
+    public function getStoreItemsSub($con, $subcategory)
+    {
+        try {
+            // SQL query to select items from the storeitems table
+            $sql = "SELECT id, itemname, price, color, description, category, subcategory, size, coverimage, otherimage, userid, created_at FROM storeitems WHERE subcategory=$subcategory";
+    
+            // Prepare the statement
+            $stmt = $con->prepare($sql);
+    
+            // Execute the statement without binding since this is a simple SELECT
+            $stmt->execute();
+    
+            // Fetch all rows into an array and return the array
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $rows;
+    
+        } catch (PDOException $e) {
+            // Display error message if the query fails
+            echo "Error: " . $e->getMessage();
+        }
+
+    }
+
 
     public function getThriftItemsBySize($con, $size)
     {
@@ -282,11 +399,10 @@ class Thrift extends Item
     public function getThriftItems($con)
     {
         try {
-            $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE i.category=? AND i.subcategory=? AND i.status=?"; //change it
+            $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE i.category=? AND i.subcategory=?"; //change it
             $pstmt = $con->prepare($sql);
             $pstmt->bindValue(1, $this->category);
             $pstmt->bindValue(2, $this->subcategory);
-            $pstmt->bindValue(3,0);
             $pstmt->execute();
             $rows = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             return $rows;
@@ -294,7 +410,6 @@ class Thrift extends Item
             echo "Error: " . $e->getMessage();
         }
     }
-
-    
-    
 }
+
+
