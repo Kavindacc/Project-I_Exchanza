@@ -14,9 +14,10 @@ class Item
     protected  $subcategory;
     private $condition;
     private $size;
+    private  $quantity;
     protected $userid;
 
-    public function __construct($itemname = null, $price = null, $color = null, $description = null, $category = null, $subcategory = null, $condition = null, $size = null, $coverimage = null, $otherimage = null, $userid = null)
+    public function __construct($itemname = null, $price = null, $color = null, $description = null, $category = null, $subcategory = null, $condition = null, $size = null, $coverimage = null, $otherimage = null, $quantity=null, $userid = null)
     {
 
         $this->itemname = $itemname;
@@ -29,6 +30,7 @@ class Item
         $this->subcategory = $subcategory;
         $this->condition = $condition;
         $this->size = $size;
+        $this->quantity=$quantity;
         $this->userid = $userid;
     }
 
@@ -51,7 +53,7 @@ class Item
     public function addItemForThrifting($con)
     {
         try {
-            $sql = "INSERT INTO item(itemname, price, color, description, category, subcategory, `condition`, size, coverimage, otherimage, userid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO item(itemname, price, color, description, category, subcategory, `condition`, size, coverimage, otherimage,quantity, userid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
             $pstmt = $con->prepare($sql);
             $pstmt->bindValue(1, $this->itemname);
             $pstmt->bindValue(2, $this->price);
@@ -63,7 +65,8 @@ class Item
             $pstmt->bindValue(8, $this->size);
             $pstmt->bindValue(9, $this->coverimage);
             $pstmt->bindValue(10, $this->otherimage);
-            $pstmt->bindValue(11, $this->userid);
+            $pstmt->bindValue(11,$this->quantity);
+            $pstmt->bindValue(12, $this->userid);
             $pstmt->execute();
 
             if ($pstmt->rowCount() > 0) {
@@ -159,6 +162,65 @@ class Item
             echo "Error: " . $e->getMessage();
         }
     }
+    public function addItemForBidding($con, $start_time, $end_time, $start_price)
+    {
+        try {
+            // Insert into item table
+            $sqlItem = "INSERT INTO item (itemname, price, color, description, category, subcategory, `condition`, size, coverimage, otherimage, quantity, userid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $pstmtItem = $con->prepare($sqlItem);
+            $pstmtItem->bindValue(1, $this->itemname);
+            $pstmtItem->bindValue(2, $this->price);
+            $pstmtItem->bindValue(3, $this->color);
+            $pstmtItem->bindValue(4, $this->description);
+            $pstmtItem->bindValue(5, $this->category);
+            $pstmtItem->bindValue(6, $this->subcategory);
+            $pstmtItem->bindValue(7, $this->condition);
+            $pstmtItem->bindValue(8, $this->size);
+            $pstmtItem->bindValue(9, $this->coverimage);
+            $pstmtItem->bindValue(10, $this->otherimage);
+            $pstmtItem->bindValue(11, $this->quantity);
+            $pstmtItem->bindValue(12, $this->userid);
+            $pstmtItem->execute();
+
+            // Get the last inserted item ID
+            $itemId = $con->lastInsertId();
+
+            // Insert into auction table
+            $sqlAuction = "INSERT INTO auction (itemid, userid, start_time, end_time, start_price) VALUES (?, ?, ?, ?, ?)";
+            $pstmtAuction = $con->prepare($sqlAuction);
+            $pstmtAuction->bindValue(1, $itemId);
+            $pstmtAuction->bindValue(2, $this->userid);
+            $pstmtAuction->bindValue(3, $start_time);
+            $pstmtAuction->bindValue(4, $end_time);
+            $pstmtAuction->bindValue(5, $start_price);
+            $pstmtAuction->execute();
+
+            if ($pstmtItem->rowCount() > 0 && $pstmtAuction->rowCount() > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+    public static function getItemsForBidding($con)
+    {
+        try {
+            $sql = "SELECT i.itemid, i.itemname, i.price, i.coverimage, i.description, a.start_time, a.end_time, a.start_price 
+                    FROM item i 
+                    JOIN auction a ON i.itemid = a.itemid 
+                    WHERE a.end_time > NOW()";
+            $stmt = $con->prepare($sql);
+            $stmt->execute();
+            $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $items;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return [];
+        }
+    }
 }
 class Thrift extends Item
 {
@@ -247,6 +309,93 @@ class Thrift extends Item
 
     }
 
+    public function getStoreItemsSub($con, $subcategory)
+    {
+        try {
+            // SQL query to select items from the storeitems table
+            $sql = "SELECT id, itemname, price, color, description, category, subcategory, size, coverimage, otherimage, userid, created_at FROM storeitems WHERE subcategory=$subcategory";
+    
+            // Prepare the statement
+            $stmt = $con->prepare($sql);
+    
+            // Execute the statement without binding since this is a simple SELECT
+            $stmt->execute();
+    
+            // Fetch all rows into an array and return the array
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $rows;
+    
+        } catch (PDOException $e) {
+            // Display error message if the query fails
+            echo "Error: " . $e->getMessage();
+        }
+
+    }
+
+
+    public function getThriftItemsBySize($con, $size)
+    {
+        try {
+            $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE i.category=? AND i.subcategory=? AND i.size = ?"; // Adjust query to include size
+            $pstmt = $con->prepare($sql);
+            $pstmt->bindValue(1, $this->category);
+            $pstmt->bindValue(2, $this->subcategory);
+            $pstmt->bindValue(3, $size); // Bind the size parameter
+            $pstmt->execute();
+            $rows = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            return $rows;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+    public function getThriftItemsBySort($con, $price)
+    {
+        if ($price == "LH") {
+            try {
+                // $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid ORDER BY price ASC"; 
+                $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE i.category=? AND i.subcategory=? ORDER BY price ASC";
+
+                $pstmt = $con->prepare($sql);
+                $pstmt->bindValue(1, $this->category);
+                $pstmt->bindValue(2, $this->subcategory);
+                $pstmt->execute();
+                $rows = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+                return $rows;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        } elseif ($price == "HL") {
+            try {
+                // $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid ORDER BY price DESC"; 
+                $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE i.category=? AND i.subcategory=? ORDER BY price DESC";
+
+                $pstmt = $con->prepare($sql);
+                $pstmt->bindValue(1, $this->category);
+                $pstmt->bindValue(2, $this->subcategory);
+               
+                $pstmt->execute();
+                $rows = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+                return $rows;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        } else {
+            try {
+                // $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid ORDER BY itemID DESC"; 
+                $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE i.category=? AND i.subcategory=? ORDER BY itemID DESC";
+                $pstmt = $con->prepare($sql);
+                $pstmt->bindValue(1, $this->category);
+                $pstmt->bindValue(2, $this->subcategory);
+            
+                $pstmt->execute();
+                $rows = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+                return $rows;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        }
+    }
     public function getThriftItems($con)
     {
         try {
