@@ -61,9 +61,9 @@ class Admin
 
     public function getSellers()
     {
-        $stmt = $this->pdo->query("SELECT sellers.id, usern.name AS username, usern.email, sellers.variant 
-                                   FROM usern 
-                                   JOIN sellers ON usern.userid = sellers.user_id");
+        $stmt = $this->pdo->query("SELECT store_id, user_id, store_name, created_at
+                                   FROM stores
+                                   ");
         return $stmt->fetchAll();
     }
 
