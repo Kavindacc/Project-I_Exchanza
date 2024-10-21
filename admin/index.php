@@ -11,7 +11,7 @@ $admin = new Admin($dbConnector->getConnection());
 $totalUsers = $admin->getTotalUsers();
 $totalSales = $admin->getTotalSales();
 $totalEnquiries = $admin->getTotalEnquiries();
-$totalEarnings = $admin->getTotalEarnings();
+$totalEarnings = $admin->getTotalStores();
 ?>
 <div class="container mt-5">
     <h2 class="text-center mb-4" style="color: #4E3B30;">Dashboard Overview</h2>
@@ -45,12 +45,12 @@ $totalEarnings = $admin->getTotalEarnings();
         <div class="col-md-6 mb-4">
             <div class="card" style="background: #D6B7A8; border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);"> <!-- Light brown color -->
                 <div class="card-body text-center">
-                    <h5 class="card-title font-weight-bold">Total Sales</h5>
+                    <h5 class="card-title font-weight-bold">Total Orders</h5>
                     <h2 class="font-weight-bolder mb-0"><?php echo $totalSales; ?></h2>
-                    <p class="card-text">Products Sold</p>
+                    <p class="card-text">Orders Received</p>
                 </div>
                 <div class="card-footer" style="background: #A17C6C; border-radius: 0 0 15px 15px;">
-                    <img src="path/to/sales-icon.png" alt="Sales Icon" style="width: 50px;">
+                    <img src="../img/orders.png" alt="Sales Icon" style="width: 50px;">
                 </div>
             </div>
         </div>
@@ -58,12 +58,12 @@ $totalEarnings = $admin->getTotalEarnings();
         <div class="col-md-6 mb-4">
             <div class="card" style="background: #B89A8D; border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);">
                 <div class="card-body text-center">
-                    <h5 class="card-title font-weight-bold">Total Earnings</h5>
+                    <h5 class="card-title font-weight-bold">Total Stores</h5>
                     <h2 class="font-weight-bolder mb-0"><?php echo $totalEarnings; ?></h2>
-                    <p class="card-text">Total Revenue</p>
+                    <p class="card-text">Store Available</p>
                 </div>
                 <div class="card-footer" style="background: #A17C6C; border-radius: 0 0 15px 15px;">
-                    <img src="path/to/earnings-icon.png" alt="Earnings Icon" style="width: 50px;">
+                    <img src="../img/shop.png" alt="Earnings Icon" style="width: 50px;">
                 </div>
             </div>
         </div>

@@ -16,8 +16,8 @@ class Admin
 
     public function getTotalSales()
     {
-        // Implement logic
-        return 10; // Placeholder
+        $stmt = $this->pdo->query("SELECT COUNT(*) as total FROM order_item");
+        return $stmt->fetch()['total'];
     }
 
     public function getTotalEnquiries()
@@ -26,9 +26,9 @@ class Admin
         return $stmt->fetch()['total'];
     }
 
-    public function getTotalEarnings()
+    public function getTotalStores()
     {
-        $stmt = $this->pdo->query("SELECT SUM(amount) as total FROM payments");
+        $stmt = $this->pdo->query("SELECT COUNT(*) as total FROM stores");
         return $stmt->fetch()['total'];
     }
 
