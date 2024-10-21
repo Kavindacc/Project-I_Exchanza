@@ -7,7 +7,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                    <h4>Enquire now</h4>
+                    <h4>Enquires and Feedbacks</h4>
                     </div>
                     <div class="card-body">
                         <form action=""method="POST">
