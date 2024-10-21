@@ -129,9 +129,9 @@ include_once '../model/user.php';
     <nav class="nav justify-content-center">
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
         <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-all" type="button" role="tab" aria-controls="nav-all" aria-selected="true">All</button>
-        <button class="nav-link" id="nav-dresses-tab" data-bs-toggle="tab" data-bs-target="#nav-dresses" type="button" role="tab" aria-controls="nav-dresses" aria-selected="false" onclick="<?php $user->getStoreItemsSub($con, "tops"); ?>">Tops</button>
-        <button class="nav-link" id="nav-blouse-tab" data-bs-toggle="tab" data-bs-target="#nav-blouse" type="button" role="tab" aria-controls="nav-blouse" aria-selected="false" onclick="<?php $user->getStoreItemsSub($con, "dresses"); ?>">Dresses</button>
-        <button class="nav-link" id="nav-tshirt-tab" data-bs-toggle="tab" data-bs-target="#nav-tshirt" type="button" role="tab" aria-controls="nav-tshirt" aria-selected="false" onclick="<?php $user->getStoreItemsSub($con, "pants"); ?>">Pants</button>
+        <button class="nav-link" id="nav-dresses-tab" data-bs-toggle="tab" data-bs-target="#nav-dresses" type="button" role="tab" aria-controls="nav-dresses" aria-selected="true" onclick="<?php $user->getStoreItemsSub($con, "tops"); ?>">Tops</button>
+        <button class="nav-link" id="nav-blouse-tab" data-bs-toggle="tab" data-bs-target="#nav-blouse" type="button" role="tab" aria-controls="nav-blouse" aria-selected="true" onclick="<?php $user->getStoreItemsSub($con, "dresses"); ?>">Dresses</button>
+        <button class="nav-link" id="nav-tshirt-tab" data-bs-toggle="tab" data-bs-target="#nav-tshirt" type="button" role="tab" aria-controls="nav-tshirt" aria-selected="true" onclick="<?php $user->getStoreItemsSub($con, "pants"); ?>">Pants</button>
         <button class="nav-link" id="nav-shirt-tab" data-bs-toggle="tab" data-bs-target="#nav-shirt" type="button" role="tab" aria-controls="nav-shirt" aria-selected="false" onclick="<?php $user->getStoreItemsSub($con, "accessories"); ?>">Accessories</button>
         <button class="nav-link" id="nav-croptop-tab" data-bs-toggle="tab" data-bs-target="#nav-croptop" type="button" role="tab" aria-controls="nav-croptop" aria-selected="false" onclick="<?php $user->getStoreItemsSub($con, "bags"); ?>">Bags</button>
         <button class="nav-link" id="nav-skirt-tab" data-bs-toggle="tab" data-bs-target="#nav-skirt" type="button" role="tab" aria-controls="nav-skirt" aria-selected="false" onclick="<?php $user->getStoreItemsSub($con, "shoes"); ?>">Shoes</button>
@@ -200,45 +200,8 @@ include_once '../model/user.php';
                             </button>
                         </form>
 
-                        <!-- Write Review Button -->
-                        <button type="button" class="btn btn-secondary mt-2 equal-width" data-bs-toggle="modal">
-                            Write a Review
-                        </button>
 
-                        <!-- Review Modal -->
-                        <div class="modal fade" id="reviewModal<?php echo $row['itemid']; ?>" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="reviewModalLabel">Write a Review for <?php echo $row['itemname']; ?></h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="../control/reviewcon.php" method="post">
-                                            <input type="hidden" name="itemid" value="<?php echo $row['itemid']; ?>">
-                                            <input type="hidden" name="userid" value="<?php echo $userid; ?>">
-                                            <input type="hidden" name="cat" value="<?php echo $category; ?>">
-                                            <input type="hidden" name="sub" value="<?php echo $subcategory; ?>">
-                                            <div class="mb-3">
-                                                <label for="reviewText" class="form-label">Your Review</label>
-                                                <textarea class="form-control" id="reviewText" name="review_text" rows="3" required></textarea>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="rating" class="form-label">Rating</label>
-                                                <select class="form-control" id="rating" name="rating" required>
-                                                    <option value="1">1 - Poor</option>
-                                                    <option value="2">2 - Fair</option>
-                                                    <option value="3">3 - Good</option>
-                                                    <option value="4">4 - Very Good</option>
-                                                    <option value="5">5 - Excellent</option>
-                                                </select>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary" style="--bs-btn-color:black;--bs-btn-bg:none;--bs-btn-border-color:black; --bs-btn-hover-bg:#4c3f31;">Submit Review</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             <?php } ?>

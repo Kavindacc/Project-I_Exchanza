@@ -226,139 +226,9 @@ include_once '../model/User.php';
 
 
 
-        <div>
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0"></div>
-                <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0"></div>
-                <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0"></div>
-                <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0"></div>
-            </div>
-
-        </div>
-        <!-- <a href="sidepanel.php" target="_blank" aria-label="Plus Icon">  -->
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle" id="openPanel">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="16"></line>
-            <line x1="8" y1="12" x2="16" y2="12"></line>
-        </svg>
-        <!-- </a> -->
-        </div>
-        <!-- sidepanel -->
-        <div id="sidePanel" class="side-panel">
-            <button id="closePanel" class="close-btn">&times;</button>
-
-
-            <?php if (isset($_SESSION['userid'])) {
-                $userid = $_SESSION['userid']; ?>
-                <button class="add-item-btn" style="width:100%;" onclick="showForm()">Add Item</button>
-            <?php } else { ?>
-                <a href="login_user.php" style="text-decoration: none;">
-                    <button class="add-item-btn" style="width:100%;">Add Item</button>
-                </a>
-            <?php } ?>
-
-
-        </div>
-        <!-- Popup overlay and form -->
-        <div id="popupForm" class="popup-overlay">
-            <div class="popup-content">
-                <button id="closePopup" class="close-btn">&times;</button>
-                <div class="container mt-5">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h2 class="mb-4">Add Item to My Store</h2>
-                            <form action="../control/storecon.php" method="post" enctype="multipart/form-data" id="resellForm"> <!--form start add to item-->
-                                <input type="hidden" name="userid" value="<?php echo $userid; ?>">
-                                <div class="form-group">
-                                    <label for="itemName" class="bold">Item Name</label>
-                                    <input type="text" class="form-control" id="itemName" placeholder="Enter item name" name="itemname" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="price" class="bold">Price (Rs.)</label>
-                                    <input type="number" class="form-control" id="price" placeholder="Enter price" name="price" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="color" class="bold">Color</label>
-                                    <input type="color" class="form-control" id="color" name="colour" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="coverImage" class="bold">Cover Image</label>
-                                    <input type="file" class="form-control-file" id="coverImage" name="image" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="otherImages" class="bold">Other Images (Optional)</label>
-                                    <input type="file" class="form-control-file" id="otherImages" name="otherimage">
-                                </div>
-                                <div class="form-group">
-                                    <label for="description" class="bold">Description</label>
-                                    <textarea class="form-control" id="description" rows="3" placeholder="Enter description" name="description" required></textarea>
-                                </div>
-
-                                <div class="form-group" id="sizeChartWrapper">
-                                    <label class="bold" for="sizeSelect">Size</label>
-                                    <select class="form-select" id="sizeSelect" name="size">
-                                        <option value="" disabled selected>Select a size</option>
-                                        <option value="S">S</option>
-                                        <option value="M">M</option>
-                                        <option value="L">L</option>
-                                        <option value="XL">XL</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="category" class="bold">Category</label>
-                                    <select class="form-control" id="category" name="category" required>
-                                        <option value="">Select Category</option>
-                                        <option value="men">Men</option>
-                                        <option value="women">Women</option>
-                                        <option value="kids">Kids</option>
-                                    </select>
-                                </div>
-                                <div class="form-group hidden" id="subcategoryWrapper">
-                                    <label for="subcategory" class="bold">Subcategory</label>
-                                    <select class="form-control" id="subcategory" name="subcategory">
-                                        <option value="">Select Subcategory</option>
-                                        <option value="tops">Tops</option>
-                                        <option value="dresses">Dresses</option>
-                                        <option value="pants">Pants</option>
-                                        <option value="accessories">Accessories</option>
-                                        <option value="bags">Bags</option>
-                                        <option value="shoes">Shoes</option>
-                                    </select>
-                                </div>
-                                <div class="form-group" id="sizeChartWrapper">
-                                    <label class="bold" for="sizeSelect">Size</label>
-                                    <select class="form-select" id="sizeSelect" name="size">
-                                        <option value="" disabled selected>Select a size</option>
-                                        <option value="S">S</option>
-                                        <option value="M">M</option>
-                                        <option value="L">L</option>
-                                        <option value="XL">XL</option>
-                                    </select>
-                                </div>
-
-                                <button type="submit" class="btn btn-primary ssubmit" name="submit">Submit</button>
-                            </form>
-                        </div>
-                        <div class="col-md-6">
-                            <h2>Preview</h2>
-                            <div class="card card-preview">
-                                <img id="previewImage" src="https://via.placeholder.com/150" alt="Item image">
-                                <div class="card-body">
-                                    <h5 class="card-title" id="previewName">Item Name</h5>
-                                    <p class="card-text" id="previewDescription">Description</p>
-                                    <p class="card-text" id="previewCategory">Category</p>
-                                    <p class="card-text" id="previewSubcategory">Subcategory</p>
-                                    <p class="card-text" id="previewSize">Size</p>
-                                    <h5 class="card-text" id="previewPrice">Rs. 0.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+        
+        
+        
 
 
 
@@ -409,7 +279,7 @@ include_once '../model/User.php';
                                 ?>
 
 
-                                    <!-- <div class="rating-stars">
+                                     <div class="rating-stars">
                                             <h6><?php echo ucwords($name); ?></h6>
                                             <h6><strong>Rating:</strong>
                                                 <?php
@@ -425,7 +295,7 @@ include_once '../model/User.php';
                                             </h6>
                                             <h6><strong>Review:</strong><?php echo $rate['review_text'] ?></h6>
 
-                                        </div> -->
+                                        </div> 
                                 <?php } ?>
                             </div>
                         <?php } ?>
@@ -436,9 +306,9 @@ include_once '../model/User.php';
                             <input type="hidden" name="userid" value="<?php echo $userid; ?>">
                             <input type="hidden" name="cat" value="<?php echo  $category; ?>">
                             <input type="hidden" name="sub" value="<?php echo $subcategory; ?>">
-                            <!-- <button type="submit" class="btn btn-primary mt-2  equal-width" name="wishlist" style="--bs-btn-color:black;--bs-btn-bg:none;--bs-btn-border-color:black; --bs-btn-hover-bg:#4c3f31;">
+                            <button type="submit" class="btn btn-primary mt-2  equal-width" name="wishlist" style="--bs-btn-color:black;--bs-btn-bg:none;--bs-btn-border-color:black; --bs-btn-hover-bg:#4c3f31;">
                                     <i class="fa-regular fa-heart"></i>&nbsp;Add to Wishlist
-                                </button> -->
+                                </button>
                         </form>
 
                         <!-- Write Review Button -->

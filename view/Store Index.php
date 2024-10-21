@@ -139,56 +139,6 @@
       <hr>
     </section>
 
-    <!-- New Arrivals -->
-    <div>
-      <div class="head">
-        <p>Shop Our New Products of the Season</p>
-      </div>
-      <p class="new  text-uppercase ">New Arrivals</p>
-
-
-      <!-- New Products Section -->
-      <!----methn NEW ITEMS witri enna oni---->
-      <section id="newproducts" class="product-store"><!----me section 1kt products 4k wge dann---->
-        <div class="product-grid">
-          <!-- Example product item -->
-          <div class="product-item">
-            <div class="image-holder">
-              <span class="new-label">New</span>
-              <img src="../img/item-1.jpg" class="product-img" alt="Product 1"><!--product img 1k--->
-              <div class="cart-concern">
-
-                <button type="button" class="btn-cart">
-                  <i class="bi bi-cart-plus"></i>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
-                    <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z" />
-                    <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-                  </svg>
-                </button>
-
-                <button type="button" class="btn-whishlist">
-                  <i class="bi bi-heart"></i>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                  </svg>
-                </button>
-
-              </div>
-            </div>
-            <div class="product-detail">
-              <h3 class="product-name">Product Name 1</h3><!-----product name enna oni methnt-->
-              <p class="category-type">Women</p><!-----category type enna oni methnt - men/women/kids-->
-              <p class="product-price">$49.99</p><!-----product price enna oni methnt-->
-            </div>
-          </div>
-
-
-
-
-
-        </div>
-      </section>
-
 
       <br>
       <br>
@@ -214,7 +164,7 @@
                     </div>
                   </a>
                   <div class="category-detail">
-                    <h3 class="category-name">Dresses</h3>
+                    <h3 class="category-name">Tops</h3>
                   </div>
                 </div>
 
@@ -225,7 +175,7 @@
                     </div>
                   </a>
                   <div class="category-detail">
-                    <h3 class="category-name">Blouses</h3>
+                    <h3 class="category-name">Dresses</h3>
                   </div>
                 </div>
 
@@ -236,7 +186,7 @@
                     </div>
                   </a>
                   <div class="category-detail">
-                    <h3 class="category-name">T-Shirts</h3>
+                    <h3 class="category-name">Pants</h3>
                   </div>
                 </div>
 
@@ -247,7 +197,7 @@
                     </div>
                   </a>
                   <div class="category-detail">
-                    <h3 class="category-name">Shirts</h3>
+                    <h3 class="category-name">Accessories</h3>
                   </div>
                 </div>
 
@@ -255,58 +205,7 @@
             </section>
           </div>
 
-          <div class="carousel-item"><!--2 weniyt tyn section eke idl awasanet tyn section enkn repeat wenn methn tyn css oni-->
-            <section id="category" class="category-icon">
-              <div class="category-grid">
-                <!-- Example product item -->
-
-                <div class="category-item">
-                  <a href="../view/categoryMain.php#nav-croptop-tab">
-                    <div class="image-cat">
-                      <img src="../img/croptop.jpg" class="category-img" alt="Category-img">
-                    </div>
-                  </a>
-                  <div class="category-detail">
-                    <h3 class="category-name">Crop-Tops</h3>
-                  </div>
-                </div>
-
-                <div class="category-item">
-                  <a href="../view/categoryMain.php#nav-skirt-tab">
-                    <div class="image-cat">
-                      <img src="../img/skirt.jpg" class="category-img" alt="Category-img">
-                    </div>
-                  </a>
-                  <div class="category-detail">
-                    <h3 class="category-name">Skirts</h3>
-                  </div>
-                </div>
-
-                <div class="category-item">
-                  <a href="../view/categoryMain.php#nav-pant-tab">
-                    <div class="image-cat">
-                      <img src="../img/pant.jpg" class="category-img" alt="Category-img">
-                    </div>
-                  </a>
-                  <div class="category-detail">
-                    <h3 class="category-name">Pants</h3>
-                  </div>
-                </div>
-
-                <div class="category-item">
-                  <a href="../view/categoryMain.php#nav-short-tab">
-                    <div class="image-cat">
-                      <img src="../img/short.jpg" class="category-img" alt="Category-img">
-                    </div>
-                  </a>
-                  <div class="category-detail">
-                    <h3 class="category-name">Shorts</h3>
-                  </div>
-                </div>
-
-              </div>
-            </section>
-          </div>
+          
 
           <div class="carousel-item">
 
@@ -321,7 +220,7 @@
                     </div>
                   </a>
                   <div class="category-detail">
-                    <h3 class="category-name">Jeans</h3>
+                    <h3 class="category-name">Bags</h3>
                   </div>
                 </div>
 
@@ -332,7 +231,7 @@
                     </div>
                   </a>
                   <div class="category-detail">
-                    <h3 class="category-name">Sandals</h3>
+                    <h3 class="category-name">Shoes</h3>
                   </div>
                 </div>
 
@@ -390,7 +289,7 @@
                 <!-- Example store---->
                 <!--Div 4k 1k section ekkt dann-->
                 <div class="store-item">
-                  <a href="StoreTem.php">
+                  <a href="visitStore.php">
                     <div class="image-st">
                       <img src="../img/store-1.jpg" class="store-img" alt="storeprofilepic"><!---- Store profile pic 1k wens wenna oni-->
                     </div>
@@ -410,7 +309,49 @@
               <div class="store-grid">
                 <!-- Example store---->
                 <div class="store-item">
-                  <a href="../view/StoreTem.php">
+                  <a href="#">
+                    <div class="image-st">
+                      <img src="../img/Cat-Banner.jpg" class="store-img" alt="storeprofilepic"><!---- Store profile pic 1k wens wenna oni-->
+                    </div>
+                  </a>
+                  <div class="store-detail">
+                    <h3 class="product-name">Store Name</h3><!---- Store name 1k wens wenna oni-->
+                  </div>
+                </div>
+
+
+
+              </div>
+            </section>
+          </div>
+
+          <div class="carousel-item"><!--2 weniyt tyn section eke idl awasanet tyn section 1k wenkn repeat wenn methn tyn css oni-->
+            <section id="store" class="store-icon">
+              <div class="store-grid">
+                <!-- Example store---->
+                <div class="store-item">
+                  <a href="#">
+                    <div class="image-st">
+                      <img src="../img/Cat-Banner.jpg" class="store-img" alt="storeprofilepic"><!---- Store profile pic 1k wens wenna oni-->
+                    </div>
+                  </a>
+                  <div class="store-detail">
+                    <h3 class="product-name">Store Name</h3><!---- Store name 1k wens wenna oni-->
+                  </div>
+                </div>
+
+
+
+              </div>
+            </section>
+          </div>
+
+          <div class="carousel-item"><!--2 weniyt tyn section eke idl awasanet tyn section 1k wenkn repeat wenn methn tyn css oni-->
+            <section id="store" class="store-icon">
+              <div class="store-grid">
+                <!-- Example store---->
+                <div class="store-item">
+                  <a href="#">
                     <div class="image-st">
                       <img src="../img/Cat-Banner.jpg" class="store-img" alt="storeprofilepic"><!---- Store profile pic 1k wens wenna oni-->
                     </div>
