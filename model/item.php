@@ -309,6 +309,29 @@ class Thrift extends Item
 
     }
 
+    public function getStoreItemsSub($con, $subcategory)
+    {
+        try {
+            // SQL query to select items from the storeitems table
+            $sql = "SELECT id, itemname, price, color, description, category, subcategory, size, coverimage, otherimage, userid, created_at FROM storeitems WHERE subcategory=$subcategory";
+    
+            // Prepare the statement
+            $stmt = $con->prepare($sql);
+    
+            // Execute the statement without binding since this is a simple SELECT
+            $stmt->execute();
+    
+            // Fetch all rows into an array and return the array
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $rows;
+    
+        } catch (PDOException $e) {
+            // Display error message if the query fails
+            echo "Error: " . $e->getMessage();
+        }
+
+    }
+
 
     public function getThriftItemsBySize($con, $size)
     {

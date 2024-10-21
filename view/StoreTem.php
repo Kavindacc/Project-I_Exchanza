@@ -261,7 +261,7 @@ include_once '../model/addtocart.php';
                     <div class="col-md-6">
                         <h2 class="mb-4">Add Item to My Store</h2>
                         <form action="../control/storecon.php" method="post" enctype="multipart/form-data" id="resellForm"> <!--form start add to item-->
-                            <input type="hidden" name="userid" value="<?php echo $userid; ?>">
+                        <input type="hidden" name="userid" value="<?php echo $userid; ?>">
                             <div class="form-group">
                                 <label for="itemName" class="bold">Item Name</label>
                                 <input type="text" class="form-control" id="itemName" placeholder="Enter item name" name="itemname" required>
@@ -290,9 +290,9 @@ include_once '../model/addtocart.php';
                                 <label for="category" class="bold">Category</label>
                                 <select class="form-control" id="category" name="category" required>
                                     <option value="">Select Category</option>
-                                    <option value="men">Men</option>
+                                    <!-- <option value="men">Men</option> -->
                                     <option value="women">Women</option>
-                                    <option value="kids">Kids</option>
+                                    <!-- <option value="kids">Kids</option> -->
                                 </select>
                             </div>
                             <div class="form-group hidden" id="subcategoryWrapper">
@@ -307,7 +307,8 @@ include_once '../model/addtocart.php';
                                     <option value="shoes">Shoes</option>
                                 </select>
                             </div>
-                            <div class="form-group hidden" id="sizeChartWrapper">
+                            <!-- normal sizes -->
+                            <div class="form-group hidden" id="normalsizeChartWrapper">
                                 <label class="bold">Size</label>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="size" id="sizeS" value="S">
@@ -326,7 +327,7 @@ include_once '../model/addtocart.php';
                                     <label class="form-check-label" for="sizeXL">XL</label>
                                 </div>
                             </div>
-                            
+                            <br>
                             <button type="submit" class="btn btn-primary ssubmit" name="submit">Submit</button>
                         </form>
                     </div>
@@ -340,7 +341,6 @@ include_once '../model/addtocart.php';
                                 <p class="card-text" id="previewCategory">Category</p>
                                 <p class="card-text" id="previewSubcategory">Subcategory</p>
                                 <p class="card-text" id="previewSize">Size</p>
-                                <p class="card-text" id="previewTimesUsed">Times Used: 0</p>
                                 <h5 class="card-text" id="previewPrice">Rs. 0.00</h5>
                             </div>
                         </div>

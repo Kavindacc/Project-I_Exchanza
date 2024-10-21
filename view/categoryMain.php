@@ -118,23 +118,23 @@ include_once '../model/user.php';
 
     <p class="new  text-uppercase ">Shop by Collection</p>
 
+    <?php
+    $dsn = new DbConnector();
+    $con = $dsn->getConnection();
+
+    $user = new Thrift($userid);
+    ?>
 
     <!---Navigation Bar - Sub-->
     <nav class="nav justify-content-center">
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
         <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-all" type="button" role="tab" aria-controls="nav-all" aria-selected="true">All</button>
-        <button class="nav-link" id="nav-dresses-tab" data-bs-toggle="tab" data-bs-target="#nav-dresses" type="button" role="tab" aria-controls="nav-dresses" aria-selected="false">Dresses</button>
-        <button class="nav-link" id="nav-blouse-tab" data-bs-toggle="tab" data-bs-target="#nav-blouse" type="button" role="tab" aria-controls="nav-blouse" aria-selected="false">Blouses</button>
-        <button class="nav-link" id="nav-tshirt-tab" data-bs-toggle="tab" data-bs-target="#nav-tshirt" type="button" role="tab" aria-controls="nav-tshirt" aria-selected="false">T-Shirts</button>
-        <button class="nav-link" id="nav-shirt-tab" data-bs-toggle="tab" data-bs-target="#nav-shirt" type="button" role="tab" aria-controls="nav-shirt" aria-selected="false">Shirts</button>
-        <button class="nav-link" id="nav-croptop-tab" data-bs-toggle="tab" data-bs-target="#nav-croptop" type="button" role="tab" aria-controls="nav-croptop" aria-selected="false">Crop-Tops</button>
-        <button class="nav-link" id="nav-skirt-tab" data-bs-toggle="tab" data-bs-target="#nav-skirt" type="button" role="tab" aria-controls="nav-skirt" aria-selected="false">Skirts</button>
-        <button class="nav-link" id="nav-pantt-tab" data-bs-toggle="tab" data-bs-target="#nav-pant" type="button" role="tab" aria-controls="nav-pantt" aria-selected="false">Pants</button>
-        <button class="nav-link" id="nav-short-tab" data-bs-toggle="tab" data-bs-target="#nav-short" type="button" role="tab" aria-controls="nav-short" aria-selected="false">Shorts</button>
-        <button class="nav-link" id="nav-jean-tab" data-bs-toggle="tab" data-bs-target="#nav-jean" type="button" role="tab" aria-controls="nav-jean" aria-selected="false">Jeans</button>
-        <button class="nav-link" id="nav-sandal-tab" data-bs-toggle="tab" data-bs-target="#nav-sandal" type="button" role="tab" aria-controls="nav-sandal" aria-selected="false">Sandals</button>
-        <button class="nav-link" id="nav-bag-tab" data-bs-toggle="tab" data-bs-target="#nav-bag" type="button" role="tab" aria-controls="nav-bag" aria-selected="false">Bags</button>
-        <button class="nav-link" id="nav-j&a-tab" data-bs-toggle="tab" data-bs-target="#nav-j&a" type="button" role="tab" aria-controls="nav-j&a" aria-selected="false">Jewelry & Accessories</button>
+        <button class="nav-link" id="nav-dresses-tab" data-bs-toggle="tab" data-bs-target="#nav-dresses" type="button" role="tab" aria-controls="nav-dresses" aria-selected="false" onclick="<?php $user->getStoreItemsSub($con, "tops"); ?>">Tops</button>
+        <button class="nav-link" id="nav-blouse-tab" data-bs-toggle="tab" data-bs-target="#nav-blouse" type="button" role="tab" aria-controls="nav-blouse" aria-selected="false" onclick="<?php $user->getStoreItemsSub($con, "dresses"); ?>">Dresses</button>
+        <button class="nav-link" id="nav-tshirt-tab" data-bs-toggle="tab" data-bs-target="#nav-tshirt" type="button" role="tab" aria-controls="nav-tshirt" aria-selected="false" onclick="<?php $user->getStoreItemsSub($con, "pants"); ?>">Pants</button>
+        <button class="nav-link" id="nav-shirt-tab" data-bs-toggle="tab" data-bs-target="#nav-shirt" type="button" role="tab" aria-controls="nav-shirt" aria-selected="false" onclick="<?php $user->getStoreItemsSub($con, "accessories"); ?>">Accessories</button>
+        <button class="nav-link" id="nav-croptop-tab" data-bs-toggle="tab" data-bs-target="#nav-croptop" type="button" role="tab" aria-controls="nav-croptop" aria-selected="false" onclick="<?php $user->getStoreItemsSub($con, "bags"); ?>">Bags</button>
+        <button class="nav-link" id="nav-skirt-tab" data-bs-toggle="tab" data-bs-target="#nav-skirt" type="button" role="tab" aria-controls="nav-skirt" aria-selected="false" onclick="<?php $user->getStoreItemsSub($con, "shoes"); ?>">Shoes</button>
     </nav>
 
     <br>
