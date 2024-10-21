@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $con = $dsn->getConnection();
 
         $item = new Item($sitemname, $sprice,  $color, $description, $scategory, $ssubcategory, $scondition, $size, $filePath, $filePatho, $userid);
-        if ($item->addItemForStore($con)) {
+        if ($item->addItemForStore($con, $userid)) {
             header("Location:../view/StoreTem.php?success=Item Add Successfully.");
             exit();
         } else {

@@ -89,10 +89,10 @@ class Item
         }
     }
 
-    public function addItemForStore($con)
+    public function addItemForStore($con, $userid)
     {
         try {
-            $sql = "INSERT INTO storeitems(itemname, price, color, description, category, subcategory, size, coverimage, otherimage, userid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO storeitems(itemname, price, color, description, category, subcategory, size, coverimage, otherimage, userid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, $userid)";
             $pstmt = $con->prepare($sql);
             $pstmt->bindValue(1, $this->itemname);
             $pstmt->bindValue(2, $this->price);
@@ -103,7 +103,7 @@ class Item
             $pstmt->bindValue(7, $this->size);
             $pstmt->bindValue(8, $this->coverimage);
             $pstmt->bindValue(9, $this->otherimage);
-            $pstmt->bindValue(10, $this->userid);
+            //$pstmt->bindValue(10, $this->userid);
             $pstmt->execute();
 
             if ($pstmt->rowCount() > 0) {
