@@ -32,7 +32,7 @@ $totalEarnings = $admin->getTotalStores();
         <div class="col-md-6 mb-4">
             <div class="card" style="background: #D6B7A8; border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);">
                 <div class="card-body text-center">
-                    <h5 class="card-title font-weight-bold">Total Enquiries</h5>
+                    <h5 class="card-title font-weight-bold">Total Enquiries and Feedbacks</h5>
                     <h2 class="font-weight-bolder mb-0"><?php echo $totalEnquiries; ?></h2>
                     <p class="card-text">User Enquireies Received</p>
                 </div>

@@ -45,7 +45,7 @@ class Admin
         return $stmt->execute(['userId' => $userId]);
     }
 
-    
+
 
     public function getUsers()
     {
@@ -105,38 +105,49 @@ class Admin
         ]);
     }
 
-    public function getEnquiries() {
+    public function getOrders()
+    {
+        $sql = "SELECT order_id, user_id, order_status, order_date, trackingnum, fullname, confirm FROM orders";
+        $stmt = $this->pdo->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getEnquiries()
+    {
         $sql = "SELECT * FROM enquiries";
         $stmt = $this->pdo->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
-    public function getEnquiryById($id) {
+
+    public function getEnquiryById($id)
+    {
         $sql = "SELECT * FROM enquiries WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    
-    
-    public function deleteEnquiry($id) {
+
+
+    public function deleteEnquiry($id)
+    {
         $sql = "DELETE FROM enquiries WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
     }
-    
-    
-    public function updateEnquiryStatus($id, $status) {
+
+
+    public function updateEnquiryStatus($id, $status)
+    {
         $sql = "UPDATE enquiries SET status = :status WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':status', $status);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
     }
-    
-    
+
+
 
 
     public function getPayments()
@@ -181,6 +192,4 @@ class Admin
         session_unset();
         session_destroy();
     }
-
-
 }
