@@ -174,7 +174,7 @@ if (isset($_SESSION['userid'])) {
                     <br>
                    
                 </div>
-                <form action="../control/payment.php" method="POST">
+                <form action="../control/billing.php" method="POST">
                         <!-- Pass total amount and user ID to the payment gateway -->
                         <input type="hidden" name="total_amount" value="<?php echo $total; ?>">
                         <input type="hidden" name="userid" value="<?php echo $userid; ?>">
