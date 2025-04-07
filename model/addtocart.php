@@ -20,7 +20,7 @@ class Cart
         $this->userid = $userid;
     }
 
-    public function getCartId($con)
+    /*public function getCartId($con)
     {
 
         try {
@@ -34,7 +34,7 @@ class Cart
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
-    }
+    }*/
 
     public function cartItemCount($con){
         try {

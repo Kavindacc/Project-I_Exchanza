@@ -38,16 +38,24 @@ $(document).ready(function() {
     });
     
     // Subcategory change event
+    // ||'dresses'||'t-shirts'||'shirts'||'suits'||'clothes'
     $('#subcategory').change(function() {
         var subcategory = $(this).val();
-        if (subcategory === 'tops') {
-            $('#sizeChartWrapper').removeClass('hidden');
-        } else {
-            $('#sizeChartWrapper').addClass('hidden');
-            $('input[name="size"]').prop('checked', false);
+    
+        $('#normalsizeChartWrapper, #pantssizeChartWrapper, #shoessizeChartWrapper').addClass('hidden');
+        $('#normalsizeChartWrapper input[type="radio"], #pantssizeChartWrapper input[type="radio"], #shoessizeChartWrapper input[type="radio"]').prop('checked', false);
+    
+        // if (subcategory === 't-shirts') 
+        if (['t-shirts', 'tops', 'dresses', 'shirts', 'suits','clothes'].includes(subcategory)) {
+            $('#normalsizeChartWrapper').removeClass('hidden');
+        } else if (subcategory === 'pants') {
+            $('#pantssizeChartWrapper').removeClass('hidden');
+        } else if (subcategory === 'shoes') {
+            $('#shoessizeChartWrapper').removeClass('hidden');
         }
         updatePreview();
     });
+   
 
     // Input and change events
     $('#itemName, #price, #description, #timesUsed').on('input', function() {

@@ -20,21 +20,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $user = new Cart();
     $user->setUserId($userid);
-    $itemids = $user->getCartId($con);
-
-
-    if (!in_array($itemid, $itemids)) {
-        $obj = new RegisteredCustomer($userid);
-        $obj->setItemId($itemid);
-        if ($obj->addToCart($con)) {
-            header("Location: ../view/wishlist.php?s=1");
-            exit();
-        } else {
-            header("Location: ../view/wishlist.php?s=0");
-            exit();
-        }
+    //$itemids = $user->getCartId($con);
+    
+    $obj = new RegisteredCustomer($userid);
+    $obj->setItemId($itemid);
+    if ($obj->addToCart($con)) {
+        header("Location: ../view/wishlist.php?s=1");
+        exit();
     } else {
-        header("Location: ../view/wishlist.php?s=2");
+        header("Location: ../view/wishlist.php?s=0");
         exit();
     }
+
+
+    
+        
 }

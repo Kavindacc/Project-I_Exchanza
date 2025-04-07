@@ -74,7 +74,7 @@
                                                                 echo $_GET['redirect'];
                                                             } ?>">
                 <input type="hidden" name="usertype" value="user">
-                <div class="row justify-content-center">
+                <div class="row justify-content-center mb-2">
                     <div class="col-md-8 col-lg-5">
                         <label class="form-label">Email Address</label>
                         <input type="email" class="form-control" placeholder="example@gmail.com" name="email" required="">
@@ -92,7 +92,7 @@
                 </div>
                 <div class="row justify-content-center mt-2">
                     <div class="col-md-8 col-lg-5 login-btn">
-                        <input class="btn btn-primary w-100" type="submit" value="Sign In" name="signin" style="background:#897062;border:none;">
+                        <input class="btn btn-primary w-100" type="submit" value="Log In" name="signin" style="background:#897062;border:none;">
                     </div>
                 </div>
             </form>

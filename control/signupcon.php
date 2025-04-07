@@ -16,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     if (!empty($fname) && !empty($lname) && !empty($email) && !empty($gender) && !empty($country) && !empty($phonenum) && !empty($password) && !empty($rpassword)) {
 
-        echo $fname;
         // Validate first name
         if (is_string($fname)) {
             // Only allow a-z and A-Z

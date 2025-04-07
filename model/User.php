@@ -34,6 +34,18 @@ class User
     {
         $this->email = $email;
     }
+    public function setFirstname($first_name)
+    {
+        $this->first_name = $first_name;
+    }
+    public function setLastname($last_name)
+    {
+        $this->last_name = $last_name;
+    }
+    public function setPhonenum($phone_num)
+    {
+        $this->phone_num = $phone_num;
+    }
 
     public function setPassword($password)
     {
@@ -122,7 +134,7 @@ class User
             $pstmt->execute();
             $row = $pstmt->fetch(PDO::FETCH_ASSOC);
             if ($row) {
-                if (password_verify($this->password, $row['password'])) {
+                if (password_verify($this->password, $row['password']) && $row['status'] == "active") {
                     $_SESSION['userid'] = $row['userid'];
                     $_SESSION['name'] = $row['firstname'] . ' ' . $row['lastname'];
                     return true;
@@ -131,6 +143,24 @@ class User
                 }
             } else {
                 return false;
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+    function saveEnquiry($con, $name, $email, $subject, $message)
+    {
+        try {
+            $sql = "INSERT INTO enquiries (name, email, subject, message) VALUES (?, ?, ?, ?)";
+            $pstmt = $con->prepare($sql);
+            $pstmt->bindValue(1, $name);
+            $pstmt->bindValue(2, $email);
+            $pstmt->bindValue(3, $subject);
+            $pstmt->bindValue(4, $message);
+            $pstmt->execute();
+
+            if ($pstmt->rowCount() > 0) {
+                return true;
             }
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
@@ -169,6 +199,28 @@ class RegisteredCustomer extends User
             $pstmt->execute();
             $row = $pstmt->fetch(PDO::FETCH_ASSOC);
             return $row;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+    function updateinfomation($con)
+    {
+        try {
+            $sql = "UPDATE user SET firstname = ?, lastname =?,email =?, phonenum =? WHERE userid=?";
+            $pstmt = $con->prepare($sql);
+            $pstmt->bindValue(1, $this->first_name);
+            $pstmt->bindValue(2, $this->last_name);
+            $pstmt->bindValue(3, $this->email);
+            $pstmt->bindValue(4, $this->phone_num);
+            $pstmt->bindValue(5, $this->userid);
+            $pstmt->execute();
+            if($pstmt->rowCount()>0){
+                return true;
+            }
+            else{
+                return false;
+            }
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
@@ -256,8 +308,30 @@ class RegisteredCustomer extends User
             $pstmt->bindValue(2, $this->userid);
             $pstmt->execute();
             if ($pstmt->rowCount() > 0) {
+                $sql = "DELETE FROM wishlist WHERE itemid=?";
+                $pstmt = $con->prepare($sql);
+                $pstmt->bindValue(1, $this->itemid);
+                $pstmt->execute();
                 return true;
             } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+    public function removeAddToCart($con)
+    {
+        try {
+            $sql = "DELETE FROM addtocart WHERE item_id=?";
+            $pstmt = $con->prepare($sql);
+            $pstmt->bindValue(1, $this->itemid);
+            $pstmt->execute();
+            if($pstmt->rowCount()>0){
+                return true;
+            }
+            else{
                 return false;
             }
         } catch (PDOException $e) {

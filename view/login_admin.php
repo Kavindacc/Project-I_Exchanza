@@ -70,7 +70,12 @@
                     <div class="col-md-8 col-lg-5 bg-success text-white"><?php echo $_GET['success']; ?></div>
                 <?php } ?>
             </div>
+            
             <form action="../control/logincon.php" method="post">
+           <input type="hidden" name="redirect" value="<?php if (isset($_GET['redirect']) && !empty($_GET['redirect'])) {
+                                                                echo $_GET['redirect'];
+                                                            } ?>">
+                <input type="hidden" name="usertype" value="admin">
                 <div class="row justify-content-center mb-2">
                     <div class="col-md-8 col-lg-5">
                         <label class="form-label">Email Address</label>
