@@ -38,9 +38,6 @@
                         <li class="nav-item mx-2">
                             <a class="nav-link" href="#">Bidding</a>
                         </li>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="#">Selling</a>
-                        </li>
                     </ul>
                     <!--login nav-link-a-color-->
                     <div class="d-flex flex-column flex-lg-row float-start  justify-content-center  align-items-center mt-3 mt-lg-0 gap-3">

@@ -64,11 +64,9 @@ if (isset($_SESSION['userid'])) {
                                 <a class="nav-link" href="view/thrift.php">Thrift</a>
                             </li>
                             <li class="nav-item mx-2">
-                                <a class="nav-link" href="../Project-I_Exchanza/view/bidding.php">Bidding</a>
+                                <a class="nav-link" href="view/bidding.php">Bidding</a>
                             </li>
-                            <li class="nav-item mx-2">
-                                <a class="nav-link" href="view/storeIndex.php">Selling</a>
-                            </li>
+                            
                         </ul>
 
                         <!--login nav-link-a-color-->
@@ -136,7 +134,7 @@ if (isset($_SESSION['userid'])) {
                      quality pre-loved goods a second life, reducing waste, and encouraging sustainable shopping.
                     Explore our thrift collections and find unique pieces that help you save money while supporting a greener planet!
                 </p>
-                <button><a href="../Project-I_Exchanza/view/thrift.php">Shop Now&nbsp;>></a></button>
+                <button><a href="../Project-I_Exchanza/view/thrift.php">Explore Thrift&nbsp;>></a></button>
             </div>
         </div>
         <div class="thirf d-flex flex-row thirf-right thirf-two">
@@ -150,7 +148,7 @@ if (isset($_SESSION['userid'])) {
                 With a variety of products available, our auctions give you the chance to score great deals while enjoying 
                 the thrill of winning. Join our bidding community and discover one-of-a-kind finds at unbeatable prices!
                 </p>
-                <button><a href="../Project-I_Exchanza/view/bidding.php">Shop Now&nbsp;>></a></button>
+                <button><a href="../Project-I_Exchanza/view/bidding.php">Start Bidding&nbsp;>></a></button>
             </div>
         </div>
         <div class="thirf d-flex flex-row thirf-left thirf-three">
@@ -308,7 +306,7 @@ if (isset($_SESSION['userid'])) {
         <!--nav bar-->
         <nav class="navbar navbar-expand-lg sticky-top nav">
             <div class="container-fluid logo"><!--logo-->
-                <a class="navbar-brand" href="#"><img src="../Project-I_Exchanza/img/Exchanza.png" width="100px"></a>
+                <a class="navbar-brand" href="#"><img src="img/Exchanza.png" width="100px"></a>
                 <!--toggle button-->
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -327,14 +325,12 @@ if (isset($_SESSION['userid'])) {
                                 <a class="nav-link active" aria-current="page" href="#">Home</a>
                             </li>
                             <li class="nav-item mx-2">
-                                <a class="nav-link" href="../Project-I_Exchanza/view/thrift.php">Thrift</a>
+                                <a class="nav-link" href="view/thrift.php">Thrift</a>
                             </li>
                             <li class="nav-item mx-2">
-                                <a class="nav-link" href="../Project-I_Exchanza/view/bidding.php">Bidding</a>
+                                <a class="nav-link" href="view/bidding.php">Bidding</a>
                             </li>
-                            <li class="nav-item mx-2">
-                                <a class="nav-link" href="view/storeIndex.php">Selling</a>
-                            </li>
+                        
                         </ul>
 
                         <!--login nav-link-a-color-->

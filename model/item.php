@@ -202,12 +202,12 @@ class Thrift extends Item
     public function getThriftItemsLogin($con)
     {
         try {
-            $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE t.user_id != ? AND i.category=? AND i.subcategory=? AND i.status=?"; //change it
+            $sql = "SELECT * FROM thrift t JOIN item i ON t.item_id = i.itemid WHERE t.user_id = ? AND i.category=? AND i.subcategory=?"; //change it
             $pstmt = $con->prepare($sql);
             $pstmt->bindValue(1, $this->userid);
             $pstmt->bindValue(2, $this->category);
             $pstmt->bindValue(3, $this->subcategory);
-            $pstmt->bindValue(4,0);
+            // $pstmt->bindValue(4,0);
             $pstmt->execute();
             $rows = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             return $rows;

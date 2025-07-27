@@ -64,9 +64,7 @@ if ($settingsFromDb) {
                         <li class="nav-item mx-2">
                             <a class="nav-link" href="bidding.php">Bidding</a>
                         </li>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="storeIndex.php">Selling</a>
-                        </li>
+
                     </ul>
 
                     <!--login nav-link-a-color-->
@@ -400,26 +398,32 @@ if ($settingsFromDb) {
             <!--side show-->
             <div id="thriftCarousel" class="carousel slide col-5 stat" data-ride="carousel">
                 <h2>Why Thrift</h2>
-                <div class="carousel-inner">
+                <div class="carousel-inner" style="padding-top: 40px;">
                     <div class="carousel-item active">
                         <div class="row stat1">
                             <img src="../img/thriftstat2.jpg" alt="thrift stat" class="rounded-circle img-fluid ts1">
-                            <h3>QUALITY ASSURED</h3>
-                            <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands.</p>
+                            <div style="padding-top:40px;">
+                                <h3>QUALITY ASSURED</h3>
+                                <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands.</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="carousel-item">
+                    <div class="carousel-item ">
                         <div class="row stat2">
                             <img src="../img/thriftstat1.jpg" alt="thrift stat" class="rounded-circle img-fluid ts2">
-                            <h3>QUALITY ASSURED</h3>
-                            <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands.</p>
+                            <div style="padding-top:40px;">
+                                <h3>QUALITY ASSURED</h3>
+                                <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands.</p>
+                            </div>
                         </div>
                     </div>
                     <div class="carousel-item">
                         <div class="row stat3">
                             <img src="../img/thrift stat4.jpg" alt="thrift stat" class="rounded-circle img-fluid ts3">
-                            <h3>QUALITY ASSURED</h3>
-                            <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands.</p>
+                            <div style="padding-top:40px;">
+                                <h3>QUALITY ASSURED</h3>
+                                <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -439,14 +443,14 @@ if ($settingsFromDb) {
                     <div class="row revieW">
                         <section class="reviews">
                             <div class="review1">
-                                <img src="https://via.placeholder.com/150" alt="George">
+
                                 <blockquote>
                                     <p>"Secondhand has never been so simple. There's no reason to buy new anymore. You get great quality clothes and you're doing some good for the planet."</p>
                                     <cite>George</cite>
                                 </blockquote>
                             </div>
                             <div class="review2">
-                                <img src="https://via.placeholder.com/150" alt="Alex">
+
                                 <blockquote>
                                     <p>"I've never been into thrifting because I thought it would take too much time - but Thrift+ has converted me! It's so quick and easy to find exactly what I am looking for."</p>
                                     <cite>Alex</cite>

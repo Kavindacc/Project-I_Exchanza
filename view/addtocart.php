@@ -48,9 +48,6 @@ if (isset($_SESSION['userid'])) {
                             <li class="nav-item mx-2">
                                 <a class="nav-link" href="../Project-I_Exchanza/view/bidding.php">Bidding</a>
                             </li>
-                            <li class="nav-item mx-2">
-                                <a class="nav-link" href="#">Selling</a>
-                            </li>
                         </ul>
 
                         <!--login nav-link-a-color-->

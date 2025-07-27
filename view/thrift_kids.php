@@ -48,9 +48,7 @@ include_once '../model/addtocart.php'; ?>
                         <li class="nav-item mx-2">
                             <a class="nav-link" href="bidding.php">Bidding</a>
                         </li>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="../view/storeIndex.php">Selling</a>
-                        </li>
+                       
                     </ul>
 
                     <!--login nav-link-a-color-->
@@ -339,14 +337,14 @@ include_once '../model/addtocart.php'; ?>
                     <div class="row revieW">
                         <section class="reviews">
                             <div class="review1">
-                                <img src="https://via.placeholder.com/150" alt="George">
+                                <!-- <img src="https://via.placeholder.com/150" alt="George"> -->
                                 <blockquote>
                                     <p>"Secondhand has never been so simple. There's no reason to buy new anymore. You get great quality clothes and you're doing some good for the planet."</p>
                                     <cite>George</cite>
                                 </blockquote>
                             </div>
                             <div class="review2">
-                                <img src="https://via.placeholder.com/150" alt="Alex">
+                                <!-- <img src="https://via.placeholder.com/150" alt="Alex"> -->
                                 <blockquote>
                                     <p>"I've never been into thrifting because I thought it would take too much time - but Thrift+ has converted me! It's so quick and easy to find exactly what I am looking for."</p>
                                     <cite>Alex</cite>

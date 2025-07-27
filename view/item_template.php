@@ -182,7 +182,7 @@ if (isset($_SESSION['userid'])) {
             <?php   }
             } ?>
         </div>
-        <div class="container d-flex justify-content-start flex-wrap mt-5 gap-4"><!--get iteam-->
+        <div class="container d-flex justify-content-start flex-wrap  gap-4" style="margin-top: 8rem;"><!--get iteam-->
 
             <?php
             $dsn = new DbConnector();
@@ -205,7 +205,7 @@ if (isset($_SESSION['userid'])) {
             if (!empty($rows)) {
                 foreach ($rows as $row) {
                     $modalId = $row['itemid']; ?>
-                    <div class="card mb-3" style="width:20rem;">
+                    <div class="card mb-3" style="width:19rem;">
                         <img src="../upload/<?php echo $row['coverimage'] ?>" class="card-img-top" alt="..." style=width:100%;object-fit: cover; display:block;padding:20px;margin:0 auto;" data-bs-toggle="modal" data-bs-target="#<?php echo $modalId; ?>">
                         <div class="card-body">
                             <h3 class="card-title"><?php echo ucfirst($row['itemname']); ?></h3>

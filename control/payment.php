@@ -25,24 +25,39 @@ if ($payment_method === 'cod') {
 
 // Set your Stripe API key
 //\Stripe\Stripe::setApiKey('YOUR_STRIPE_SECRET_KEY');
-
-$total_amount_in_cents = $total_amount_with_delivery * 100; // Convert to cents for Stripe
+$total_amount_in_cents=$total_amount*100;
+$total_amount_delivery_in_cents = $total_amount_with_delivery * 100; // Convert to cents for Stripe
+$delivery_charge_in_cents = $delivery_charge * 100; // Delivery charge in cents
 
 // Create a new Stripe Checkout Session
 $session = \Stripe\Checkout\Session::create([
     'payment_method_types' => ['card'],
-    'line_items' => [[
-        'price_data' => [
-            'currency' => 'lkr',
-            'product_data' => [
-                'name' => 'Shopping Cart Items',
+    'line_items' => [
+        // Line item for the product total
+        [
+            'price_data' => [
+                'currency' => 'lkr',
+                'product_data' => [
+                    'name' => 'Shopping Cart Items',
+                ],
+                'unit_amount' => $total_amount_in_cents, // Product amount in cents
             ],
-            'unit_amount' => $total_amount_in_cents, // Amount in cents
+            'quantity' => 1,
         ],
-        'quantity' => 1,
-    ]],
+        // Line item for the delivery charge
+        [
+            'price_data' => [
+                'currency' => 'lkr',
+                'product_data' => [
+                    'name' => 'Delivery Charge',
+                ],
+                'unit_amount' => $delivery_charge_in_cents, // Delivery charge in cents
+            ],
+            'quantity' => 1,
+        ],
+    ],
     'mode' => 'payment',
-    'success_url' => 'http://localhost/Project-I_Exchanza/control/payment_success.php?session_id={CHECKOUT_SESSION_ID}&userid='.$userid.'&total_amount='.$total_amount_with_delivery.'&address='.$delivery_address,
+    'success_url' => 'http://localhost/Project-I_Exchanza/control/payment_success.php?session_id={CHECKOUT_SESSION_ID}&userid='.$userid.'&total_amount='.$total_amount_with_delivery.'&address='.$delivery_address.'&delivery_charge='.$delivery_charge,
     'cancel_url' => 'http://localhost/Project-I_Exchanza/control/payment_failed.php',
 ]);
 

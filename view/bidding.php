@@ -266,9 +266,7 @@ $finishedBids = $auction->getFinishedAuctions();
                         <li class="nav-item mx-2">
                             <a class="nav-link active" href="#">Bidding</a>
                         </li>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="storeIndex.php">Selling</a>
-                        </li>
+                       
                     </ul>
 
                     <!--login nav-link-a-color-->

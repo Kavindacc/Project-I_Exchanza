@@ -38,7 +38,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             $allowed = ['jpg', 'jpeg', 'png'];
     
             if (in_array($fileactualext, $allowed)) {
-                if ($filesize < 2000000) { // 2MB file size limit
+                if ($filesize < 20000000) { // 2MB file size limit
                     $fileNewName = uniqid('', true) . "." . $fileactualext;
                     $fileDestination = '../upload/' . $fileNewName;
                     if (move_uploaded_file($filetmpname, $fileDestination)) {

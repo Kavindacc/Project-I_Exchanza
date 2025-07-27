@@ -50,9 +50,6 @@ if (isset($_SESSION['userid'])) {
                             <li class="nav-item mx-2">
                                 <a class="nav-link" href="bidding.php">Bidding</a>
                             </li>
-                            <li class="nav-item mx-2">
-                                <a class="nav-link" href="storeIndex.php">Selling</a>
-                            </li>
                         </ul>
 
                         <!--login nav-link-a-color-->
@@ -106,9 +103,8 @@ if (isset($_SESSION['userid'])) {
                     <?php } ?>
 
                     <button type="button" class="btn  my-2" onclick="showInformation()" id="information">Personal information</button>
-                    <button type="button" class="btn  mb-2" onclick="showOrderTable()" id="order">My Orders</button>
-                    <button type="button" class="btn  mb-2" onclick="showOrdersTable()" id="orders">Orders</button><!-- other user bought items-->
-                    <button type="button" class="btn  mb-2" onclick="showItemTable()" id="item">My Items</button>
+                    <button type="button" class="btn  mb-2" onclick="showOrderTable()" id="order">Orders</button>
+                    <button type="button" class="btn  mb-2" onclick="showItemTable()" id="item">Items</button>
 
                 </div>
                 <div class="col-md-8 p-4  mx-auto my-5 " id="personalinfo"><!--personal information -->
@@ -415,108 +411,7 @@ if (isset($_SESSION['userid'])) {
                             <h2>No Thrift Items Yet</h2>
                         <?php } ?>
                     </div>
-                    <!--aution-->
-                    <div class="auction">
-                        <?php if ($auctionItems) { ?>
-                            <h3>Auction Items</h3>
-                            <table class="table table-striped table-hover table-sm">
-                                <thead>
-                                    <tr class="table-primary">
-                                        <th scope="col">Image</th>
-                                        <th scope="col">Product_Name</th>
-                                        <th scope="col">Start_time</th>
-                                        <th scope="col">End_time</th>
-                                        <th scope="col">Price(Rs.)</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($auctionItems as $row) {
-                                        $modalId = "staticBackdrop" . $row['itemid'];
-                                        $editModalId = "editModal" . $row['itemid'];
-                                        $accordionId = "accordion" . $row['itemid'];
-                                    ?>
-                                        <tr class="vertical-center">
-                                            <td><img src="<?php echo $row['coverimage']; ?>" class="table-image"></td>
-                                            <td><?php echo ucwords($row['itemname']); ?></td>
-                                            <td><?php echo ucwords($row['start_time']); ?></td>
-                                            <td><?php echo ucwords($row['end_time']); ?></td>
-                                            <td><?php echo $row['price']; ?></td>
-                                            <td>
-                                                <?php if ($row['status'] == 0) { ?>
-                                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#<?php echo $modalId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .6rem; --bs-btn-font-size: .75rem;">
-                                                        Delete
-                                                    </button>
-                                                <?php } else { ?>
-                                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#<?php echo $modalId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .6rem; --bs-btn-font-size: .75rem;" disabled>
-                                                        Delete
-                                                    </button>
-                                                <?php } ?>
-                                                <!--<button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#<?php echo $accordionId; ?>" aria-expanded="false" aria-controls="<?php echo $accordionId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .8rem; --bs-btn-font-size: .75rem;">
-                                                Review
-                                            </button>
-                                            <!-- Review 
-                                            <?php /* //rating
-                                            $obj = new GeneralCustomer();
-                                            $obj->setItemId($row['itemid']);
-                                            $rating = $obj->getRating($con);
-                                            if (!empty($rating)) { ?>
-                                                <div class="review mt-4">
-                                                    <?php foreach ($rating as $rate) {
-                                                        $user_id = $rate['user_id'];
-                                                        $obj->setUserid($user_id);
-                                                        $name = $obj->getusername($con);
-
-                                                    ?>
-
-                                                        <div class="collapse mt-2" id="<?php echo $accordionId; ?>" style="width: 100%;">
-                                                            <div class="card card-body" style="background-color: #f7f7f7;">
-                                                                <p><strong><?php echo ucwords($name); ?></strong></p>
-                                                                <p><strong>Rating:</strong> <?php
-                                                                                            $ratingValue = $rate['rating'];
-                                                                                            for ($i = 1; $i <= 5; $i++) {
-                                                                                                if ($i <= $ratingValue) {
-                                                                                                    echo '<i class="fas fa-star filled"></i>';
-                                                                                                } else {
-                                                                                                    echo '<i class="fas fa-star"></i>';
-                                                                                                }
-                                                                                            }
-                                                                                            ?></p>
-                                                                <p><strong>Review:</strong><?php echo $rate['review_text']; ?></p>
-                                                            </div>
-                                                        </div>
-                                                    <?php } ?>
-                                                <?php } */ ?>
-                                                <!-- Modal delete -->
-                                                <div class="modal fade" id="<?php echo $modalId; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="<?php echo $modalId; ?>Label" aria-hidden="true">
-                                                    <div class="modal-dialog  modal-sm">
-                                                        <div class="modal-content" style="background:#AE9D92;color:#ffff;">
-                                                            <div class="modal-header">
-                                                                <h4 class="modal-title fs-5" id="<?php echo $modalId; ?>Label">Do you Want to Delete?<strong><?php echo ucwords($row['itemname']); ?></strong></h4>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <form action="../control/deleteitem.php" method="post">
-                                                                    <input type="hidden" name="productid" value="<?php echo $row['itemid']; ?>">
-                                                                    <button type="submit" class="btn btn-danger" name="delete">Delete</button>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-
-
-
-                        <?php } else { ?>
-                            <h2>No Auction Items Yet</h2>
-                        <?php } ?>
-                    </div>
+                    
 
 
                 </div>
