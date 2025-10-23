@@ -1,3 +1,59 @@
+/* ---------- Responsive improvements ---------- */
+
+/* Tablet: stack some columns, adjust carousel height, shrink paddings */
+@media screen and (min-width: 721px) and (max-width: 991px) {
+    .con { width: 94%; }
+    .carousel-item { height: 60vh; } /* shorter on tablets */
+    .tread { width: 94%; padding: 18px; }
+    .item { width: 94%; margin-top: 30px; }
+    .thirf { width: 94%; margin-top: 40px; }
+    .thirf .pic { width: 45%; clip-path: polygon(50% 0%,0% 100%,100% 100%); top: -20px; left: -20px; }
+    .thirf .text { width: 55%; padding: 12px; margin-top: 15px; }
+    .thirf .text button { width: 140px; }
+    .item .side { width: 48%; } /* side-by-side but narrower */
+    .icon { width: 30%; }
+    .card img { height: 180px; object-fit: cover; }
+    .footer .container { padding: 20px; }
+    .sp { left: 20px; } /* adjust badge position */
+    .lo-button { padding: 0.4rem 0.6rem; }
+}
+
+/* Mobile: stack everything, increase tap targets, simplify footer */
+@media screen and (max-width: 720px) {
+    /* keep/extend some existing mobile rules */
+    body { font-size: 15px; }
+    .con, .tread, .item, .thirf { width: 96%; padding-left: 8px; padding-right: 8px; }
+    .carousel-item { height: 48vh; } /* much shorter on phones */
+    .thirf { margin-top: 30px; display: block; }
+    .thirf .pic { width: 100%; height: 220px; clip-path: none; top: 0; left: 0; object-fit: cover; }
+    .thirf .text { width: 100%; margin-top: 10px; padding: 12px 8px; }
+    .thirf .text button { width: 100%; max-width: 260px; transition: none; padding: 10px; }
+    .thirf .text button:hover { width: 100%; } /* disable expand on hover for mobile */
+    .item { flex-direction: column; gap: 18px; }
+    .item .side { width: 100%; }
+    .icon { width: 100%; text-align: center; margin-bottom: 8px; }
+    .card img { width: 100%; height: 180px; object-fit: cover; }
+    .card-title a { font-size: 0.95rem; }
+    .navbar .offcanvas { width: 85%; } /* make offcanvas more full-screen on phones */
+    .sp { left: 14px; top: -8px; } /* adjust cart/wishlist badge */
+    .lo-button { padding: 0.5rem 0.8rem; font-size: 0.95rem; width: 100%; text-align: center; }
+    .footer .container { padding: 12px; font-size: 14px; }
+    .footer .col-md-4 { margin-bottom: 12px; }
+    .search { height: 2rem; font-size: 0.95rem; }
+    .p-btn { width: 100%; }
+}
+
+/* Desktop refinements (large screens) */
+@media screen and (min-width: 992px) {
+    .carousel-item { height: 90vh; } /* your original */
+    .thirf { display: flex; align-items: center; gap: 20px; }
+    .thirf .pic { width: 40%; top: -30px; left: -40px; }
+    .thirf .text { width: 60%; padding: 20px 30px; }
+    .item .side { width: 35%; }
+    .card img { height: 220px; object-fit: cover; }
+    .offcanvas-body { display: block; }
+    .nav .navbar-brand img { max-width: 140px; }
+}
 *{
     margin: 0;
     padding: 0;

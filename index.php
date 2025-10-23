@@ -4,22 +4,7 @@ include_once './model/wishlist.php';
 include_once './model/addtocart.php';
 include_once './admin/classes/Admin.php';
 
-$settings = [
-    'email' => '',
-    'phone' => '',
-    'address' => '',
-    'facebook_link' => '',
-    'instagram_link' => '',
-    'youtube_link' => ''
-];
 $dbConnector = new DbConnector();
-    $admin = new Admin($dbConnector->getConnection());
-
-    $settingsFromDb = $admin->getSettings();
-
-    if ($settingsFromDb) {
-        $settings = $settingsFromDb; // Overwrite default values with the actual settings
-    }
 if (isset($_SESSION['userid'])) {
     $userid = $_SESSION['userid'];
     
@@ -65,6 +50,9 @@ if (isset($_SESSION['userid'])) {
                             </li>
                             <li class="nav-item mx-2">
                                 <a class="nav-link" href="view/bidding.php">Bidding</a>
+                            </li>
+                             <li class="nav-item mx-2">
+                                <a class="nav-link" href="view/aboutus.php">About us</a>
                             </li>
                             
                         </ul>
@@ -249,9 +237,9 @@ if (isset($_SESSION['userid'])) {
                 <div class="row  mt-4" style="border-bottom:1px solid black;">
                     <div class="col-sm-6 col-md-4 text-center text-md-start ">
                         
-                        <p><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['phone']) ?></p>
-                        <p><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['email']) ?></p>
-                        <p><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['address']) ?></p>
+                        <p><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;0717749219</p>
+                        <p><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;Exchanze@gmail.com</p>
+                        <p><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;243/c,Colombo 03</p>
                     </div>
                     <div class="col-sm-6 col-md-4 text-center text-md-start lin">
                         <h5>Information</h5>
@@ -272,7 +260,7 @@ if (isset($_SESSION['userid'])) {
                 <div class="row mt-2 text-center text-md-none">
                     <div class="d-flex justify-content-between flex-column flex-md-row">
                         <div><i class="fa-brands fa-cc-visa" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-mastercard" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-amex" style="font-size:50px;"></i></div>
-                        <div>&copy;Exchanze All Rights are reserved</div>
+                        <div>&copy; Exchanze All Rights are reserved</div>
                     </div>
                 </div>
             </div>
@@ -329,6 +317,9 @@ if (isset($_SESSION['userid'])) {
                             </li>
                             <li class="nav-item mx-2">
                                 <a class="nav-link" href="view/bidding.php">Bidding</a>
+                            </li>
+                             <li class="nav-item mx-2">
+                                <a class="nav-link" href="view/aboutus.php">About us</a>
                             </li>
                         
                         </ul>
@@ -486,7 +477,7 @@ if (isset($_SESSION['userid'])) {
         </div>
 
         <!--footer-->
-        <div class="container-fluid footer">
+         <div class="container-fluid footer">
             <div class="container p-3">
                 <div class="row">
                     <div class="col text-center text-md-start">
@@ -496,9 +487,9 @@ if (isset($_SESSION['userid'])) {
                 <div class="row  mt-4" style="border-bottom:1px solid black;">
                     <div class="col-sm-6 col-md-4 text-center text-md-start ">
                         
-                        <p><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['phone']) ?></p>
-                        <p><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['email']) ?></p>
-                        <p><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['address']) ?></p>
+                        <p><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;0717749219</p>
+                        <p><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;Exchanze@gmail.com</p>
+                        <p><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;243/c,Colombo 03</p>
                     </div>
                     <div class="col-sm-6 col-md-4 text-center text-md-start lin">
                         <h5>Information</h5>
@@ -519,7 +510,7 @@ if (isset($_SESSION['userid'])) {
                 <div class="row mt-2 text-center text-md-none">
                     <div class="d-flex justify-content-between flex-column flex-md-row">
                         <div><i class="fa-brands fa-cc-visa" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-mastercard" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-amex" style="font-size:50px;"></i></div>
-                        <div>&copy;Exchanze All Rights are reserved</div>
+                        <div>&copy; Exchanze All Rights are reserved</div>
                     </div>
                 </div>
             </div>

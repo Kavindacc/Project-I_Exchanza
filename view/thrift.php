@@ -4,22 +4,8 @@ include_once '../model/wishlist.php';
 include_once '../model/addtocart.php';
 include_once '../admin/classes/Admin.php';
 
-$settings = [
-    'email' => '',
-    'phone' => '',
-    'address' => '',
-    'facebook_link' => '',
-    'instagram_link' => '',
-    'youtube_link' => ''
-];
+
 $dbConnector = new DbConnector();
-$admin = new Admin($dbConnector->getConnection());
-
-$settingsFromDb = $admin->getSettings();
-
-if ($settingsFromDb) {
-    $settings = $settingsFromDb; // Overwrite default values with the actual settings
-}
 
 ?>
 <!DOCTYPE html>
@@ -28,11 +14,14 @@ if ($settingsFromDb) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/thriftW.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Thrift</title>
 </head>
 
@@ -42,11 +31,13 @@ if ($settingsFromDb) {
         <div class="container-fluid logo"><!--logo-->
             <a class="navbar-brand" href="#"><img src="../img/Exchanza.png" width="100px"></a>
             <!--toggle button-->
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <!--sidebar-->
-            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
                 <!--sidebarheader-->
                 <div class="offcanvas-header border-bottom">
                     <h5 class="offcanvas-title " id="offcanvasNavbarLabel">Exchanze</h5>
@@ -64,11 +55,15 @@ if ($settingsFromDb) {
                         <li class="nav-item mx-2">
                             <a class="nav-link" href="bidding.php">Bidding</a>
                         </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link" href="view/bidding.php">About us</a>
+                        </li>
 
                     </ul>
 
                     <!--login nav-link-a-color-->
-                    <div class="d-flex flex-column float-start flex-lg-row justify-content-center  align-items-center mt-3 mt-lg-0 gap-3">
+                    <div
+                        class="d-flex flex-column float-start flex-lg-row justify-content-center  align-items-center mt-3 mt-lg-0 gap-3">
                         <?php if (isset($_SESSION['userid'])) {
                             $userid = $_SESSION['userid'];
 
@@ -78,26 +73,36 @@ if ($settingsFromDb) {
                             $obj = new Cart();
                             $obj->setUserId($userid);
                             $count = $obj->cartItemCount($con); ?>
-                            <a href="addtocart.php" class="nav-link  text-decoration-none mx-1"><i class="fa-solid fa-cart-plus position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp"><?php if (isset($count)) {
-                                                                                                                                                                                                                                        echo $count;
-                                                                                                                                                                                                                                    } ?></span></i></a><!--addtocart-->
+                            <a href="addtocart.php" class="nav-link  text-decoration-none mx-1"><i
+                                    class="fa-solid fa-cart-plus position-relative"><span
+                                        class="position-absolute translate-middle badge rounded-pill bg-danger sp"><?php if (isset($count)) {
+                                            echo $count;
+                                        } ?></span></i></a><!--addtocart-->
                             <?php
 
                             $obj = new wishlist();
                             $obj->setUserId($userid);
                             $count = $obj->itemCount($con); ?>
-                            <a href="wishlist.php" class="nav-link  text-decoration-none mx-1"><i class="fa-regular fa-heart position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-dark sp"><?php if (isset($count)) {
-                                                                                                                                                                                                                                    echo $count;
-                                                                                                                                                                                                                                } ?></span></i></a><!--addto wishlist-->
+                            <a href="wishlist.php" class="nav-link  text-decoration-none mx-1"><i
+                                    class="fa-regular fa-heart position-relative"><span
+                                        class="position-absolute translate-middle badge rounded-pill bg-dark sp"><?php if (isset($count)) {
+                                            echo $count;
+                                        } ?></span></i></a><!--addto wishlist-->
 
 
 
-                            <a href="userpage.php" class=" text-decoration-none"><i class="fa-regular fa-circle-user" style="font-size:1.5rem;"></i></a>
+                            <a href="userpage.php" class=" text-decoration-none"><i class="fa-regular fa-circle-user"
+                                    style="font-size:1.5rem;"></i></a>
                             <?php echo "Hi," . ucwords($_SESSION['name']); ?>
                         <?php } else { ?>
-                            <a href="addtocart.php" class="nav-link  text-decoration-none mx-1"><i class="fa-solid fa-cart-plus position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp">0</span></i></a><!--addtocart-->
-                            <a href="wishlist.php" class="nav-link  text-decoration-none mx-1"><i class="fa-regular fa-heart position-relative"><span class="position-absolute translate-middle badge rounded-pill bg-danger sp">0</span></i></a>
-                            <a href="login_user.php" class=" text-decoration-none"><button class="lo-button btn-sm ms-2 px-3" style="color:#ffff;">login</button></a>
+                            <a href="addtocart.php" class="nav-link  text-decoration-none mx-1"><i
+                                    class="fa-solid fa-cart-plus position-relative"><span
+                                        class="position-absolute translate-middle badge rounded-pill bg-danger sp">0</span></i></a><!--addtocart-->
+                            <a href="wishlist.php" class="nav-link  text-decoration-none mx-1"><i
+                                    class="fa-regular fa-heart position-relative"><span
+                                        class="position-absolute translate-middle badge rounded-pill bg-danger sp">0</span></i></a>
+                            <a href="login_user.php" class=" text-decoration-none"><button
+                                    class="lo-button btn-sm ms-2 px-3" style="color:#ffff;">login</button></a>
                         <?php } ?>
                     </div>
                 </div>
@@ -120,25 +125,37 @@ if ($settingsFromDb) {
         <div class="but">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" onclick="window.location.href='thrift.php';">Women</button>
+                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
+                        type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true"
+                        onclick="window.location.href='thrift.php';">Women</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" onclick="window.location.href='thrift_men.php';">Men</button>
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
+                        type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false"
+                        onclick="window.location.href='thrift_men.php';">Men</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" onclick="window.location.href='thrift_kids.php';">Kids</button>
+                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane"
+                        type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"
+                        onclick="window.location.href='thrift_kids.php';">Kids</button>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0"></div>
-                <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0"></div>
-                <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0"></div>
-                <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0"></div>
+                <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
+                    tabindex="0"></div>
+                <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
+                    tabindex="0"></div>
+                <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab"
+                    tabindex="0"></div>
+                <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab"
+                    tabindex="0"></div>
             </div>
 
         </div>
         <!-- <a href="sidepanel.php" target="_blank" aria-label="Plus Icon">  -->
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle" id="openPanel">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="feather feather-plus-circle" id="openPanel">
             <circle cx="12" cy="12" r="10"></circle>
             <line x1="12" y1="8" x2="12" y2="16"></line>
             <line x1="8" y1="12" x2="16" y2="12"></line>
@@ -172,15 +189,18 @@ if ($settingsFromDb) {
                 <div class="row">
                     <div class="col-md-6">
                         <h2 class="mb-4">Add Item to Resell</h2>
-                        <form action="../control/thriftcon.php" method="post" enctype="multipart/form-data" id="resellForm"> <!--form start add to item-->
+                        <form action="../control/thriftcon.php" method="post" enctype="multipart/form-data"
+                            id="resellForm"> <!--form start add to item-->
                             <input type="hidden" name="userid" value="<?php echo $userid; ?>">
                             <div class="form-group">
                                 <label for="itemName" class="bold">Item Name</label>
-                                <input type="text" class="form-control" id="itemName" placeholder="Enter item name" name="itemname" required>
+                                <input type="text" class="form-control" id="itemName" placeholder="Enter item name"
+                                    name="itemname" required>
                             </div>
                             <div class="form-group">
                                 <label for="price" class="bold">Price (Rs.)</label>
-                                <input type="number" class="form-control" id="price" placeholder="Enter price" name="price" required>
+                                <input type="number" class="form-control" id="price" placeholder="Enter price"
+                                    name="price" required>
                             </div>
                             <div class="form-group">
                                 <label for="color" class="bold">Color</label>
@@ -196,7 +216,8 @@ if ($settingsFromDb) {
                             </div>
                             <div class="form-group">
                                 <label for="description" class="bold">Description</label>
-                                <textarea class="form-control" id="description" rows="3" placeholder="Enter description" name="description" required></textarea>
+                                <textarea class="form-control" id="description" rows="3" placeholder="Enter description"
+                                    name="description" required></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="category" class="bold">Category</label>
@@ -244,23 +265,28 @@ if ($settingsFromDb) {
                             <div class="form-group hidden" id="pantssizeChartWrapper">
                                 <label class="bold">Size</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="size" id="sizepantsS" value="28-30">
+                                    <input class="form-check-input" type="radio" name="size" id="sizepantsS"
+                                        value="28-30">
                                     <label class="form-check-label" for="sizepantsS">28-30</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="size" id="sizepantsM" value="30-32">
+                                    <input class="form-check-input" type="radio" name="size" id="sizepantsM"
+                                        value="30-32">
                                     <label class="form-check-label" for="sizepantsM">30-32</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="size" id="sizepantsL" value="32-34">
+                                    <input class="form-check-input" type="radio" name="size" id="sizepantsL"
+                                        value="32-34">
                                     <label class="form-check-label" for="sizepantsL">32-34</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="size" id="sizepantsXL" value="34-36">
+                                    <input class="form-check-input" type="radio" name="size" id="sizepantsXL"
+                                        value="34-36">
                                     <label class="form-check-label" for="sizepantsXL">34-36</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="size" id="sizepantsXL" value="36-40">
+                                    <input class="form-check-input" type="radio" name="size" id="sizepantsXL"
+                                        value="36-40">
                                     <label class="form-check-label" for="sizepantsXL">36-40</label>
                                 </div>
                                 <div class="form-check">
@@ -290,8 +316,10 @@ if ($settingsFromDb) {
                             </div>
                             <div class="form-group">
                                 <label for="timesUsed" class="bold">Condition</label>
-                                <input type="number" class="form-control" id="timesUsed" placeholder="Enter number of times used" name="condition" required>
-                                <small class="form-text text-muted">Please provide an estimate of how many times this item has been used.</small>
+                                <input type="number" class="form-control" id="timesUsed"
+                                    placeholder="Enter number of times used" name="condition" required>
+                                <small class="form-text text-muted">Please provide an estimate of how many times this
+                                    item has been used.</small>
                             </div>
                             <button type="submit" class="btn btn-primary ssubmit" name="submit">Submit</button>
                         </form> <!--form end-->
@@ -332,7 +360,8 @@ if ($settingsFromDb) {
         I’d worn to a film premiere in 2005.I know that’s kind of a no-no in the
         fashion world, but why wear something just once if you love it?”
 
-                                                                         —<b>Winona Ryder</b> -Red, April 2014 </pre><br>
+                                                                         —<b>Winona Ryder</b> -Red, April 2014 </pre>
+            <br>
 
         </div>
 
@@ -392,117 +421,50 @@ if ($settingsFromDb) {
 
     </div>
 
-    <!-- review  div-->
-    <div class="container ">
-        <div class="row des">
-            <!--side show-->
-            <div id="thriftCarousel" class="carousel slide col-5 stat" data-ride="carousel">
-                <h2>Why Thrift</h2>
-                <div class="carousel-inner" style="padding-top: 40px;">
-                    <div class="carousel-item active">
-                        <div class="row stat1">
-                            <img src="../img/thriftstat2.jpg" alt="thrift stat" class="rounded-circle img-fluid ts1">
-                            <div style="padding-top:40px;">
-                                <h3>QUALITY ASSURED</h3>
-                                <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item ">
-                        <div class="row stat2">
-                            <img src="../img/thriftstat1.jpg" alt="thrift stat" class="rounded-circle img-fluid ts2">
-                            <div style="padding-top:40px;">
-                                <h3>QUALITY ASSURED</h3>
-                                <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="row stat3">
-                            <img src="../img/thrift stat4.jpg" alt="thrift stat" class="rounded-circle img-fluid ts3">
-                            <div style="padding-top:40px;">
-                                <h3>QUALITY ASSURED</h3>
-                                <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Carousel controls -->
-                <a class="carousel-control-prev" href="#thriftCarousel" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#thriftCarousel" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-            <div class="col-7">
-                <div class="container text-center">
-                    <h2>Hear It From Others</h2>
-                    <div class="row revieW">
-                        <section class="reviews">
-                            <div class="review1">
+    
 
-                                <blockquote>
-                                    <p>"Secondhand has never been so simple. There's no reason to buy new anymore. You get great quality clothes and you're doing some good for the planet."</p>
-                                    <cite>George</cite>
-                                </blockquote>
-                            </div>
-                            <div class="review2">
-
-                                <blockquote>
-                                    <p>"I've never been into thrifting because I thought it would take too much time - but Thrift+ has converted me! It's so quick and easy to find exactly what I am looking for."</p>
-                                    <cite>Alex</cite>
-                                </blockquote>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
     <!--footer-->
-    <div class="container-fluid footer">
-        <div class="container p-3">
-            <div class="row">
-                <div class="col text-center text-md-start">
-                    <img src="../img/Exchanza.png" width="200px">
+     <div class="container-fluid footer">
+            <div class="container p-3">
+                <div class="row">
+                    <div class="col text-center text-md-start">
+                        <img src="../img/Exchanza.png" width="200px">
+                    </div>
                 </div>
-            </div>
-            <div class="row  mt-4" style="border-bottom:1px solid black;">
-                <div class="col-sm-6 col-md-4 text-center text-md-start ">
-
-                    <p><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['phone']) ?></p>
-                    <p><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['email']) ?></p>
-                    <p><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;<?= htmlspecialchars($settings['address']) ?></p>
+                <div class="row  mt-4" style="border-bottom:1px solid black;">
+                    <div class="col-sm-6 col-md-4 text-center text-md-start ">
+                        
+                        <p><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;0717749219</p>
+                        <p><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;Exchanze@gmail.com</p>
+                        <p><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;243/c,Colombo 03</p>
+                    </div>
+                    <div class="col-sm-6 col-md-4 text-center text-md-start lin">
+                        <h5>Information</h5>
+                        <p><a href="#1">Privacy &amp; Policy</a></p>
+                        <p><a href="#1">About Us</a></p>
+                        <p><a href="#1">Terms &amp; Condition</a></p>
+                        <p><a href="view/enquiry.php">Enquire Now </a></p>
+                    </div>
+                    <div class="col-md-4 text-center text-md-start lin">
+                        <h5>Connect with Us</h5>
+                        <p>
+                            <a href="<?= htmlspecialchars($settings['facebook_link']) ?>"target="_blank"><i class="fa-brands fa-facebook" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="<?= htmlspecialchars($settings['instagram_link']) ?>"target="_blank"><i class="fa-brands fa-instagram" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="<?= htmlspecialchars($settings['youtube_link']) ?>"target="_blank"><i class="fa-brands fa-youtube" style="font-size:50px;"></i></a>
+                        </p>
+                    </div>
                 </div>
-                <div class="col-sm-6 col-md-4 text-center text-md-start lin">
-                    <h5>Information</h5>
-                    <p><a href="#1">Privacy &amp; Policy</a></p>
-                    <p><a href="#1">About Us</a></p>
-                    <p><a href="#1">Terms &amp; Condition</a></p>
-                    <p><a href="enquiry.php">Enquire Now </a></p>
-                </div>
-                <div class="col-md-4 text-center text-md-start lin">
-                    <h5>Connect with Us</h5>
-                    <p>
-                        <a href="<?= htmlspecialchars($settings['facebook_link']) ?>" target="_blank"><i class="fa-brands fa-facebook" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="<?= htmlspecialchars($settings['instagram_link']) ?>" target="_blank"><i class="fa-brands fa-instagram" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="<?= htmlspecialchars($settings['youtube_link']) ?>" target="_blank"><i class="fa-brands fa-youtube" style="font-size:50px;"></i></a>
-                    </p>
-                </div>
-            </div>
-            <div class="row mt-2 text-center text-md-none">
-                <div class="d-flex justify-content-between flex-column flex-md-row">
-                    <div><i class="fa-brands fa-cc-visa" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-mastercard" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-amex" style="font-size:50px;"></i></div>
-                    <div>&copy;Exchanze All Rights are reserved</div>
+                <div class="row mt-2 text-center text-md-none">
+                    <div class="d-flex justify-content-between flex-column flex-md-row">
+                        <div><i class="fa-brands fa-cc-visa" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-mastercard" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-amex" style="font-size:50px;"></i></div>
+                        <div>&copy; Exchanze All Rights are reserved</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

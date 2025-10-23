@@ -95,7 +95,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         $errors[]="Input feild required.";
     }
 
-    if(empty($errors) && $filePath !== null || $filePatho !== null){
+    if (empty($errors) && ($filePath !== null || $filePatho !== null)) {
         $dsn=new DbConnector();
         $con=$dsn->getConnection();
 

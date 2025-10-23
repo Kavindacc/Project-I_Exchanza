@@ -50,6 +50,9 @@ if (isset($_SESSION['userid'])) {
                             <li class="nav-item mx-2">
                                 <a class="nav-link" href="bidding.php">Bidding</a>
                             </li>
+                             <li class="nav-item mx-2">
+                                <a class="nav-link" href="bidding.php">About us</a>
+                            </li>
                         </ul>
 
                         <!--login nav-link-a-color-->
@@ -252,8 +255,7 @@ if (isset($_SESSION['userid'])) {
                     </div>
                 </div>
                 <?php
-
-                $auctionItems = $user->getAuctionItems($con);
+                // REMOVED: $auctionItems = $user->getAuctionItems($con);
                 $rows = $user->browserProducts($con);
                 ?>
 
@@ -314,41 +316,6 @@ if (isset($_SESSION['userid'])) {
                                                         Delete
                                                     </button>
                                                 <?php } ?>
-                                                <!--<button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#<?php echo $accordionId; ?>" aria-expanded="false" aria-controls="<?php echo $accordionId; ?>" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .8rem; --bs-btn-font-size: .75rem;">
-                                                Review
-                                            </button>
-                                            <!-- Review 
-                                            <?php /* //rating
-                                            $obj = new GeneralCustomer();
-                                            $obj->setItemId($row['itemid']);
-                                            $rating = $obj->getRating($con);
-                                            if (!empty($rating)) { ?>
-                                                <div class="review mt-4">
-                                                    <?php foreach ($rating as $rate) {
-                                                        $user_id = $rate['user_id'];
-                                                        $obj->setUserid($user_id);
-                                                        $name = $obj->getusername($con);
-
-                                                    ?>
-
-                                                        <div class="collapse mt-2" id="<?php echo $accordionId; ?>" style="width: 100%;">
-                                                            <div class="card card-body" style="background-color: #f7f7f7;">
-                                                                <p><strong><?php echo ucwords($name); ?></strong></p>
-                                                                <p><strong>Rating:</strong> <?php
-                                                                                            $ratingValue = $rate['rating'];
-                                                                                            for ($i = 1; $i <= 5; $i++) {
-                                                                                                if ($i <= $ratingValue) {
-                                                                                                    echo '<i class="fas fa-star filled"></i>';
-                                                                                                } else {
-                                                                                                    echo '<i class="fas fa-star"></i>';
-                                                                                                }
-                                                                                            }
-                                                                                            ?></p>
-                                                                <p><strong>Review:</strong><?php echo $rate['review_text']; ?></p>
-                                                            </div>
-                                                        </div>
-                                                    <?php } ?>
-                                                <?php } */ ?>
 
                                                 <!-- Modal edit -->
                                                 <div class="modal fade" id="<?php echo $editModalId; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="<?php echo $editModalId; ?>Label" aria-hidden="true">

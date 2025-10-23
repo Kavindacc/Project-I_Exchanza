@@ -49,6 +49,9 @@ include_once '../model/addtocart.php'; ?>
                         <li class="nav-item mx-2">
                             <a class="nav-link" href="bidding.php">Bidding</a>
                         </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link" href="view/bidding.php">About us</a>
+                        </li>
                        
                     </ul>
 
@@ -393,104 +396,45 @@ include_once '../model/addtocart.php'; ?>
 
 
     <!-- review  div-->
-    <div class="container ">
-        <div class="row des">
-            <div id="thriftCarousel" class="carousel slide col-5 stat" data-ride="carousel">
-                <h2>Why Thrift</h2>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="row stat1">
-                            <img src="../img/thriftstat2.jpg" alt="thrift stat" class="rounded-circle img-fluid ts1">
-                            <h3>QUALITY ASSURED</h3>
-                            <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands.</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="row stat2">
-                            <img src="../img/thriftstat1.jpg" alt="thrift stat" class="rounded-circle img-fluid ts2">
-                            <h3>QUALITY ASSURED</h3>
-                            <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands.</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="row stat3">
-                            <img src="../img/thrift stat4.jpg" alt="thrift stat" class="rounded-circle img-fluid ts3">
-                            <h3>QUALITY ASSURED</h3>
-                            <p>We quality check every single item on<br><b>Exchanza.</b><br>No more surprise stains or fake brands.</p>
-                        </div>
+    <!--footer-->
+     <div class="container-fluid footer">
+            <div class="container p-3">
+                <div class="row">
+                    <div class="col text-center text-md-start">
+                        <img src="../img/Exchanza.png" width="200px">
                     </div>
                 </div>
-                <!-- Carousel controls -->
-                <a class="carousel-control-prev" href="#thriftCarousel" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#thriftCarousel" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-            <div class="col-7">
-                <div class="container text-center">
-                    <h2>Hear It From Others</h2>
-                    <div class="row revieW">
-                        <section class="reviews">
-                            <div class="review1">
-                                
-                                <blockquote>
-                                    <p>"Secondhand has never been so simple. There's no reason to buy new anymore. You get great quality clothes and you're doing some good for the planet."</p>
-                                    <cite>George</cite>
-                                </blockquote>
-                            </div>
-                            <div class="review2">
-                                
-                                <blockquote>
-                                    <p>"I've never been into thrifting because I thought it would take too much time - but Thrift+ has converted me! It's so quick and easy to find exactly what I am looking for."</p>
-                                    <cite>Alex</cite>
-                                </blockquote>
-                            </div>
-                        </section>
+                <div class="row  mt-4" style="border-bottom:1px solid black;">
+                    <div class="col-sm-6 col-md-4 text-center text-md-start ">
+                        
+                        <p><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;0717749219</p>
+                        <p><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;Exchanze@gmail.com</p>
+                        <p><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;243/c,Colombo 03</p>
+                    </div>
+                    <div class="col-sm-6 col-md-4 text-center text-md-start lin">
+                        <h5>Information</h5>
+                        <p><a href="#1">Privacy &amp; Policy</a></p>
+                        <p><a href="#1">About Us</a></p>
+                        <p><a href="#1">Terms &amp; Condition</a></p>
+                        <p><a href="view/enquiry.php">Enquire Now </a></p>
+                    </div>
+                    <div class="col-md-4 text-center text-md-start lin">
+                        <h5>Connect with Us</h5>
+                        <p>
+                            <a href="<?= htmlspecialchars($settings['facebook_link']) ?>"target="_blank"><i class="fa-brands fa-facebook" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="<?= htmlspecialchars($settings['instagram_link']) ?>"target="_blank"><i class="fa-brands fa-instagram" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="<?= htmlspecialchars($settings['youtube_link']) ?>"target="_blank"><i class="fa-brands fa-youtube" style="font-size:50px;"></i></a>
+                        </p>
+                    </div>
+                </div>
+                <div class="row mt-2 text-center text-md-none">
+                    <div class="d-flex justify-content-between flex-column flex-md-row">
+                        <div><i class="fa-brands fa-cc-visa" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-mastercard" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-amex" style="font-size:50px;"></i></div>
+                        <div>&copy; Exchanze All Rights are reserved</div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!--footer-->
-    <!--footer-->
-    <div class="container-fluid footer">
-        <div class="container p-3">
-            <div class="row">
-                <div class="col">
-                    <img src="../img/Exchanza.png" width="200px">
-                </div>
-            </div>
-            <div class="row  mt-4" style="border-bottom:1px solid black;">
-                <div class="col">
-                    <p class=""><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;+94 112 555 444</p>
-                    <p class=""><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;exchanza@gmail.com</p>
-                    <p class=""><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;No.56/2,Kotta Rd,Colombo
-                        05,<br>&nbsp;&nbsp;&nbsp;&nbsp;Sri Lanka</p>
-                </div>
-                <div class="col lin">
-                    <h5>Information</h5>
-                    <p><a href="#1">Privacy &amp; Policy</a></p>
-                    <p><a href="#1">About Us</a></p>
-                    <p><a href="#1">Terms &amp; Condition</a></p>
-                </div>
-                <div class="col lin">
-                    <h5>Connect with Us</h5>
-                    <p><a href=""><i class="fa-brands fa-facebook" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><i class="fa-brands fa-instagram" style="font-size:50px;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><i class="fa-brands fa-youtube" style="font-size:50px;"></i></a></p>
-                </div>
-            </div>
-            <div class="row mt-2">
-                <div class="d-flex justify-content-between flex-column flex-md-row">
-                    <div><i class="fa-brands fa-cc-visa" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-mastercard" style="font-size:50px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-brands fa-cc-amex" style="font-size:50px;"></i></div>
-                    <div>&copy;Exchanze All Rights are reserved</div>
-
-                </div>
-            </div>
-        </div>
-    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../js/sidepanel.js"></script>
