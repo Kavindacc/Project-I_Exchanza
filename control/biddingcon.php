@@ -13,6 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submitBid'])) {
     $userid = $_POST['userid']; // Assuming user ID is available from the session or form
 
     $errors = [];
+    $filePath = null;  // Initialize variables
+    $filePatho = null;
 
     // Basic validation
     if (!empty($itemname) && !empty($start_price) && !empty($description) && !empty($start_time) && !empty($end_time) && !empty($userid)) {
@@ -89,12 +91,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submitBid'])) {
     }
 
     // If no errors, proceed with database operations
-    if (empty($errors) && isset($filePath)) {
+    if (empty($errors) && $filePath !== null) {
         $dsn = new DbConnector();
         $con = $dsn->getConnection();
 
+        // For bidding items, set default values for fields not captured in the form
+        // condition = 0 (default for bidding items), color = null, category = 'bidding', etc.
+        $color = null;  // Not required for bidding items
+        $category = 'bidding';  // Set category to 'bidding'
+        $subcategory = null;  // Not required for bidding items
+        $condition = 0;  // Default condition for bidding items (0 = new/auction item)
+        $size = null;  // Not required for bidding items
+        $quantity = 1;  // Default quantity
+
         // Create new Item object and add it for bidding
-        $item = new Item($sitemname, $sprice, null, $description, null, null, null, null, $filePath, $filePatho ?? null, 1, $userid);
+        $item = new Item($sitemname, $sprice, $color, $description, $category, $subcategory, $condition, $size, $filePath, $filePatho, $quantity, $userid);
         if ($item->addItemForBidding($con, $start_time, $end_time, $sprice)) {
             header("Location:../view/bidding.php?success=Item added for bidding successfully.");
             exit();
@@ -103,10 +114,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submitBid'])) {
             exit();
         }
     } else {
-        // Debugging: Output errors to the browser
-        echo "<pre>";
-        print_r($errors);
-        echo "</pre>";
+        // Redirect with error messages
+        $errorMsg = !empty($errors) ? implode(', ', $errors) : "Failed to upload image.";
+        header("Location:../view/bidding.php?error=" . urlencode($errorMsg));
         exit();
     }
 }
