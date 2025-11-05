@@ -113,125 +113,286 @@ $finishedBids = $auction->getFinishedAuctions();
     </script>
 
     <style type="text/tailwindcss">
+        /* Premium Auction Design Styles */
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            @apply font-['Poppins',sans-serif];
+        }
+        
         .product{
-            @apply relative overflow-hidden p-[20px];
+            @apply relative overflow-hidden p-[20px] transition-all duration-500;
         }
+        
         .product-category{
-            @apply py-0 px-[10vw] text-[30px] font-[500] mb-[40px] capitalize text-[#4C3F31];
+            @apply py-0 px-[10vw] text-[36px] font-[600] mb-[50px] capitalize text-[#4C3F31] font-['Playfair_Display',serif] tracking-wide relative;
         }
+        
+        .product-category::after {
+            content: '';
+            @apply absolute bottom-[-15px] left-[10vw] w-[100px] h-[3px] bg-gradient-to-r from-[#746557] to-[#AE9D92];
+        }
+        
         .product-container{
-            @apply py-1 px-[10vw] flex overflow-y-hidden overflow-x-auto scroll-smooth;
+            @apply py-1 px-[10vw] flex overflow-y-hidden overflow-x-auto scroll-smooth gap-8;
         }
+        
         .product-container::-webkit-scrollbar{
-            @apply hidden;
+            @apply h-2;
         }
+        
+        .product-container::-webkit-scrollbar-track{
+            @apply bg-[#e7e0dc] rounded-full;
+        }
+        
+        .product-container::-webkit-scrollbar-thumb{
+            @apply bg-[#746557] rounded-full hover:bg-[#4C3F31];
+        }
+        
         .product-card{
-            @apply flex-[0_0_auto] w-[250px] h-[450px] mr-[40px]; 
+            @apply flex-[0_0_auto] w-[280px] h-[480px] bg-white rounded-[20px] shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 border border-[#e7e0dc];
         }
+        
         .product-image{
-            @apply relative w-full h-[350px] overflow-hidden transition-all duration-300 hover:scale-105;
+            @apply relative w-full h-[340px] overflow-hidden bg-gradient-to-br from-[#CEC0B9] to-[#e7e0dc];
         }
+        
         .product-thumb{
-            @apply w-full h-full object-cover;
+            @apply w-full h-full object-cover transition-transform duration-700 hover:scale-110;
         }
+        
         .countdown-tag {
-            @apply absolute bg-[#746557] p-[5px] rounded-[5px] text-[#e7e0dc] right-[10px] top-[10px] capitalize;
+            @apply absolute bg-gradient-to-r from-[#746557] to-[#4C3F31] px-3 py-2 rounded-[10px] text-white right-[10px] top-[10px] capitalize text-sm font-semibold shadow-lg backdrop-blur-sm;
         }
+        
         .card-btn{
-            @apply absolute bottom-[10px] left-[50%] -translate-x-1/2  p-[10px] w-[50%] capitalize border-[#746557] bg-[#CEC0B9] rounded-[10px] duration-[0.5s] cursor-pointer opacity-0 text-[#4C3F31];    
+            @apply absolute bottom-[15px] left-[50%] -translate-x-1/2 px-6 py-3 w-[80%] capitalize border-2 border-[#746557] bg-white rounded-[12px] duration-300 cursor-pointer opacity-0 text-[#4C3F31] font-semibold text-center shadow-lg hover:shadow-xl;    
         }
+        
         .product-card:hover .card-btn {
-            @apply opacity-100;
+            @apply opacity-100 translate-y-0;
         }
 
         .card-btn:hover{
-            @apply bg-[#746557] text-[#fff]  scale-110 tracking-widest ;
+            @apply bg-[#746557] text-white scale-105 tracking-wider border-[#4C3F31];
         }
+        
         .product-info{
-            @apply w-full h-full pt-[10px];
+            @apply w-full h-full pt-[15px] px-[20px] bg-gradient-to-b from-white to-[#f9f7f5];
         }
-        /* .product-brand{
-            @apply ;
-        } */
+        
+        .product-brand{
+            @apply font-semibold text-[18px] text-[#4C3F31] mb-2 truncate hover:text-[#746557] transition-colors;
+        }
+        
         .product-short-description{
-            @apply w-full h-[20px] leading-[20px] overflow-hidden opacity-[0.5] capitalize my-[5px] text-black;
+            @apply w-full h-[40px] leading-[20px] overflow-hidden text-[#897062] text-sm my-2;
         }
+        
         .price{
-            @apply font-extrabold text-[20px];
+            @apply font-extrabold text-[24px] text-[#746557] tracking-tight;
         }
+        
         .actual-price{
-            @apply ml-[20px] opacity-50 line-through;
+            @apply ml-[15px] opacity-50 line-through text-[16px];
         }
+        
         .pre-btn,.nxt-btn{
-            @apply border-0 w-[10vw] h-full absolute top-0 flex justify-center items-center bg-gradient-to-r from-transparent to-[#e7e0dc] cursor-pointer z-20;
+            @apply border-0 w-[60px] h-[60px] rounded-full absolute top-[50%] -translate-y-1/2 flex justify-center items-center bg-white shadow-xl cursor-pointer z-20 transition-all duration-300 hover:scale-110 hover:shadow-2xl;
         }
+        
         .pre-btn {
-            @apply left-0 rotate-180;
+            @apply left-[20px];
         }
+        
         .nxt-btn {
-            @apply right-0;
+            @apply right-[20px];
         }
+        
         .pre-btn img,
         .nxt-btn img {
-            @apply opacity-20;
+            @apply opacity-60 w-[24px] h-[24px];
         }
+        
         .pre-btn:hover img,
         .nxt-btn:hover img {
             @apply opacity-100;
         }
+        
+        .pre-btn:hover {
+            @apply bg-[#CEC0B9] -translate-x-1 -translate-y-1/2;
+        }
+        
+        .nxt-btn:hover {
+            @apply bg-[#CEC0B9] translate-x-1 -translate-y-1/2;
+        }
+        
         .collection-container {
             @apply w-full grid grid-cols-2 gap-2.5;
         }
+        
         .collection {
-            @apply relative;
+            @apply relative rounded-[20px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500;
         }
+        
         .collection img {
-            @apply w-full h-full object-cover;
+            @apply w-full h-full object-cover transition-transform duration-700 hover:scale-105;
         }
+        
         .collection p {
-            @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white text-5xl capitalize;
+            @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white text-5xl capitalize font-['Playfair_Display',serif];
         }
+        
         .collection:nth-child(3) {
             @apply col-span-2 mb-2.5;
         }
+        
         .addbit-btn{
-            @apply p-2 my-2 w-[12%] uppercase font-semibold border-2 border-[#AE9D92] bg-[#CEC0B9] rounded-[4px] duration-[0.5s] cursor-pointer text-[#4C3F31] hover:scale-105 hover:tracking-widest hover:w-[13%] hover:text-[#d0bfae] hover:bg-[#746557];
+            @apply px-8 py-3 my-2 uppercase font-semibold border-2 border-[#AE9D92] bg-gradient-to-r from-[#CEC0B9] to-[#d4c5b8] rounded-[12px] duration-300 cursor-pointer text-[#4C3F31] hover:scale-105 hover:tracking-widest hover:shadow-2xl hover:from-[#746557] hover:to-[#4C3F31] hover:text-white transition-all;
         }
+        
         .main-div#blur.active{
             @apply blur-[30px] pointer-events-none select-none;
         }
-        #bidpopupform {
-            @apply bg-white fixed top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 p-[20px] shadow-lg rounded-[10px]  transition-opacity duration-500 w-[80vw] h-[81vh] invisible opacity-0;
-        }
-        #bidpopupform.active {
-            @apply transition-[0.5s] opacity-100 visible; 
-        }
-        .f-title{
-            @apply font-semibold text-[2.0rem] uppercase mb-2;
-        }
-        .bform-items{
-            @apply py-1 pr-2 
-        }
-        .bflable{
-            @apply font-semibold;
-        }
-        .form-control{
-            @apply w-[60%] placeholder-[#897062] border border-[#AE9D92];
-        }
-        .form-control-file{
-            @apply text-[#897062] border border-[#AE9D92] font-medium text-sm  file:cursor-pointer cursor-pointer file:border-0 file:py-2 file:px-4 file:mr-4 file:bg-[#CEC0B9] file:hover:bg-[#d6c5bc] file:text-[#4C3F31] rounded-md;
-        }
-        .form-control-time{
-            @apply  w-[92%] p-2 text-[#7b6457]  border border-[#AE9D92] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#CEC0B9] focus:border-[#CEC0B9] sm:text-sm uppercase;
-        }
-        .plsBid-btn{
-            @apply p-[6px] my-2 w-[22%] uppercase font-semibold border-2 border-[#AE9D92] bg-[#CEC0B9] rounded-[4px] duration-[0.5s] cursor-pointer text-[#4C3F31] hover:scale-105 active:cursor-progress;
-        }
-        #previewImage{
-            @apply w-[200px] h-[250px] overflow-hidden
-        }
-
         
+        #bidpopupform {
+            @apply bg-white fixed top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 p-[30px] shadow-2xl rounded-[20px] transition-all duration-500 w-[85vw] max-w-[1200px] h-[85vh] max-h-[800px] invisible opacity-0 scale-95 border-2 border-[#e7e0dc];
+        }
+        
+        #bidpopupform.active {
+            @apply opacity-100 visible scale-100; 
+        }
+        
+        .f-title{
+            @apply font-bold text-[2.2rem] uppercase mb-4 text-[#4C3F31] font-['Playfair_Display',serif] tracking-wide;
+        }
+        
+        .bform-items{
+            @apply py-2 pr-3;
+        }
+        
+        .bflable{
+            @apply font-semibold text-[#4C3F31] mb-1 block text-sm;
+        }
+        
+        .form-control{
+            @apply w-full px-4 py-3 placeholder-[#897062] border-2 border-[#e7e0dc] rounded-[10px] focus:border-[#746557] focus:outline-none focus:ring-2 focus:ring-[#CEC0B9] transition-all duration-300;
+        }
+        
+        .form-control-file{
+            @apply w-full text-[#897062] border-2 border-[#e7e0dc] rounded-[10px] font-medium text-sm file:cursor-pointer cursor-pointer file:border-0 file:py-3 file:px-6 file:mr-4 file:bg-gradient-to-r file:from-[#CEC0B9] file:to-[#d4c5b8] file:hover:from-[#746557] file:hover:to-[#4C3F31] file:text-[#4C3F31] file:hover:text-white file:rounded-[8px] file:font-semibold file:transition-all file:duration-300;
+        }
+        
+        .form-control-time{
+            @apply w-full px-4 py-3 text-[#7b6457] border-2 border-[#e7e0dc] rounded-[10px] shadow-sm focus:outline-none focus:ring-2 focus:ring-[#CEC0B9] focus:border-[#746557] text-sm uppercase transition-all duration-300;
+        }
+        
+        .plsBid-btn{
+            @apply px-8 py-4 my-4 w-full md:w-auto uppercase font-bold border-2 border-[#746557] bg-gradient-to-r from-[#746557] to-[#4C3F31] rounded-[12px] duration-300 cursor-pointer text-white hover:scale-105 hover:shadow-2xl active:cursor-progress transition-all tracking-wide;
+        }
+        
+        #previewImage{
+            @apply w-full h-[280px] object-cover rounded-[15px] shadow-lg;
+        }
+        
+        .preview-container {
+            @apply bg-gradient-to-br from-[#f9f7f5] to-white;
+        }
+        
+        /* Hero Section Enhancement */
+        .hero-overlay {
+            @apply bg-gradient-to-t from-black/70 via-black/40 to-transparent;
+        }
+        
+        /* Smooth animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .animate-bounce {
+            animation: bounce 1s ease-in-out infinite;
+        }
+        
+        /* Alert Modal Animations */
+        #alertModal {
+            animation: modalFadeIn 0.4s ease-out;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        #alertModal > div {
+            animation: modalSlideUp 0.5s ease-out;
+        }
+        
+        @keyframes modalSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        /* Custom scrollbar for form */
+        .overflow-y-auto::-webkit-scrollbar {
+            @apply w-2;
+        }
+        
+        .overflow-y-auto::-webkit-scrollbar-track {
+            @apply bg-[#f9f7f5] rounded-full;
+        }
+        
+        .overflow-y-auto::-webkit-scrollbar-thumb {
+            @apply bg-[#CEC0B9] rounded-full hover:bg-[#746557];
+        }
+        
+        /* Status badge styles */
+        .status-badge {
+            @apply inline-block px-3 py-1 rounded-full text-xs font-semibold;
+        }
+        
+        .status-ongoing {
+            @apply bg-green-100 text-green-800;
+        }
+        
+        .status-upcoming {
+            @apply bg-blue-100 text-blue-800;
+        }
+        
+        .status-finished {
+            @apply bg-gray-100 text-gray-800;
+        }
 
     </style>
 
@@ -320,60 +481,150 @@ $finishedBids = $auction->getFinishedAuctions();
     </nav>
 
 
+    <!-- Success/Error Alert Modal -->
+    <?php if (isset($_GET['success'])) { ?>
+        <div id="alertModal" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fadeInUp">
+            <div class="bg-white rounded-[25px] shadow-2xl max-w-md w-full mx-4 overflow-hidden transform scale-100 transition-all duration-300">
+                <!-- Success Header -->
+                <div class="bg-gradient-to-r from-[#746557] to-[#4C3F31] p-6 text-center">
+                    <div class="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white font-['Playfair_Display',serif]">Success!</h3>
+                </div>
+                
+                <!-- Success Body -->
+                <div class="p-8 text-center">
+                    <p class="text-[#4C3F31] text-lg font-medium mb-6 leading-relaxed">
+                        <?php echo htmlspecialchars($_GET['success']); ?>
+                    </p>
+                    <button onclick="closeAlertModal()" class="px-8 py-3 bg-gradient-to-r from-[#746557] to-[#4C3F31] text-white font-semibold rounded-[12px] hover:scale-105 hover:shadow-xl transition-all duration-300 w-full">
+                        Continue
+                    </button>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+    
+    <?php if (isset($_GET['error'])) { ?>
+        <div id="alertModal" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fadeInUp">
+            <div class="bg-white rounded-[25px] shadow-2xl max-w-md w-full mx-4 overflow-hidden transform scale-100 transition-all duration-300">
+                <!-- Error Header -->
+                <div class="bg-gradient-to-r from-[#8B4513] to-[#6B3410] p-6 text-center">
+                    <div class="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white font-['Playfair_Display',serif]">Oops!</h3>
+                </div>
+                
+                <!-- Error Body -->
+                <div class="p-8 text-center">
+                    <p class="text-[#4C3F31] text-lg font-medium mb-6 leading-relaxed">
+                        <?php echo htmlspecialchars($_GET['error']); ?>
+                    </p>
+                    <button onclick="closeAlertModal()" class="px-8 py-3 bg-gradient-to-r from-[#8B4513] to-[#6B3410] text-white font-semibold rounded-[12px] hover:scale-105 hover:shadow-xl transition-all duration-300 w-full">
+                        Try Again
+                    </button>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+
     <!-- content -->
-    <div id ="blur" class="main-div flex w-full flex-col pb-10 px-10" >
+    <div id ="blur" class="main-div flex w-full flex-col pb-10" >
 
         <!-- Hero Section -->
-        <div class="flex flex-row w-full bg-[#F3F3F3] px-5 pt-4">
-            <div class="relative w-full max-h-[450px] overflow-hidden rounded-[20px]">
-                <img src="../img/Bidding/banner.png" alt="Exclusive rare collectibles auction" class="">
-                <div class="absolute bottom-10 left-6 right-6  bg-opacity-80 pl-36 pt-3 rounded-md ">
-                    <p class=" text-[rgb(116,101,87)] text-[20px] font-medium tracking-[0.25rem] mb-2">Hot Auctions</p>
-                    <h2 class="uppercase text-[50px] font-semibold pr-[800px]">Exclusive rare collectibles auction</h2>
-                    <p class="text-[25px] text-[#948276] font-semibold ">Join The Bidding War! 
-                    <?php 
-                    // date_default_timezone_set('Asia/Colombo');
-                    // echo date("h:i:sa") . " "; echo gmdate("Y-m-d\TH:i:s\Z"); 
-                    ?>
-                    </p>
+        <div class="relative w-full bg-gradient-to-br from-[#F3F3F3] via-[#e7e0dc] to-[#CEC0B9] px-5 py-8 md:px-10 md:py-12">
+            <div class="relative w-full max-w-[1400px] mx-auto max-h-[500px] overflow-hidden rounded-[30px] shadow-2xl">
+                <img src="../img/Bidding/banner.png" alt="Exclusive rare collectibles auction" class="w-full h-full object-cover">
+                
+                <!-- Gradient Overlay -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                
+                <!-- Content -->
+                <div class="absolute inset-0 flex flex-col justify-end p-8 md:p-12 lg:p-16 animate-fadeInUp">
+                    <div class="max-w-[800px]">
+                        <p class="text-[#CEC0B9] text-[16px] md:text-[20px] font-semibold tracking-[0.3rem] mb-3 uppercase">Hot Auctions</p>
+                        <h1 class="text-white text-[36px] md:text-[56px] lg:text-[64px] font-bold leading-tight mb-4 font-['Playfair_Display',serif]">
+                            Exclusive Rare Collectibles Auction
+                        </h1>
+                        <p class="text-[#e7e0dc] text-[18px] md:text-[24px] font-medium mb-6">
+                            Join The Bidding War! Discover Unique Treasures
+                        </p>
 
-                    <?php if (isset($_SESSION['userid'])) {
-                        $userid = $_SESSION['userid']; ?>
-                        <button class="addbit-btn" onclick="addBidForm()">Add Your Bid</button>
-                        <div id="addItemForm" class="add-item-form"> </div>
-                    <?php } else { ?>
-                        <a href="login_user.php" style="text-decoration: none;">
-                            <button class="adabit-btn">Add Your Bid</button>
-                        </a>
-                    <?php } ?>
-
-                    
-                    
+                        <?php if (isset($_SESSION['userid'])) {
+                            $userid = $_SESSION['userid']; ?>
+                            <button class="addbit-btn inline-flex items-center gap-2" onclick="addBidForm()">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                                </svg>
+                                Add Your Bid
+                            </button>
+                            <div id="addItemForm" class="add-item-form"></div>
+                        <?php } else { ?>
+                            <a href="login_user.php" style="text-decoration: none;">
+                                <button class="addbit-btn inline-flex items-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                                    </svg>
+                                    Add Your Bid
+                                </button>
+                            </a>
+                        <?php } ?>
+                    </div>
                 </div>
-            </div>            
+                
+                <!-- Decorative Elements -->
+                <div class="absolute top-8 right-8 w-20 h-20 border-4 border-[#CEC0B9] rounded-full opacity-30"></div>
+                <div class="absolute bottom-8 left-8 w-16 h-16 border-4 border-[#CEC0B9] rounded-full opacity-20"></div>
+            </div>
         </div>
 
         
        <!-- Ongoing Bidding Section -->
-        <div class="flex flex-col px-12 pt-16 bg-red bg-[#F3F3F3] ongoing">
-            <div class="product bg-[#CEC0B9] rounded-[20px]"> 
-                <h2 class="product-category">Ongoing Bidding</h2>
-                <button class="pre-btn"><img src="../img/Bidding/arrow.png" alt=""></button>
-                <button class="nxt-btn"><img src="../img/Bidding/arrow.png" alt=""></button>
+        <div class="flex flex-col px-5 md:px-12 pt-16 pb-8 bg-gradient-to-br from-[#F3F3F3] to-[#e7e0dc] ongoing">
+            <div class="product bg-gradient-to-br from-[#CEC0B9] to-[#d4c5b8] rounded-[30px] shadow-xl"> 
+                <div class="flex items-center justify-between px-[10vw] pt-8">
+                    <div>
+                        <h2 class="product-category mb-2">Ongoing Bidding</h2>
+                        <p class="text-[#4C3F31] text-sm font-medium opacity-70">Live auctions happening now</p>
+                    </div>
+                    <span class="status-badge status-ongoing hidden md:inline-block">
+                        <span class="inline-block w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+                        Live
+                    </span>
+                </div>
+                <button class="pre-btn"><img src="../img/Bidding/arrow.png" alt="Previous"></button>
+                <button class="nxt-btn"><img src="../img/Bidding/arrow.png" alt="Next"></button>
                 <div class="product-container">
                     <?php foreach ($ongoingBids as $auction) { ?>
-                        <div class="product-card" id="bidCard<?php echo $auction['auction_id']; ?>">
-                            <div class="product-image rounded-[5px]">
+                        <div class="product-card animate-fadeInUp" id="bidCard<?php echo $auction['auction_id']; ?>">
+                            <div class="product-image rounded-t-[20px]">
                                 <span class="countdown-tag">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                                    </svg>
                                     <span id="ongoingCountdown<?php echo $auction['auction_id']; ?>"></span>
                                 </span>
-                                <img src="<?php echo htmlspecialchars($auction['coverimage']); ?>" class="product-thumb" alt="">
-                                <a href="bidProduct_view.php?itemid=<?php echo $auction['itemid']; ?>" class="card-btn">Bid Now</a>
+                                <img src="<?php echo htmlspecialchars($auction['coverimage']); ?>" class="product-thumb" alt="<?php echo htmlspecialchars($auction['itemname']); ?>">
+                                <a href="bidProduct_view.php?itemid=<?php echo $auction['itemid']; ?>" class="card-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M8 5a1 1 0 100 2h5.586l-1.293 1.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L13.586 5H8zM12 15a1 1 0 100-2H6.414l1.293-1.293a1 1 0 10-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L6.414 15H12z" />
+                                    </svg>
+                                    Bid Now
+                                </a>
                             </div>
                             <div class="product-info">
                                 <h2 class="product-brand"><?php echo htmlspecialchars($auction['itemname']); ?></h2>
                                 <p class="product-short-description"><?php echo htmlspecialchars($auction['description']); ?></p>
-                                <span class="price">Rs.<?php echo htmlspecialchars($auction['price']); ?></span>
+                                <div class="flex items-center justify-between mt-3">
+                                    <span class="price">Rs.<?php echo htmlspecialchars($auction['price']); ?></span>
+                                    <span class="text-xs text-[#897062] font-medium">Starting Bid</span>
+                                </div>
                             </div>
                         </div>
                     <?php } ?>
@@ -383,25 +634,49 @@ $finishedBids = $auction->getFinishedAuctions();
 
 
         <!-- Upcoming Bidding Section -->
-        <div class="flex flex-col px-12 pt-16 bg-red bg-[#F3F3F3]">
-            <div class="product bg-[#CEC0B9] rounded-[20px]"> 
-                <h2 class="product-category">Upcoming Bidding</h2>
-                <button class="pre-btn"><img src="../img/Bidding/arrow.png" alt=""></button>
-                <button class="nxt-btn"><img src="../img/Bidding/arrow.png" alt=""></button>
+        <div class="flex flex-col px-5 md:px-12 pt-16 pb-8 bg-gradient-to-br from-[#e7e0dc] to-[#F3F3F3]">
+            <div class="product bg-gradient-to-br from-[#d4c5b8] to-[#CEC0B9] rounded-[30px] shadow-xl"> 
+                <div class="flex items-center justify-between px-[10vw] pt-8">
+                    <div>
+                        <h2 class="product-category mb-2">Upcoming Bidding</h2>
+                        <p class="text-[#4C3F31] text-sm font-medium opacity-70">Get ready for these exciting auctions</p>
+                    </div>
+                    <span class="status-badge status-upcoming hidden md:inline-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                        </svg>
+                        Upcoming
+                    </span>
+                </div>
+                <button class="pre-btn"><img src="../img/Bidding/arrow.png" alt="Previous"></button>
+                <button class="nxt-btn"><img src="../img/Bidding/arrow.png" alt="Next"></button>
                 <div class="product-container">
                     <?php foreach ($upcomingBids as $auction) { ?>
-                        <div class="product-card" id="bidCard<?php echo $auction['auction_id']; ?>">
-                            <div class="product-image rounded-[5px]">
+                        <div class="product-card animate-fadeInUp" id="bidCard<?php echo $auction['auction_id']; ?>">
+                            <div class="product-image rounded-t-[20px] relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent pointer-events-none"></div>
                                 <span class="countdown-tag">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                                    </svg>
                                     <span id="upcomingCountdown<?php echo $auction['auction_id']; ?>"></span>
                                 </span>
-                                <img src="<?php echo htmlspecialchars($auction['coverimage']); ?>" class="product-thumb" alt="">
-                                <a href="bidProduct_view.php?itemid=<?php echo $auction['itemid']; ?>" class="card-btn">View Bid</a>
+                                <img src="<?php echo htmlspecialchars($auction['coverimage']); ?>" class="product-thumb" alt="<?php echo htmlspecialchars($auction['itemname']); ?>">
+                                <a href="bidProduct_view.php?itemid=<?php echo $auction['itemid']; ?>" class="card-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                        <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                                    </svg>
+                                    View Details
+                                </a>
                             </div>
                             <div class="product-info">
                                 <h2 class="product-brand"><?php echo htmlspecialchars($auction['itemname']); ?></h2>
                                 <p class="product-short-description"><?php echo htmlspecialchars($auction['description']); ?></p>
-                                <span class="price">Rs.<?php echo htmlspecialchars($auction['price']); ?></span>
+                                <div class="flex items-center justify-between mt-3">
+                                    <span class="price">Rs.<?php echo htmlspecialchars($auction['price']); ?></span>
+                                    <span class="text-xs text-[#897062] font-medium">Starting Bid</span>
+                                </div>
                             </div>
                         </div>
                     <?php } ?>
@@ -411,25 +686,49 @@ $finishedBids = $auction->getFinishedAuctions();
 
 
         <!-- Finished Bidding Section -->
-        <div class="flex flex-col px-12 pt-16 bg-red bg-[#F3F3F3] finished">
-            <div class="product bg-[#CEC0B9] rounded-[20px]"> 
-                <h2 class="product-category">Finished Bidding</h2>
-                <button class="pre-btn"><img src="../img/Bidding/arrow.png" alt=""></button>
-                <button class="nxt-btn"><img src="../img/Bidding/arrow.png" alt=""></button>
+        <div class="flex flex-col px-5 md:px-12 pt-16 pb-16 bg-gradient-to-br from-[#F3F3F3] to-[#e7e0dc] finished">
+            <div class="product bg-gradient-to-br from-[#CEC0B9] to-[#d4c5b8] rounded-[30px] shadow-xl"> 
+                <div class="flex items-center justify-between px-[10vw] pt-8">
+                    <div>
+                        <h2 class="product-category mb-2">Finished Bidding</h2>
+                        <p class="text-[#4C3F31] text-sm font-medium opacity-70">View completed auction results</p>
+                    </div>
+                    <span class="status-badge status-finished hidden md:inline-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                        Completed
+                    </span>
+                </div>
+                <button class="pre-btn"><img src="../img/Bidding/arrow.png" alt="Previous"></button>
+                <button class="nxt-btn"><img src="../img/Bidding/arrow.png" alt="Next"></button>
                 <div class="product-container">
                     <?php foreach ($finishedBids as $auction) { ?>
-                        <div class="product-card" id="bidCard<?php echo $auction['auction_id']; ?>">
-                            <div class="product-image rounded-[5px]">
-                                <span class="countdown-tag">
+                        <div class="product-card animate-fadeInUp" id="bidCard<?php echo $auction['auction_id']; ?>">
+                            <div class="product-image rounded-t-[20px] relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/30 to-transparent pointer-events-none"></div>
+                                <span class="countdown-tag bg-gradient-to-r from-gray-600 to-gray-700">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
                                     <span id="finishedCountdown<?php echo $auction['auction_id']; ?>"></span>
                                 </span>
-                                <img src="<?php echo htmlspecialchars($auction['coverimage']); ?>" class="product-thumb" alt="">
-                                <a href="bidProduct_view.php?itemid=<?php echo $auction['itemid']; ?>" class="card-btn">View Bid</a>
+                                <img src="<?php echo htmlspecialchars($auction['coverimage']); ?>" class="product-thumb opacity-90" alt="<?php echo htmlspecialchars($auction['itemname']); ?>">
+                                <a href="bidProduct_view.php?itemid=<?php echo $auction['itemid']; ?>" class="card-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                                        <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+                                    </svg>
+                                    View Results
+                                </a>
                             </div>
                             <div class="product-info">
                                 <h2 class="product-brand"><?php echo htmlspecialchars($auction['itemname']); ?></h2>
                                 <p class="product-short-description"><?php echo htmlspecialchars($auction['description']); ?></p>
-                                <span class="price">Rs.<?php echo htmlspecialchars($auction['price']); ?></span>
+                                <div class="flex items-center justify-between mt-3">
+                                    <span class="price">Rs.<?php echo htmlspecialchars($auction['price']); ?></span>
+                                    <span class="text-xs text-[#897062] font-medium">Final Bid</span>
+                                </div>
                             </div>  
                         </div>
                     <?php } ?>
@@ -439,66 +738,129 @@ $finishedBids = $auction->getFinishedAuctions();
         
         
         <!-- Popup Form -->
-        <div class="overflow-y-auto" id="bidpopupform">
-            <button id="fcancel-btn" onclick=addBidForm() class="fcancel-btn w-10 text-[1.8rem] ml-[98%] p-0 -mt-40 hover:scale-110 hover:transition-[0.8s]">&times;</button>                
-            <div class="flex mx-10 my-2 gap-4">
-                <div class="w-[60%] border-r-2 border-[#AE9D92]">
-                    <h2 class="f-title">ADD YOUR BID</h2>
+        <div class="overflow-y-auto backdrop-blur-sm" id="bidpopupform">
+            <!-- Close Button -->
+            <button id="fcancel-btn" onclick=addBidForm() class="absolute top-4 right-4 w-12 h-12 flex items-center justify-center text-[2rem] text-[#4C3F31] hover:bg-[#f9f7f5] rounded-full hover:scale-110 transition-all duration-300 z-10">
+                &times;
+            </button>
+            
+            <div class="flex flex-col lg:flex-row gap-8 px-4 md:px-8 py-6">
+                <!-- Form Section -->
+                <div class="w-full lg:w-[60%]">
+                    <div class="mb-6">
+                        <h2 class="f-title text-[#4C3F31] flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-[#746557]" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                                <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            Create Your Auction
+                        </h2>
+                        <p class="text-[#897062] mt-2">Fill in the details to list your item for bidding</p>
+                    </div>
+                    
                     <!-- Form for adding a bid -->
-                    <form action="../control/biddingcon.php" method="POST" enctype="multipart/form-data" id="">
+                    <form action="../control/biddingcon.php" method="POST" enctype="multipart/form-data" class="space-y-5">
                         <div class="bform-items">
-                                    <label for="itemName"  class="bflable">Item Name</label>
-                                    <input type="text" class="form-control" id="itemName" placeholder="Enter item name" name="itemname" required>
-                        </div>
-                        <div class="bform-items">
-                                    <label for="price" class="bflable">Bid Starting Price (Rs.)</label>
-                                    <input type="number" class="form-control" id="price" placeholder="Enter the bid starting price." name="price" required>
-                        </div>
-                        <div class="flex">
-                            <div class="bform-items">
-                                        <label for="coverImage" class="bflable">Cover Image</label>
-                                        <input type="file" class="form-control-file" id="coverImage" name="image" required>
-                            </div>
-                            <div class="bform-items">
-                                        <label for="otherImages" class="bflable">Other Images (Optional)</label>
-                                        <input type="file" class="form-control-file" id="otherImages" name="otherimage">
-                            </div>
-                        </div>
-                        <div class="flex">
-                            <div class="bform-items py-2">
-                                        <label for="bidstarttime" class="bflable">Bid Start Time: </label>
-                                        <input type="datetime-local" id="bidstarttime" name="bidstarttime" required class="form-control-time">
-                            </div>
-                            <div class="bform-items py-2">
-                                        <label for="bitendtime" class="bflable">Bid End Time: </label>
-                                        <input type="datetime-local" id="bitendtime" name="bitendtime" required class="form-control-time">
-                            </div>
-                        </div>
-                        <div class="bform-items">
-                                    <label for="description" class="bflable">Description</label>
-                                    <textarea class="form-control" id="description" rows="3" placeholder="Enter description" name="description" required></textarea>
-                        </div>
-                        <input type="hidden" name="userid" value="<?php echo $userid; ?>">
-                        <input type="hidden" name="submitBid" value="submitBid">
-                        <div>
-                            <button class="plsBid-btn" name="submitBid">
-                                Place Your Bid
-                            </button>
+                            <label for="itemName" class="bflable">Item Name *</label>
+                            <input type="text" class="form-control" id="itemName" placeholder="e.g., Vintage Designer Watch" name="itemname" required>
                         </div>
                         
+                        <div class="bform-items">
+                            <label for="price" class="bflable">Starting Bid Price (Rs.) *</label>
+                            <div class="relative">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-[#897062] font-semibold"></span>
+                                <input type="number" class="form-control pl-14" id="price" placeholder="5000" name="price" required min="1" step="0.01">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bform-items">
+                                <label for="coverImage" class="bflable">Cover Image *</label>
+                                <input type="file" class="form-control-file" id="coverImage" name="image" accept="image/*" required>
+                                <p class="text-xs text-[#897062] mt-1">Max 2MB (JPG, PNG)</p>
+                            </div>
+                            <div class="bform-items">
+                                <label for="otherImages" class="bflable">Additional Image</label>
+                                <input type="file" class="form-control-file" id="otherImages" name="otherimage" accept="image/*">
+                                <p class="text-xs text-[#897062] mt-1">Optional</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bform-items">
+                                <label for="bidstarttime" class="bflable">Auction Start Time *</label>
+                                <input type="datetime-local" id="bidstarttime" name="bidstarttime" required class="form-control-time">
+                            </div>
+                            <div class="bform-items">
+                                <label for="bitendtime" class="bflable">Auction End Time *</label>
+                                <input type="datetime-local" id="bitendtime" name="bitendtime" required class="form-control-time">
+                            </div>
+                        </div>
+                        
+                        <div class="bform-items">
+                            <label for="description" class="bflable">Item Description *</label>
+                            <textarea class="form-control" id="description" rows="4" placeholder="Describe your item in detail - condition, features, history..." name="description" required></textarea>
+                        </div>
+                        
+                        <input type="hidden" name="userid" value="<?php echo $userid; ?>">
+                        <input type="hidden" name="submitBid" value="submitBid">
+                        
+                        <div class="pt-4">
+                            <button type="submit" class="plsBid-btn flex items-center justify-center gap-3" name="submitBid">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
+                                </svg>
+                                Submit Auction Listing
+                            </button>
+                        </div>
                     </form>        
                 </div>
 
-                <div class="w-full md:w-[40%] overflow-y-auto pl-4">
-                    <h2 class="f-title">Bid Item Preview</h2>
-                    <div class="preview-container flex flex-col items-center border-[1px] border-[#AE9D92] rounded-lg p-4">
-                        <img id="previewImage" src="https://via.placeholder.com/200x250" alt="Item image" class="mb-4 rounded-md w-[200px] h-[250px] overflow-hidden">
-                        <div class="text-left">
-                            <h5 class="break-words max-w-[200px] text-xl font-semibold mb-2 text-[#746557]" id="previewName">Item Name</h5>
-                            <p class="text-[#897062] mb-2 break-words max-w-[200px]" id="previewDescription">Description</p>
-                            <p class="text-[#897062] mb-2" id="prevBidStartingTime">Your Bid Starts at:
-                            <Span class="" id="countdown" class="font-semibold"> 00:00:00:00</Span></p>
-                            <h5 class="text-lg font-semibold text-[#6b564a]" id="previewPrice">Rs. 0.00</h5>
+                <!-- Preview Section -->
+                <div class="w-full lg:w-[40%] lg:sticky lg:top-8 h-fit">
+                    <div class="mb-4">
+                        <h2 class="f-title text-[#4C3F31] flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-[#746557]" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                            </svg>
+                            Live Preview
+                        </h2>
+                        <p class="text-[#897062] mt-2 text-sm">See how your auction will appear</p>
+                    </div>
+                    
+                    <div class="preview-container rounded-[20px] p-6 border-2 border-[#e7e0dc] shadow-xl bg-white">
+                        <div class="relative mb-4 rounded-[15px] overflow-hidden shadow-lg">
+                            <img id="previewImage" src="https://via.placeholder.com/400x300/CEC0B9/4C3F31?text=Upload+Image" alt="Item preview" class="w-full h-[280px] object-cover">
+                            <div class="absolute top-3 right-3 bg-gradient-to-r from-[#746557] to-[#4C3F31] text-white px-3 py-1 rounded-full text-xs font-semibold">
+                                Preview
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <h5 class="text-2xl font-bold text-[#4C3F31] font-['Playfair_Display',serif]" id="previewName">Item Name</h5>
+                            
+                            <p class="text-[#897062] text-sm leading-relaxed" id="previewDescription">Your item description will appear here. Add detailed information to attract more bidders.</p>
+                            
+                            <div class="flex items-center gap-2 text-[#897062] text-sm pt-2 border-t border-[#e7e0dc]">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                                </svg>
+                                <span id="prevBidStartingTime">Starts: <span class="font-semibold">Not set</span></span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between pt-3 border-t border-[#e7e0dc]">
+                                <div>
+                                    <p class="text-xs text-[#897062] uppercase tracking-wide mb-1">Starting Bid</p>
+                                    <h5 class="text-3xl font-extrabold text-[#746557]" id="previewPrice">Rs. 0.00</h5>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-xs text-[#897062]">Auction Status</p>
+                                    <span class="inline-block mt-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-semibold">
+                                        Pending
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -547,11 +909,98 @@ $finishedBids = $auction->getFinishedAuctions();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
     <script>
+        // Close alert modal function
+        function closeAlertModal() {
+            const modal = document.getElementById('alertModal');
+            if (modal) {
+                modal.style.transition = 'opacity 0.3s, transform 0.3s';
+                modal.style.opacity = '0';
+                modal.style.transform = 'scale(0.95)';
+                setTimeout(function() {
+                    // Remove query parameters from URL
+                    const url = new URL(window.location);
+                    url.searchParams.delete('success');
+                    url.searchParams.delete('error');
+                    window.history.replaceState({}, document.title, url);
+                    modal.remove();
+                }, 300);
+            }
+        }
+        
+        // Close modal on backdrop click
+        document.addEventListener('click', function(e) {
+            const modal = document.getElementById('alertModal');
+            if (modal && e.target === modal) {
+                closeAlertModal();
+            }
+        });
+        
+        // Close modal on ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeAlertModal();
+            }
+        });
+        
         document.addEventListener('DOMContentLoaded', function() {
             const auctions = <?php echo json_encode($upcomingBids); ?>;
             auctions.forEach(function(auction) {
                 updateCountdownUpcomming(auction.start_time, 'ongoingCountdown' + auction.auction_id);
             });
+            
+            // Enhanced form preview
+            const itemNameInput = document.getElementById('itemName');
+            const priceInput = document.getElementById('price');
+            const descriptionInput = document.getElementById('description');
+            const coverImageInput = document.getElementById('coverImage');
+            const startTimeInput = document.getElementById('bidstarttime');
+            
+            if (itemNameInput) {
+                itemNameInput.addEventListener('input', function() {
+                    document.getElementById('previewName').textContent = this.value || 'Item Name';
+                });
+            }
+            
+            if (priceInput) {
+                priceInput.addEventListener('input', function() {
+                    const price = parseFloat(this.value) || 0;
+                    document.getElementById('previewPrice').textContent = 'Rs. ' + price.toFixed(2);
+                });
+            }
+            
+            if (descriptionInput) {
+                descriptionInput.addEventListener('input', function() {
+                    document.getElementById('previewDescription').textContent = this.value || 'Your item description will appear here. Add detailed information to attract more bidders.';
+                });
+            }
+            
+            if (coverImageInput) {
+                coverImageInput.addEventListener('change', function() {
+                    if (this.files && this.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            document.getElementById('previewImage').src = e.target.result;
+                        };
+                        reader.readAsDataURL(this.files[0]);
+                    }
+                });
+            }
+            
+            if (startTimeInput) {
+                startTimeInput.addEventListener('change', function() {
+                    if (this.value) {
+                        const startDate = new Date(this.value);
+                        const options = { 
+                            year: 'numeric', 
+                            month: 'short', 
+                            day: 'numeric', 
+                            hour: '2-digit', 
+                            minute: '2-digit' 
+                        };
+                        document.getElementById('prevBidStartingTime').innerHTML = 'Starts: <span class="font-semibold">' + startDate.toLocaleDateString('en-US', options) + '</span>';
+                    }
+                });
+            }
         });
     </script>
 
