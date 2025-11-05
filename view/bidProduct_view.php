@@ -87,17 +87,30 @@ $highest_bid = $highestBidRow['highest_bid'] ?? $auction['start_price'];
             xhr.open("POST", "place_bid.php", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    var response = JSON.parse(xhr.responseText);
-                    if (response.status == 'success') {
-                        document.getElementById('highestBid').innerText = newBid.toFixed(2);
-                        alert('You placed a bid of Rs.' + newBid.toFixed(2));
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        try {
+                            var response = JSON.parse(xhr.responseText);
+                            if (response.status == 'success') {
+                                document.getElementById('highestBid').innerText = newBid.toFixed(2);
+                                alert('✓ Success!\n\nYou placed a bid of Rs.' + newBid.toFixed(2));
+                                // Reload page to update bid history
+                                setTimeout(function() {
+                                    location.reload();
+                                }, 1500);
+                            } else {
+                                alert('✗ Error\n\n' + (response.message || 'Failed to place bid.'));
+                            }
+                        } catch (e) {
+                            console.error('Parse error:', e);
+                            console.error('Response:', xhr.responseText);
+                            alert('✗ Error\n\nInvalid response from server. Please try again.');
+                        }
                     } else {
-                        alert('Failed to place bid.');
+                        alert('✗ Error\n\nServer error. Please try again.');
                     }
                 }
             };
-            // xhr.send("auction_id=<?php echo $auction['auction_id']; ?>&bid_price=" + newBid);
             xhr.send("auction_id=<?php echo $auction['auction_id']; ?>&bid_price=" + newBid + "&userid=<?php echo $userid; ?>");
         }
 
@@ -106,8 +119,8 @@ $highest_bid = $highestBidRow['highest_bid'] ?? $auction['start_price'];
             let highestBid = parseFloat(document.getElementById('highestBid').innerText);
             let newBid = parseFloat(bidInput.value);
 
-            if (isNaN(newBid) || newBid < highestBid) {
-                alert('Please enter a valid bid amount.');
+            if (isNaN(newBid) || newBid <= highestBid) {
+                alert('✗ Error\n\nYour bid must be higher than Rs.' + highestBid.toFixed(2));
                 return;
             }
 
@@ -116,21 +129,32 @@ $highest_bid = $highestBidRow['highest_bid'] ?? $auction['start_price'];
             xhr.open("POST", "place_bid.php", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    var response = JSON.parse(xhr.responseText);
-                    if (response.status == 'success') {
-                        document.getElementById('highestBid').innerText = newBid.toFixed(2);
-                        alert('You placed a bid of Rs.' + newBid.toFixed(2));
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        try {
+                            var response = JSON.parse(xhr.responseText);
+                            if (response.status == 'success') {
+                                document.getElementById('highestBid').innerText = newBid.toFixed(2);
+                                bidInput.value = '';
+                                alert('✓ Success!\n\nYou placed a bid of Rs.' + newBid.toFixed(2));
+                                // Reload page to update bid history
+                                setTimeout(function() {
+                                    location.reload();
+                                }, 1500);
+                            } else {
+                                alert('✗ Error\n\n' + (response.message || 'Failed to place bid.'));
+                            }
+                        } catch (e) {
+                            console.error('Parse error:', e);
+                            console.error('Response:', xhr.responseText);
+                            alert('✗ Error\n\nInvalid response from server. Please try again.');
+                        }
                     } else {
-                        alert('Failed to place bid.');
+                        alert('✗ Error\n\nServer error. Please try again.');
                     }
                 }
             };
-            // xhr.send("auction_id=<?php echo $auction['auction_id']; ?>&bid_price=" + newBid);
             xhr.send("auction_id=<?php echo $auction['auction_id']; ?>&bid_price=" + newBid + "&userid=<?php echo $userid; ?>");
-            
-            
-
         }
     </script>
 </head>
