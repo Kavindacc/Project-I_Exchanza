@@ -590,7 +590,7 @@ $finishedBids = $auction->getFinishedAuctions();
             <div class="product bg-gradient-to-br from-[#CEC0B9] to-[#d4c5b8] rounded-[30px] shadow-xl"> 
                 <div class="flex items-center justify-between px-[10vw] pt-8">
                     <div>
-                        <h2 class="product-category mb-2">Ongoing Bidding</h2>
+                        <h2 class="product-category mb-2">Live Auctions</h2>
                         
                     </div>
                     <span class="status-badge status-ongoing hidden md:inline-block">
@@ -638,7 +638,7 @@ $finishedBids = $auction->getFinishedAuctions();
             <div class="product bg-gradient-to-br from-[#d4c5b8] to-[#CEC0B9] rounded-[30px] shadow-xl"> 
                 <div class="flex items-center justify-between px-[10vw] pt-8">
                     <div>
-                        <h2 class="product-category mb-2">Upcoming Bidding</h2>
+                        <h2 class="product-category mb-2">Upcoming Auctions</h2>
                         
                     </div>
                     <span class="status-badge status-upcoming hidden md:inline-block">
@@ -690,7 +690,7 @@ $finishedBids = $auction->getFinishedAuctions();
             <div class="product bg-gradient-to-br from-[#CEC0B9] to-[#d4c5b8] rounded-[30px] shadow-xl"> 
                 <div class="flex items-center justify-between px-[10vw] pt-8">
                     <div>
-                        <h2 class="product-category mb-2">Finished Bidding</h2>
+                        <h2 class="product-category mb-2">Closed Auctions</h2>
                     
                     </div>
                     <span class="status-badge status-finished hidden md:inline-block">
