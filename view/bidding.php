@@ -539,17 +539,17 @@ $finishedBids = $auction->getFinishedAuctions();
 
         <!-- Hero Section -->
         <div class="relative w-full bg-gradient-to-br from-[#F3F3F3] via-[#e7e0dc] to-[#CEC0B9] px-5 py-8 md:px-10 md:py-12">
-            <div class="relative w-full max-w-[1400px] mx-auto max-h-[500px] overflow-hidden rounded-[30px] shadow-2xl">
+            <div class="relative w-full max-w-[1800px] mx-auto max-h-[500px] overflow-hidden rounded-[30px] shadow-2xl">
                 <img src="../img/Bidding/banner.png" alt="Exclusive rare collectibles auction" class="w-full h-full object-cover">
                 
                 <!-- Gradient Overlay -->
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                 
                 <!-- Content -->
                 <div class="absolute inset-0 flex flex-col justify-end p-8 md:p-12 lg:p-16 animate-fadeInUp">
                     <div class="max-w-[800px]">
-                        <p class="text-[#CEC0B9] text-[16px] md:text-[20px] font-semibold tracking-[0.3rem] mb-3 uppercase">Hot Auctions</p>
-                        <h1 class="text-white text-[36px] md:text-[56px] lg:text-[64px] font-bold leading-tight mb-4 font-['Playfair_Display',serif]">
+                        <p class="text-[#4C3F31] text-[16px] md:text-[20px] font-semibold tracking-[0.3rem] mb-3 uppercase">Hot Auctions</p>
+                        <h1 class="text-[#554f49] text-[36px] md:text-[56px] lg:text-[64px] font-bold leading-tight mb-4 ">
                             Exclusive Rare Collectibles Auction
                         </h1>
                         <p class="text-[#e7e0dc] text-[18px] md:text-[24px] font-medium mb-6">
@@ -591,7 +591,7 @@ $finishedBids = $auction->getFinishedAuctions();
                 <div class="flex items-center justify-between px-[10vw] pt-8">
                     <div>
                         <h2 class="product-category mb-2">Ongoing Bidding</h2>
-                        <p class="text-[#4C3F31] text-sm font-medium opacity-70">Live auctions happening now</p>
+                        
                     </div>
                     <span class="status-badge status-ongoing hidden md:inline-block">
                         <span class="inline-block w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
@@ -639,7 +639,7 @@ $finishedBids = $auction->getFinishedAuctions();
                 <div class="flex items-center justify-between px-[10vw] pt-8">
                     <div>
                         <h2 class="product-category mb-2">Upcoming Bidding</h2>
-                        <p class="text-[#4C3F31] text-sm font-medium opacity-70">Get ready for these exciting auctions</p>
+                        
                     </div>
                     <span class="status-badge status-upcoming hidden md:inline-block">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" viewBox="0 0 20 20" fill="currentColor">
@@ -691,7 +691,7 @@ $finishedBids = $auction->getFinishedAuctions();
                 <div class="flex items-center justify-between px-[10vw] pt-8">
                     <div>
                         <h2 class="product-category mb-2">Finished Bidding</h2>
-                        <p class="text-[#4C3F31] text-sm font-medium opacity-70">View completed auction results</p>
+                    
                     </div>
                     <span class="status-badge status-finished hidden md:inline-block">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" viewBox="0 0 20 20" fill="currentColor">
@@ -826,7 +826,6 @@ $finishedBids = $auction->getFinishedAuctions();
                             </svg>
                             Live Preview
                         </h2>
-                        <p class="text-[#897062] mt-2 text-sm">See how your auction will appear</p>
                     </div>
                     
                     <div class="preview-container rounded-[20px] p-6 border-2 border-[#e7e0dc] shadow-xl bg-white">
