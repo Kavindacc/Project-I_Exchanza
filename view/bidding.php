@@ -198,7 +198,7 @@ $finishedBids = $auction->getFinishedAuctions();
         }
         
         .pre-btn,.nxt-btn{
-            @apply border-0 w-[60px] h-[60px] rounded-full absolute top-[50%] -translate-y-1/2 flex justify-center items-center bg-white shadow-xl cursor-pointer z-20 transition-all duration-300 hover:scale-110 hover:shadow-2xl;
+            @apply border-0 w-[60px] h-[60px] rounded-full absolute top-[50%] -translate-y-1/2 flex justify-center items-center shadow-xl cursor-pointer z-20 transition-all duration-300 hover:scale-110 hover:shadow-2xl;
         }
         
         .pre-btn {
@@ -588,15 +588,29 @@ $finishedBids = $auction->getFinishedAuctions();
        <!-- Ongoing Bidding Section -->
         <div class="flex flex-col px-5 md:px-12 pt-16 pb-8 bg-gradient-to-br from-[#F3F3F3] to-[#e7e0dc] ongoing">
             <div class="product bg-gradient-to-br from-[#CEC0B9] to-[#d4c5b8] rounded-[30px] shadow-xl"> 
-                <div class="flex items-center justify-between px-[10vw] pt-8">
-                    <div>
-                        <h2 class="product-category mb-2">Live Auctions</h2>
-                        
+                <div class="flex items-center justify-between px-[10vw] pt-8 pb-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-[#746557] to-[#AE9D92] rounded-2xl flex items-center justify-center shadow-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="text-4xl font-bold text-[#4C3F31] font-['Playfair_Display',serif] tracking-tight mb-1">Live Auctions</h2>
+                            <p class="text-[#897062] text-sm font-medium flex items-center gap-2">
+                                <span class="inline-block w-2 h-2 bg-[#746557] rounded-full animate-pulse"></span>
+                                Bidding in progress • Real-time updates
+                            </p>
+                        </div>
                     </div>
-                    <span class="status-badge status-ongoing hidden md:inline-block">
-                        <span class="inline-block w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
-                        Live
-                    </span>
+                    <div class="hidden lg:flex items-center gap-3 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-md">
+                        <div class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm font-semibold text-[#4C3F31]"><?php echo count($ongoingBids); ?> Active</span>
+                        </div>
+                    </div>
                 </div>
                 <button class="pre-btn"><img src="../img/Bidding/arrow.png" alt="Previous"></button>
                 <button class="nxt-btn"><img src="../img/Bidding/arrow.png" alt="Next"></button>
@@ -636,17 +650,31 @@ $finishedBids = $auction->getFinishedAuctions();
         <!-- Upcoming Bidding Section -->
         <div class="flex flex-col px-5 md:px-12 pt-16 pb-8 bg-gradient-to-br from-[#e7e0dc] to-[#F3F3F3]">
             <div class="product bg-gradient-to-br from-[#d4c5b8] to-[#CEC0B9] rounded-[30px] shadow-xl"> 
-                <div class="flex items-center justify-between px-[10vw] pt-8">
-                    <div>
-                        <h2 class="product-category mb-2">Upcoming Auctions</h2>
-                        
+                <div class="flex items-center justify-between px-[10vw] pt-8 pb-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-[#AE9D92] to-[#897062] rounded-2xl flex items-center justify-center shadow-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="text-4xl font-bold text-[#4C3F31] font-['Playfair_Display',serif] tracking-tight mb-1">Upcoming Auctions</h2>
+                            <p class="text-[#897062] text-sm font-medium flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                                </svg>
+                                Starting soon • Set your reminders
+                            </p>
+                        </div>
                     </div>
-                    <span class="status-badge status-upcoming hidden md:inline-block">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
-                        </svg>
-                        Upcoming
-                    </span>
+                    <div class="hidden lg:flex items-center gap-3 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-md">
+                        <div class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#746557]" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+                            </svg>
+                            <span class="text-sm font-semibold text-[#4C3F31]"><?php echo count($upcomingBids); ?> Scheduled</span>
+                        </div>
+                    </div>
                 </div>
                 <button class="pre-btn"><img src="../img/Bidding/arrow.png" alt="Previous"></button>
                 <button class="nxt-btn"><img src="../img/Bidding/arrow.png" alt="Next"></button>
@@ -688,17 +716,32 @@ $finishedBids = $auction->getFinishedAuctions();
         <!-- Finished Bidding Section -->
         <div class="flex flex-col px-5 md:px-12 pt-16 pb-16 bg-gradient-to-br from-[#F3F3F3] to-[#e7e0dc] finished">
             <div class="product bg-gradient-to-br from-[#CEC0B9] to-[#d4c5b8] rounded-[30px] shadow-xl"> 
-                <div class="flex items-center justify-between px-[10vw] pt-8">
-                    <div>
-                        <h2 class="product-category mb-2">Closed Auctions</h2>
-                    
+                <div class="flex items-center justify-between px-[10vw] pt-8 pb-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-[#AE9D92] to-[#897062] rounded-2xl flex items-center justify-center shadow-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                                <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="text-4xl font-bold text-[#4C3F31] font-['Playfair_Display',serif] tracking-tight mb-1">Closed Auctions</h2>
+                            <p class="text-[#897062] text-sm font-medium flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                Completed auctions • View final results
+                            </p>
+                        </div>
                     </div>
-                    <span class="status-badge status-finished hidden md:inline-block">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                        </svg>
-                        Completed
-                    </span>
+                    <div class="hidden lg:flex items-center gap-3 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-md">
+                        <div class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm font-semibold text-[#4C3F31]"><?php echo count($finishedBids); ?> Archived</span>
+                        </div>
+                    </div>
                 </div>
                 <button class="pre-btn"><img src="../img/Bidding/arrow.png" alt="Previous"></button>
                 <button class="nxt-btn"><img src="../img/Bidding/arrow.png" alt="Next"></button>

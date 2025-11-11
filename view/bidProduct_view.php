@@ -84,15 +84,15 @@ $highest_bid = $highestBidRow['highest_bid'] ?? $auction['start_price'];
         }
         
         .status-live {
-            @apply bg-gradient-to-r from-green-500 to-green-600 text-white animate-pulse;
+            @apply bg-gradient-to-r from-[#AE9D92] to-[#897062] text-white animate-pulse;
         }
         
         .status-upcoming {
-            @apply bg-gradient-to-r from-blue-500 to-blue-600 text-white;
+            @apply bg-gradient-to-r from-[#AE9D92] to-[#897062] text-white;
         }
         
         .status-ended {
-            @apply bg-gradient-to-r from-gray-500 to-gray-600 text-white;
+            @apply bg-gradient-to-r from-[#AE9D92] to-[#897062] text-white;
         }
         
         .bid-button {
@@ -153,7 +153,7 @@ $highest_bid = $highestBidRow['highest_bid'] ?? $auction['start_price'];
                 var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                countdownElement.innerHTML = days + " " + hours + "h " +
+                countdownElement.innerHTML = days + "d " + hours + "h " +
                     minutes + "m " + seconds + "s ";
 
                 if (distance < 0) {
@@ -515,14 +515,14 @@ $highest_bid = $highestBidRow['highest_bid'] ?? $auction['start_price'];
                 <?php } else if (strtotime($auction['start_time']) > time()) { ?>
                     
                     <!-- Upcoming Auction Notice -->
-                    <div class="info-card bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+                    <div class="info-card bg-gradient-to-br from-[#f9f7f5] to-[#e7e0dc] border-[#CEC0B9]">
                         <div class="text-center py-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-blue-600 mb-2" viewBox="0 0 20 20" fill="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-[#746557] mb-2" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
                             </svg>
                             <h3 class="text-xl font-bold text-[#4C3F31] mb-2">Auction Starting Soon</h3>
                             <p class="text-[#897062] text-sm mb-3">This auction hasn't started yet. Check back soon!</p>
-                            <div class="inline-block px-4 py-2 bg-blue-600 text-white rounded-[10px] font-semibold text-sm">
+                            <div class="inline-block px-4 py-2 bg-gradient-to-r from-[#746557] to-[#4C3F31] text-white rounded-[10px] font-semibold text-sm">
                                 Starts: <?php echo date('F j, Y g:i A', strtotime($auction['start_time'])); ?>
                             </div>
                         </div>
@@ -533,7 +533,7 @@ $highest_bid = $highestBidRow['highest_bid'] ?? $auction['start_price'];
                     <!-- Auction Ended Notice -->
                     <div class="info-card bg-gradient-to-br from-gray-50 to-gray-100 border-gray-200">
                         <div class="text-center py-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-gray-600 mb-2" viewBox="0 0 20 20" fill="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-gray-600 mb-2" viewBox="0 0 20 20" fill="#746557">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                             </svg>
                             <h3 class="text-xl font-bold text-[#4C3F31] mb-2">Auction Has Ended</h3>
